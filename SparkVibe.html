@@ -1,0 +1,3267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SparkVibe - Dating App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-dark: #0D0D1A;
+            --bg-card: #1A1A2E;
+            --bg-card-light: #252542;
+            --neon-pink: #FF2E93;
+            --neon-cyan: #00F5FF;
+            --neon-purple: #9D4EDD;
+            --neon-orange: #FF6B35;
+            --neon-green: #39FF14;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --gradient-main: linear-gradient(135deg, #FF2E93 0%, #9D4EDD 50%, #00F5FF 100%);
+            --gradient-pink: linear-gradient(135deg, #FF2E93 0%, #FF6B6B 100%);
+            --gradient-purple: linear-gradient(135deg, #9D4EDD 0%, #6B5CE7 100%);
+            --glow-pink: 0 0 20px rgba(255, 46, 147, 0.5);
+            --glow-cyan: 0 0 20px rgba(0, 245, 255, 0.5);
+            --glow-purple: 0 0 20px rgba(157, 78, 221, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Phone Frame */
+        .phone-frame {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 900px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 500px) {
+            body {
+                background: #050510;
+                padding: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+            .phone-frame {
+                border-radius: 40px;
+                border: 3px solid var(--bg-card-light);
+                box-shadow: 0 0 60px rgba(157, 78, 221, 0.3),
+                            inset 0 0 30px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* Screens */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: transparent;
+            position: relative;
+            z-index: 100;
+        }
+
+        .status-bar .time {
+            font-weight: 600;
+        }
+
+        .status-bar .icons {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        /* Welcome Screen */
+        #welcome-screen {
+            background: var(--bg-dark);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .welcome-bg::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 46, 147, 0.3) 0%, transparent 70%);
+            top: 10%;
+            left: -20%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .welcome-bg::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 245, 255, 0.2) 0%, transparent 70%);
+            bottom: 10%;
+            right: -30%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -30px); }
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(255, 46, 147, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .logo-icon i {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255, 46, 147, 0.8));
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 60px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-main);
+            color: white;
+            box-shadow: var(--glow-pink);
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 40px rgba(255, 46, 147, 0.7);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--neon-cyan);
+            box-shadow: var(--glow-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 245, 255, 0.1);
+        }
+
+        .btn-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            padding: 0;
+            font-size: 20px;
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        /* Onboarding */
+        #onboarding-screen {
+            background: var(--bg-dark);
+        }
+
+        .onboarding-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .onboarding-image {
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 60px rgba(255, 46, 147, 0.4);
+        }
+
+        .onboarding-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .onboarding-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-card-light);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 30px;
+            border-radius: 5px;
+            background: var(--gradient-main);
+        }
+
+        /* Auth Screen */
+        #auth-screen {
+            background: var(--bg-dark);
+        }
+
+        .auth-header {
+            padding: 20px 30px;
+            text-align: center;
+        }
+
+        .auth-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .auth-content {
+            flex: 1;
+            padding: 20px 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--bg-card-light);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 46, 147, 0.3);
+        }
+
+        .input-field::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .country-code {
+            width: 80px;
+            text-align: center;
+        }
+
+        .social-login {
+            margin-top: 30px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--bg-card-light);
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--bg-card);
+            border: 2px solid var(--bg-card-light);
+            color: var(--text-primary);
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+        }
+
+        /* Main Swipe Screen */
+        #swipe-screen {
+            background: var(--bg-dark);
+        }
+
+        .swipe-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            height: 60px;
+        }
+
+        .swipe-header .logo-small {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .header-icon:hover {
+            background: var(--bg-card-light);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: var(--neon-pink);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-container {
+            flex: 1;
+            position: relative;
+            padding: 10px 20px;
+            overflow: hidden;
+        }
+
+        .swipe-card {
+            position: absolute;
+            width: calc(100% - 40px);
+            height: calc(100% - 20px);
+            border-radius: 25px;
+            overflow: hidden;
+            cursor: grab;
+            transition: transform 0.3s ease;
+            background: var(--bg-card);
+        }
+
+        .swipe-card:active {
+            cursor: grabbing;
+        }
+
+        .swipe-card.dragging {
+            transition: none;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-light) 100%);
+        }
+
+        .card-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+        }
+
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+        }
+
+        .card-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .verified-badge {
+            color: var(--neon-cyan);
+            font-size: 20px;
+        }
+
+        .card-details {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .card-details span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-bio {
+            margin-top: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .card-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .interest-tag {
+            padding: 6px 14px;
+            background: rgba(255, 46, 147, 0.2);
+            border: 1px solid var(--neon-pink);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--neon-pink);
+        }
+
+        .swipe-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .action-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .action-btn.dislike {
+            background: var(--bg-card);
+            border: 2px solid #FF6B6B;
+            color: #FF6B6B;
+        }
+
+        .action-btn.superlike {
+            background: var(--bg-card);
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+        }
+
+        .action-btn.like {
+            background: var(--gradient-pink);
+            border: none;
+            color: white;
+            box-shadow: var(--glow-pink);
+        }
+
+        .action-btn.boost {
+            background: var(--bg-card);
+            border: 2px solid var(--neon-purple);
+            color: var(--neon-purple);
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .action-btn.like:hover {
+            box-shadow: 0 0 40px rgba(255, 46, 147, 0.8);
+        }
+
+        /* Swipe Indicators */
+        .swipe-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .swipe-indicator.like {
+            right: 30px;
+            color: var(--neon-green);
+            border: 4px solid var(--neon-green);
+            transform: translateY(-50%) rotate(20deg);
+        }
+
+        .swipe-indicator.nope {
+            left: 30px;
+            color: #FF6B6B;
+            border: 4px solid #FF6B6B;
+            transform: translateY(-50%) rotate(-20deg);
+        }
+
+        /* Match Screen */
+        #match-screen {
+            background: rgba(13, 13, 26, 0.95);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .match-animation {
+            position: relative;
+        }
+
+        .match-photos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .match-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--neon-pink);
+            box-shadow: var(--glow-pink);
+            background: var(--bg-card);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .match-photo:first-child {
+            transform: translateX(20px);
+        }
+
+        .match-photo:last-child {
+            transform: translateX(-20px);
+        }
+
+        .match-heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: var(--neon-pink);
+            animation: heartBeat 1s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        .match-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .match-subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .match-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        /* Chat List Screen */
+        #chats-screen {
+            background: var(--bg-dark);
+        }
+
+        .screen-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .screen-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .new-matches-section {
+            padding: 15px 20px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .matches-scroll {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .matches-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .match-avatar {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 70px;
+            height: 70px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .avatar.has-story {
+            border: 3px solid var(--neon-pink);
+            animation: storyRing 3s linear infinite;
+        }
+
+        @keyframes storyRing {
+            0% { border-color: var(--neon-pink); }
+            33% { border-color: var(--neon-purple); }
+            66% { border-color: var(--neon-cyan); }
+            100% { border-color: var(--neon-pink); }
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: var(--neon-green);
+            border: 3px solid var(--bg-dark);
+            border-radius: 50%;
+        }
+
+        .match-name {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .chats-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0 20px;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--bg-card);
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .chat-item:hover {
+            background: var(--bg-card);
+            margin: 0 -20px;
+            padding: 15px 20px;
+        }
+
+        .chat-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--bg-card-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .chat-content {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chat-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .chat-preview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-message {
+            font-size: 14px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .unread-badge {
+            min-width: 22px;
+            height: 22px;
+            background: var(--neon-pink);
+            border-radius: 11px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+        }
+
+        /* Chat Screen */
+        #chat-screen {
+            background: var(--bg-dark);
+        }
+
+        .chat-screen-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            gap: 15px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-user-info {
+            flex: 1;
+        }
+
+        .chat-user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chat-user-status {
+            font-size: 12px;
+            color: var(--neon-green);
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            background: var(--bg-card);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            background: var(--gradient-pink);
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .icebreaker-card {
+            background: var(--bg-card);
+            border: 1px solid var(--neon-purple);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .icebreaker-title {
+            font-size: 12px;
+            color: var(--neon-purple);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icebreaker-suggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .icebreaker-suggestion {
+            padding: 10px 15px;
+            background: rgba(157, 78, 221, 0.1);
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .icebreaker-suggestion:hover {
+            background: rgba(157, 78, 221, 0.2);
+        }
+
+        .chat-input-area {
+            padding: 15px 20px;
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-input-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .chat-input-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .chat-input-btn:hover {
+            color: var(--neon-pink);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 20px;
+            background: var(--bg-dark);
+            border: none;
+            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+        }
+
+        .send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient-pink);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--glow-pink);
+        }
+
+        /* Roulette Screen */
+        #roulette-screen {
+            background: var(--bg-dark);
+        }
+
+        .roulette-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .roulette-icon {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 60px rgba(157, 78, 221, 0.5);
+            animation: roulettePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes roulettePulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 60px rgba(157, 78, 221, 0.5);
+            }
+            50% { 
+                transform: scale(1.05); 
+                box-shadow: 0 0 80px rgba(157, 78, 221, 0.7);
+            }
+        }
+
+        .roulette-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .roulette-desc {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .roulette-filters {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .filter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--bg-card);
+        }
+
+        .filter-label {
+            font-size: 15px;
+        }
+
+        .filter-value {
+            color: var(--neon-cyan);
+            font-weight: 600;
+        }
+
+        /* Searching Animation */
+        .searching-animation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .searching-animation.active {
+            display: flex;
+        }
+
+        .searching-spinner {
+            width: 100px;
+            height: 100px;
+            border: 4px solid var(--bg-card);
+            border-top-color: var(--neon-pink);
+            border-right-color: var(--neon-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Anonymous Chat */
+        .anonymous-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        .anonymous-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--bg-card-light) 0%, var(--bg-card) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+            border: 3px solid var(--neon-purple);
+        }
+
+        .anonymous-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .anonymous-info {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .reveal-btn {
+            margin-top: 20px;
+            background: var(--gradient-purple);
+            padding: 15px 40px;
+        }
+
+        /* Profile Screen */
+        #profile-screen {
+            background: var(--bg-dark);
+        }
+
+        .profile-header {
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-photo-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            border: 4px solid var(--neon-pink);
+            box-shadow: var(--glow-pink);
+        }
+
+        .edit-photo-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-main);
+            border: 3px solid var(--bg-dark);
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .profile-age-location {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--neon-pink);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        .profile-menu {
+            padding: 0 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--bg-card);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item:hover {
+            padding-left: 10px;
+        }
+
+        .menu-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+
+        .menu-icon.pink { background: rgba(255, 46, 147, 0.2); color: var(--neon-pink); }
+        .menu-icon.cyan { background: rgba(0, 245, 255, 0.2); color: var(--neon-cyan); }
+        .menu-icon.purple { background: rgba(157, 78, 221, 0.2); color: var(--neon-purple); }
+        .menu-icon.orange { background: rgba(255, 107, 53, 0.2); color: var(--neon-orange); }
+        .menu-icon.green { background: rgba(57, 255, 20, 0.2); color: var(--neon-green); }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .menu-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .menu-arrow {
+            color: var(--text-secondary);
+        }
+
+        /* Coins Screen (Tap Game) */
+        #coins-screen {
+            background: var(--bg-dark);
+        }
+
+        .coins-header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .coins-balance {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 2px solid var(--neon-orange);
+        }
+
+        .coins-balance i {
+            font-size: 28px;
+            color: var(--neon-orange);
+        }
+
+        .coins-amount {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .tap-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .big-coin {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #FFD700, #FFA500, #FF8C00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            box-shadow: 0 10px 40px rgba(255, 165, 0, 0.4),
+                        inset 0 -5px 20px rgba(0,0,0,0.2),
+                        inset 0 5px 20px rgba(255,255,255,0.3);
+            user-select: none;
+        }
+
+        .big-coin:active {
+            transform: scale(0.95);
+        }
+
+        .big-coin i {
+            color: #FFF8DC;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .tap-info {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .energy-bar {
+            width: 200px;
+            height: 20px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .energy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-orange), var(--neon-pink));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .energy-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .tap-multiplier {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .multiplier-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--neon-purple);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .multiplier-btn:hover {
+            background: var(--neon-purple);
+        }
+
+        .daily-missions {
+            padding: 20px;
+        }
+
+        .mission-card {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
+        .mission-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(255, 165, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--neon-orange);
+            margin-right: 15px;
+        }
+
+        .mission-info {
+            flex: 1;
+        }
+
+        .mission-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .mission-progress {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+        }
+
+        .mission-reward {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--neon-orange);
+            font-weight: 600;
+        }
+
+        /* Shop Screen */
+        #shop-screen {
+            background: var(--bg-dark);
+            overflow-y: auto;
+        }
+
+        .shop-content {
+            padding: 20px;
+        }
+
+        .premium-banner {
+            background: var(--gradient-main);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+        }
+
+        .premium-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .premium-features {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .premium-price {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .premium-price span {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .shop-section {
+            margin-bottom: 25px;
+        }
+
+        .shop-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .coin-packages {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .coin-package {
+            background: var(--bg-card);
+            border: 2px solid var(--bg-card-light);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .coin-package:hover {
+            border-color: var(--neon-orange);
+            transform: translateY(-3px);
+        }
+
+        .coin-package.popular {
+            border-color: var(--neon-pink);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--neon-pink);
+            padding: 3px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .package-coins {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .package-amount {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--neon-orange);
+        }
+
+        .package-price {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        .package-bonus {
+            font-size: 11px;
+            color: var(--neon-green);
+            margin-top: 5px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 0;
+            background: var(--bg-card);
+            border-top: 1px solid var(--bg-card-light);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .nav-item span {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active i {
+            color: var(--neon-pink);
+        }
+
+        .nav-item.active span {
+            color: var(--neon-pink);
+        }
+
+        .nav-item:hover i {
+            color: var(--neon-pink);
+            transform: scale(1.1);
+        }
+
+        .nav-center {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -30px;
+            box-shadow: 0 0 20px rgba(255, 46, 147, 0.5);
+        }
+
+        .nav-center i {
+            font-size: 26px;
+            color: white !important;
+        }
+
+        /* Radar Screen */
+        #radar-screen {
+            background: var(--bg-dark);
+        }
+
+        .radar-map {
+            flex: 1;
+            background: linear-gradient(135deg, #0a1628 0%, #0D0D1A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-circle {
+            position: absolute;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .radar-circle:nth-child(1) { width: 100px; height: 100px; }
+        .radar-circle:nth-child(2) { width: 200px; height: 200px; }
+        .radar-circle:nth-child(3) { width: 300px; height: 300px; }
+        .radar-circle:nth-child(4) { width: 400px; height: 400px; }
+
+        .radar-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 30px rgba(255, 46, 147, 0.6);
+            z-index: 10;
+        }
+
+        .radar-user {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background: var(--bg-card);
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            animation: radarPing 2s ease-in-out infinite;
+        }
+
+        .radar-user:hover {
+            transform: scale(1.2);
+            box-shadow: var(--glow-cyan);
+        }
+
+        @keyframes radarPing {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .radar-user.user1 { top: 30%; left: 60%; animation-delay: 0s; }
+        .radar-user.user2 { top: 65%; left: 25%; animation-delay: 0.5s; }
+        .radar-user.user3 { top: 25%; left: 30%; animation-delay: 1s; }
+        .radar-user.user4 { top: 70%; left: 70%; animation-delay: 1.5s; }
+
+        .radar-distance {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--neon-cyan);
+            white-space: nowrap;
+        }
+
+        .radar-scan {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            transform: translate(-50%, -50%);
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 245, 255, 0.2) 30deg, transparent 60deg);
+            border-radius: 50%;
+            animation: radarScan 4s linear infinite;
+        }
+
+        @keyframes radarScan {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Stories Section */
+        .stories-section {
+            padding: 15px 20px;
+            background: var(--bg-card);
+        }
+
+        .stories-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .story-item {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            padding: 3px;
+            background: var(--gradient-main);
+        }
+
+        .story-avatar.add-story {
+            background: var(--bg-card-light);
+            border: 2px dashed var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .story-avatar.add-story i {
+            font-size: 24px;
+            color: var(--text-secondary);
+        }
+
+        .story-avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+        }
+
+        .story-name {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            max-width: 65px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Floating elements */
+        .floating-coins {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .floating-coin {
+            position: absolute;
+            font-size: 24px;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        /* Gifts */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .gift-item {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .gift-item:hover {
+            border-color: var(--neon-pink);
+            transform: translateY(-3px);
+        }
+
+        .gift-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .gift-price {
+            font-size: 12px;
+            color: var(--neon-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* Tooltips */
+        .tooltip {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid var(--neon-purple);
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 13px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            animation: tooltipFade 0.2s ease;
+        }
+
+        @keyframes tooltipFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-light) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: skeleton 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeleton {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="welcome-bg"></div>
+            <div class="welcome-content">
+                <div class="logo-icon">
+                    <i class="fas fa-fire-flame-curved"></i>
+                </div>
+                <h1 class="logo">SparkVibe</h1>
+                <p class="tagline">Найди свою искру ✨</p>
+                <button class="btn btn-primary" onclick="showScreen('onboarding-screen')">
+                    Начать
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Onboarding Screen -->
+        <div id="onboarding-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="onboarding-content">
+                <div class="onboarding-image" id="onboarding-icon">
+                    🔥
+                </div>
+                <h2 class="onboarding-title" id="onboarding-title">Свайпай и находи</h2>
+                <p class="onboarding-text" id="onboarding-text">
+                    Свайп вправо — лайк, влево — пропуск. 
+                    Взаимный лайк = мэтч и возможность начать общение!
+                </p>
+                <div class="dots">
+                    <div class="dot active" data-step="0"></div>
+                    <div class="dot" data-step="1"></div>
+                    <div class="dot" data-step="2"></div>
+                </div>
+                <button class="btn btn-primary" onclick="nextOnboarding()">
+                    Далее
+                </button>
+            </div>
+        </div>
+
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="auth-header">
+                <h1>Добро пожаловать! 👋</h1>
+                <p style="color: var(--text-secondary); margin-top: 5px;">Войди или создай аккаунт</p>
+            </div>
+            <div class="auth-content">
+                <div class="input-group">
+                    <label>Номер телефона</label>
+                    <div class="phone-input">
+                        <input type="text" class="input-field country-code" value="+7" readonly>
+                        <input type="tel" class="input-field" placeholder="999 123 45 67">
+                    </div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="showScreen('swipe-screen')">
+                    Получить код
+                </button>
+                
+                <div class="divider">или войти через</div>
+                
+                <div class="social-buttons">
+                    <button class="social-btn"><i class="fab fa-google"></i></button>
+                    <button class="social-btn"><i class="fab fa-apple"></i></button>
+                    <button class="social-btn"><i class="fab fa-vk"></i></button>
+                    <button class="social-btn"><i class="fab fa-telegram"></i></button>
+                </div>
+                
+                <p style="text-align: center; margin-top: 30px; font-size: 12px; color: var(--text-secondary);">
+                    Нажимая "Получить код", вы соглашаетесь с 
+                    <a href="#" style="color: var(--neon-cyan);">Условиями использования</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main Swipe Screen -->
+        <div id="swipe-screen" class="screen">
+            <div class="swipe-header">
+                <span class="logo-small">SparkVibe</span>
+                <div class="header-icons">
+                    <div class="header-icon" onclick="showScreen('radar-screen')">
+                        <i class="fas fa-location-crosshairs"></i>
+                    </div>
+                    <div class="header-icon" onclick="showScreen('chats-screen')">
+                        <i class="fas fa-comment"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-container" id="card-container">
+                <div class="swipe-card" id="swipe-card" style="z-index: 3;">
+                    <div class="card-image" style="background: url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop') center/cover;"></div>
+                    <div class="card-gradient"></div>
+                    <div class="swipe-indicator like">LIKE</div>
+                    <div class="swipe-indicator nope">NOPE</div>
+                    <div class="card-info">
+                        <h2 class="card-name">
+                            Анна, 24
+                            <i class="fas fa-circle-check verified-badge"></i>
+                        </h2>
+                        <div class="card-details">
+                            <span><i class="fas fa-location-dot"></i> 2 км</span>
+                            <span><i class="fas fa-briefcase"></i> Дизайнер</span>
+                        </div>
+                        <p class="card-bio">Люблю путешествия, книги и хороший кофе ☕️ Ищу интересного собеседника 💫</p>
+                        <div class="card-interests">
+                            <span class="interest-tag">🎨 Искусство</span>
+                            <span class="interest-tag">✈️ Путешествия</span>
+                            <span class="interest-tag">📚 Книги</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swipe-card" style="z-index: 2; transform: scale(0.95) translateY(10px);">
+                    <div class="card-image" style="background: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop') center/cover;"></div>
+                    <div class="card-gradient"></div>
+                </div>
+                <div class="swipe-card" style="z-index: 1; transform: scale(0.9) translateY(20px);">
+                    <div class="card-image" style="background: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=600&fit=crop') center/cover;"></div>
+                    <div class="card-gradient"></div>
+                </div>
+            </div>
+            
+            <div class="swipe-actions">
+                <button class="action-btn dislike" onclick="swipeAction('dislike')">
+                    <i class="fas fa-xmark"></i>
+                </button>
+                <button class="action-btn superlike" onclick="swipeAction('superlike')">
+                    <i class="fas fa-star"></i>
+                </button>
+                <button class="action-btn like" onclick="swipeAction('like')">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="action-btn boost" onclick="showScreen('shop-screen')">
+                    <i class="fas fa-bolt"></i>
+                </button>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item active" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Match Screen -->
+        <div id="match-screen" class="screen">
+            <div class="match-animation">
+                <div class="match-photos">
+                    <div class="match-photo">👤</div>
+                    <div class="match-heart"><i class="fas fa-heart"></i></div>
+                    <div class="match-photo">👩</div>
+                </div>
+            </div>
+            <h1 class="match-title">It's a Match! 🎉</h1>
+            <p class="match-subtitle">Вам понравились друг друга</p>
+            <div class="match-actions">
+                <button class="btn btn-primary" onclick="showScreen('chat-screen')">
+                    <i class="fas fa-paper-plane"></i>
+                    Написать сообщение
+                </button>
+                <button class="btn btn-secondary" onclick="showScreen('swipe-screen')">
+                    Продолжить свайпать
+                </button>
+            </div>
+        </div>
+
+        <!-- Chats Screen -->
+        <div id="chats-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="screen-header">
+                <h1 class="screen-title">Чаты</h1>
+                <div class="header-icon">
+                    <i class="fas fa-sliders"></i>
+                </div>
+            </div>
+            
+            <div class="new-matches-section">
+                <div class="section-title">Новые мэтчи</div>
+                <div class="matches-scroll">
+                    <div class="match-avatar">
+                        <div class="avatar-wrapper">
+                            <div class="avatar has-story">👩</div>
+                            <div class="online-indicator"></div>
+                        </div>
+                        <div class="match-name">Анна</div>
+                    </div>
+                    <div class="match-avatar">
+                        <div class="avatar-wrapper">
+                            <div class="avatar">👩‍🦰</div>
+                        </div>
+                        <div class="match-name">Мария</div>
+                    </div>
+                    <div class="match-avatar">
+                        <div class="avatar-wrapper">
+                            <div class="avatar has-story">👱‍♀️</div>
+                            <div class="online-indicator"></div>
+                        </div>
+                        <div class="match-name">Ольга</div>
+                    </div>
+                    <div class="match-avatar">
+                        <div class="avatar-wrapper">
+                            <div class="avatar">👩‍🦱</div>
+                        </div>
+                        <div class="match-name">Екатерина</div>
+                    </div>
+                    <div class="match-avatar">
+                        <div class="avatar-wrapper">
+                            <div class="avatar">👧</div>
+                        </div>
+                        <div class="match-name">Дарья</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-title" style="padding: 0 20px;">Сообщения</div>
+            
+            <div class="chats-list">
+                <div class="chat-item" onclick="showScreen('chat-screen')">
+                    <div class="chat-avatar">👩</div>
+                    <div class="chat-content">
+                        <div class="chat-header">
+                            <span class="chat-name">Анна</span>
+                            <span class="chat-time">14:32</span>
+                        </div>
+                        <div class="chat-preview">
+                            <span class="chat-message">Привет! Как твои дела? 😊</span>
+                            <span class="unread-badge">2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-item" onclick="showScreen('chat-screen')">
+                    <div class="chat-avatar">👩‍🦰</div>
+                    <div class="chat-content">
+                        <div class="chat-header">
+                            <span class="chat-name">Мария</span>
+                            <span class="chat-time">Вчера</span>
+                        </div>
+                        <div class="chat-preview">
+                            <span class="chat-message">Было здорово пообщаться!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-item" onclick="showScreen('chat-screen')">
+                    <div class="chat-avatar">👱‍♀️</div>
+                    <div class="chat-content">
+                        <div class="chat-header">
+                            <span class="chat-name">Ольга</span>
+                            <span class="chat-time">Вчера</span>
+                        </div>
+                        <div class="chat-preview">
+                            <span class="chat-message">🎵 Голосовое сообщение</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-item" onclick="showScreen('chat-screen')">
+                    <div class="chat-avatar">👩‍🦱</div>
+                    <div class="chat-content">
+                        <div class="chat-header">
+                            <span class="chat-name">Екатерина</span>
+                            <span class="chat-time">2 дня</span>
+                        </div>
+                        <div class="chat-preview">
+                            <span class="chat-message">Отправлено фото</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item active" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chat-screen" class="screen">
+            <div class="chat-screen-header">
+                <button class="back-btn" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="chat-avatar" style="width: 45px; height: 45px; font-size: 20px;">👩</div>
+                <div class="chat-user-info">
+                    <div class="chat-user-name">Анна</div>
+                    <div class="chat-user-status">онлайн</div>
+                </div>
+                <div class="chat-actions">
+                    <button class="back-btn"><i class="fas fa-video"></i></button>
+                    <button class="back-btn"><i class="fas fa-ellipsis-vertical"></i></button>
+                </div>
+            </div>
+            
+            <div class="chat-messages">
+                <div class="icebreaker-card">
+                    <div class="icebreaker-title">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        ИИ-подсказки для начала разговора
+                    </div>
+                    <div class="icebreaker-suggestions">
+                        <div class="icebreaker-suggestion" onclick="sendIcebreaker(this)">
+                            Вижу ты любишь путешествия! Какое место понравилось больше всего? ✈️
+                        </div>
+                        <div class="icebreaker-suggestion" onclick="sendIcebreaker(this)">
+                            Классные фото! Ты сама их делаешь или есть личный фотограф? 📸
+                        </div>
+                        <div class="icebreaker-suggestion" onclick="sendIcebreaker(this)">
+                            Кофе или чай? Важный вопрос для совместимости! ☕️
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="message sent">
+                    <span>Привет! Классный профиль 😊</span>
+                    <div class="message-time">14:28 ✓✓</div>
+                </div>
+                <div class="message received">
+                    <span>Привет! Спасибо 💕 Как твои дела?</span>
+                    <div class="message-time">14:30</div>
+                </div>
+                <div class="message sent">
+                    <span>Отлично! Заметил что ты любишь путешествовать. Какая была самая крутая поездка?</span>
+                    <div class="message-time">14:31 ✓✓</div>
+                </div>
+                <div class="message received">
+                    <span>О, это была Исландия прошлым летом! 🇮🇸 Невероятная природа. А ты где был последний раз?</span>
+                    <div class="message-time">14:32</div>
+                </div>
+            </div>
+            
+            <div class="chat-input-area">
+                <div class="chat-input-actions">
+                    <button class="chat-input-btn"><i class="fas fa-camera"></i></button>
+                    <button class="chat-input-btn"><i class="fas fa-microphone"></i></button>
+                    <button class="chat-input-btn"><i class="fas fa-gift"></i></button>
+                </div>
+                <input type="text" class="chat-input" placeholder="Сообщение...">
+                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <!-- Roulette Screen -->
+        <div id="roulette-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="screen-title">Рулетка</h1>
+                <div style="width: 40px;"></div>
+            </div>
+            
+            <div class="roulette-content" id="roulette-initial">
+                <div class="roulette-icon">
+                    <i class="fas fa-masks-theater"></i>
+                </div>
+                <h2 class="roulette-title">Слепое свидание 🎭</h2>
+                <p class="roulette-desc">
+                    Общайтесь анонимно! Фото и имена скрыты. 
+                    Раскройте профили только когда оба будете готовы.
+                </p>
+                
+                <div class="roulette-filters">
+                    <div class="filter-row">
+                        <span class="filter-label">Возраст</span>
+                        <span class="filter-value">18 — 35 лет</span>
+                    </div>
+                    <div class="filter-row">
+                        <span class="filter-label">Пол</span>
+                        <span class="filter-value">Женский</span>
+                    </div>
+                    <div class="filter-row">
+                        <span class="filter-label">Город</span>
+                        <span class="filter-value">Москва</span>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="startRoulette()">
+                    <i class="fas fa-play"></i>
+                    Найти собеседника
+                </button>
+            </div>
+            
+            <div class="roulette-content searching-animation" id="roulette-searching">
+                <div class="searching-spinner"></div>
+                <h2 class="roulette-title">Ищем собеседника...</h2>
+                <p class="roulette-desc">Подбираем идеального незнакомца для вас</p>
+            </div>
+            
+            <div id="roulette-found" style="display: none; padding: 20px;">
+                <div class="anonymous-profile">
+                    <div class="anonymous-avatar">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <h3 class="anonymous-name">Незнакомка</h3>
+                    <p class="anonymous-info">24 года • Москва</p>
+                    <p class="anonymous-info" style="margin-top: 10px; font-style: italic;">
+                        "Люблю искусство и хорошие разговоры"
+                    </p>
+                    <button class="btn btn-primary reveal-btn" onclick="revealProfile()">
+                        <i class="fas fa-eye"></i>
+                        Открыться
+                    </button>
+                </div>
+                
+                <div class="chat-messages" style="flex: 1; min-height: 200px;">
+                    <div class="message received">
+                        <span>Привет, незнакомец! 👋</span>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" placeholder="Сообщение...">
+                    <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item active" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Radar Screen -->
+        <div id="radar-screen" class="screen">
+            <div class="status-bar" style="position: absolute; z-index: 100; width: 100%;">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="screen-header" style="position: absolute; z-index: 100; width: 100%; top: 44px; background: transparent;">
+                <button class="back-btn" onclick="showScreen('swipe-screen')" style="background: var(--bg-card);">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="screen-title">Радар</h1>
+                <div class="header-icon" style="background: var(--bg-card);">
+                    <i class="fas fa-sliders"></i>
+                </div>
+            </div>
+            
+            <div class="radar-map">
+                <div class="radar-scan"></div>
+                <div class="radar-circle"></div>
+                <div class="radar-circle"></div>
+                <div class="radar-circle"></div>
+                <div class="radar-circle"></div>
+                
+                <div class="radar-center">
+                    <i class="fas fa-user"></i>
+                </div>
+                
+                <div class="radar-user user1" onclick="showRadarProfile()">
+                    👩
+                    <span class="radar-distance">~200м</span>
+                </div>
+                <div class="radar-user user2" onclick="showRadarProfile()">
+                    👩‍🦰
+                    <span class="radar-distance">~500м</span>
+                </div>
+                <div class="radar-user user3" onclick="showRadarProfile()">
+                    👱‍♀️
+                    <span class="radar-distance">~150м</span>
+                </div>
+                <div class="radar-user user4" onclick="showRadarProfile()">
+                    👧
+                    <span class="radar-distance">~1км</span>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Profile Screen -->
+        <div id="profile-screen" class="screen" style="overflow-y: auto;">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            
+            <div class="profile-header">
+                <div class="profile-photo-container">
+                    <div class="profile-photo">👤</div>
+                    <button class="edit-photo-btn"><i class="fas fa-camera"></i></button>
+                </div>
+                <h2 class="profile-name">
+                    Александр, 28
+                    <i class="fas fa-circle-check verified-badge"></i>
+                </h2>
+                <p class="profile-age-location">Москва • 2 км от центра</p>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Лайков</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">23</div>
+                    <div class="stat-label">Мэтчей</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4.8</div>
+                    <div class="stat-label">Рейтинг</div>
+                </div>
+            </div>
+            
+            <div class="profile-menu">
+                <div class="menu-item" onclick="showScreen('shop-screen')">
+                    <div class="menu-icon pink"><i class="fas fa-crown"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">SparkVibe Gold</div>
+                        <div class="menu-subtitle">Безлимитные лайки и многое другое</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon cyan"><i class="fas fa-pen"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">Редактировать профиль</div>
+                        <div class="menu-subtitle">Фото, био, интересы</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon purple"><i class="fas fa-wand-magic-sparkles"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">ИИ-генератор био</div>
+                        <div class="menu-subtitle">Создай идеальное описание</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon orange"><i class="fas fa-sliders"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">Настройки поиска</div>
+                        <div class="menu-subtitle">Возраст, расстояние, фильтры</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon green"><i class="fas fa-shield-halved"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">Приватность</div>
+                        <div class="menu-subtitle">Видимость, блокировки</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon cyan"><i class="fas fa-bell"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">Уведомления</div>
+                        <div class="menu-subtitle">Push, звуки, тихие часы</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+                
+                <div class="menu-item">
+                    <div class="menu-icon purple"><i class="fas fa-question-circle"></i></div>
+                    <div class="menu-text">
+                        <div class="menu-title">Помощь</div>
+                        <div class="menu-subtitle">FAQ, поддержка</div>
+                    </div>
+                    <i class="fas fa-chevron-right menu-arrow"></i>
+                </div>
+            </div>
+            
+            <div style="padding: 20px; padding-bottom: 100px;">
+                <button class="btn btn-secondary" style="width: 100%;">
+                    <i class="fas fa-right-from-bracket"></i>
+                    Выйти
+                </button>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item active" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Coins Screen (Tap Game) -->
+        <div id="coins-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="screen-title">Монеты</h1>
+                <div class="header-icon" onclick="showScreen('shop-screen')">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+            
+            <div class="coins-header">
+                <div class="coins-balance">
+                    <i class="fas fa-coins"></i>
+                    <span class="coins-amount" id="coins-display">1,250</span>
+                </div>
+            </div>
+            
+            <div class="tap-area">
+                <div class="big-coin" id="tap-coin" onclick="tapCoin(event)">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="tap-info">
+                    <div class="energy-bar">
+                        <div class="energy-fill" id="energy-bar" style="width: 75%;"></div>
+                    </div>
+                    <div class="energy-text">⚡ 750 / 1000 энергии</div>
+                </div>
+                <div class="tap-multiplier">
+                    <button class="multiplier-btn">x2 🔥</button>
+                    <button class="multiplier-btn">x5 ⚡</button>
+                </div>
+            </div>
+            
+            <div class="daily-missions">
+                <div class="section-title">Ежедневные миссии</div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-coins"></i></div>
+                    <div class="mission-info">
+                        <div class="mission-title">Собери 1000 монет</div>
+                        <div class="mission-progress">750 / 1000</div>
+                    </div>
+                    <div class="mission-reward">
+                        <i class="fas fa-coins"></i> +200
+                    </div>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="mission-info">
+                        <div class="mission-title">Заходи 7 дней подряд</div>
+                        <div class="mission-progress">5 / 7 дней</div>
+                    </div>
+                    <div class="mission-reward">
+                        <i class="fas fa-coins"></i> +500
+                    </div>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-heart"></i></div>
+                    <div class="mission-info">
+                        <div class="mission-title">Поставь 10 лайков</div>
+                        <div class="mission-progress">7 / 10</div>
+                    </div>
+                    <div class="mission-reward">
+                        <i class="fas fa-coins"></i> +100
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center active" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Shop Screen -->
+        <div id="shop-screen" class="screen">
+            <div class="status-bar">
+                <span class="time">9:41</span>
+                <div class="icons">
+                    <i class="fas fa-signal"></i>
+                    <i class="fas fa-wifi"></i>
+                    <i class="fas fa-battery-full"></i>
+                </div>
+            </div>
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1 class="screen-title">Магазин</h1>
+                <div style="width: 40px;"></div>
+            </div>
+            
+            <div class="shop-content">
+                <div class="premium-banner">
+                    <h2 class="premium-title">
+                        <i class="fas fa-crown"></i>
+                        SparkVibe Gold
+                    </h2>
+                    <div class="premium-features">
+                        ✓ Безлимитные свайпы<br>
+                        ✓ Смотри кто тебя лайкнул<br>
+                        ✓ 5 суперлайков в день<br>
+                        ✓ Без рекламы<br>
+                        ✓ Приоритет в показе
+                    </div>
+                    <div class="premium-price">
+                        от <span>$9.99</span>/мес
+                    </div>
+                    <button class="btn btn-secondary" style="margin-top: 15px; border-color: white; color: white;">
+                        Попробовать бесплатно
+                    </button>
+                </div>
+                
+                <div class="shop-section">
+                    <h3 class="shop-section-title">💰 Пакеты монет</h3>
+                    <div class="coin-packages">
+                        <div class="coin-package">
+                            <div class="package-coins">🪙</div>
+                            <div class="package-amount">100</div>
+                            <div class="package-price">$0.99</div>
+                        </div>
+                        <div class="coin-package">
+                            <div class="package-coins">🪙🪙</div>
+                            <div class="package-amount">500</div>
+                            <div class="package-price">$3.99</div>
+                            <div class="package-bonus">+10% бонус</div>
+                        </div>
+                        <div class="coin-package popular">
+                            <div class="popular-badge">Популярное</div>
+                            <div class="package-coins">💰</div>
+                            <div class="package-amount">1,000</div>
+                            <div class="package-price">$6.99</div>
+                            <div class="package-bonus">+20% бонус</div>
+                        </div>
+                        <div class="coin-package">
+                            <div class="package-coins">💎</div>
+                            <div class="package-amount">5,000</div>
+                            <div class="package-price">$29.99</div>
+                            <div class="package-bonus">+35% бонус</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shop-section">
+                    <h3 class="shop-section-title">🎁 Подарки</h3>
+                    <div class="gifts-grid">
+                        <div class="gift-item">
+                            <div class="gift-emoji">🌹</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 50</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">💐</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 100</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">🧸</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 200</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">🍫</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 150</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">💍</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 500</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">👑</div>
+                            <div class="gift-price"><i class="fas fa-coins"></i> 1000</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">💎</div>
+                            <div class="gift-price">$4.99</div>
+                        </div>
+                        <div class="gift-item">
+                            <div class="gift-emoji">🏎️</div>
+                            <div class="gift-price">$9.99</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="shop-section" style="padding-bottom: 100px;">
+                    <h3 class="shop-section-title">⚡ Бусты</h3>
+                    <div class="coin-packages">
+                        <div class="coin-package">
+                            <div class="package-coins">🚀</div>
+                            <div class="package-amount">1 Буст</div>
+                            <div class="package-price"><i class="fas fa-coins"></i> 300</div>
+                        </div>
+                        <div class="coin-package">
+                            <div class="package-coins">🚀🚀🚀</div>
+                            <div class="package-amount">5 Бустов</div>
+                            <div class="package-price">$4.99</div>
+                            <div class="package-bonus">Экономия 30%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav">
+                <div class="nav-item" onclick="showScreen('swipe-screen')">
+                    <i class="fas fa-fire"></i>
+                    <span>Поиск</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('roulette-screen')">
+                    <i class="fas fa-shuffle"></i>
+                    <span>Рулетка</span>
+                </div>
+                <div class="nav-item nav-center" onclick="showScreen('coins-screen')">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="nav-item" onclick="showScreen('chats-screen')">
+                    <i class="fas fa-comments"></i>
+                    <span>Чаты</span>
+                </div>
+                <div class="nav-item" onclick="showScreen('profile-screen')">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Floating coins container -->
+    <div class="floating-coins" id="floating-coins"></div>
+
+    <script>
+        // Screen Navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            
+            // Update bottom nav
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+
+        // Onboarding
+        let onboardingStep = 0;
+        const onboardingData = [
+            {
+                icon: '🔥',
+                title: 'Свайпай и находи',
+                text: 'Свайп вправо — лайк, влево — пропуск. Взаимный лайк = мэтч и возможность начать общение!'
+            },
+            {
+                icon: '🎭',
+                title: 'Анонимная рулетка',
+                text: 'Общайся без фото и имён. Раскрой профиль только когда оба будете готовы!'
+            },
+            {
+                icon: '🤖',
+                title: 'ИИ-помощник',
+                text: 'Не знаешь с чего начать? ИИ подскажет идеальное первое сообщение!'
+            }
+        ];
+
+        function nextOnboarding() {
+            onboardingStep++;
+            if (onboardingStep >= onboardingData.length) {
+                showScreen('auth-screen');
+                return;
+            }
+            
+            const data = onboardingData[onboardingStep];
+            document.getElementById('onboarding-icon').textContent = data.icon;
+            document.getElementById('onboarding-title').textContent = data.title;
+            document.getElementById('onboarding-text').textContent = data.text;
+            
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === onboardingStep);
+            });
+        }
+
+        // Swipe Actions
+        let cardElement = null;
+        let startX = 0;
+        let currentX = 0;
+
+        function initSwipe() {
+            cardElement = document.getElementById('swipe-card');
+            if (!cardElement) return;
+
+            cardElement.addEventListener('touchstart', handleTouchStart, { passive: true });
+            cardElement.addEventListener('touchmove', handleTouchMove, { passive: true });
+            cardElement.addEventListener('touchend', handleTouchEnd);
+            
+            cardElement.addEventListener('mousedown', handleMouseDown);
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+
+        function handleTouchStart(e) {
+            startX = e.touches[0].clientX;
+            cardElement.classList.add('dragging');
+        }
+
+        function handleTouchMove(e) {
+            currentX = e.touches[0].clientX - startX;
+            updateCardPosition();
+        }
+
+        function handleTouchEnd() {
+            finishSwipe();
+        }
+
+        let isDragging = false;
+
+        function handleMouseDown(e) {
+            isDragging = true;
+            startX = e.clientX;
+            cardElement.classList.add('dragging');
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            currentX = e.clientX - startX;
+            updateCardPosition();
+        }
+
+        function handleMouseUp() {
+            if (!isDragging) return;
+            isDragging = false;
+            finishSwipe();
+        }
+
+        function updateCardPosition() {
+            if (!cardElement) return;
+            const rotate = currentX * 0.1;
+            cardElement.style.transform = `translateX(${currentX}px) rotate(${rotate}deg)`;
+            
+            // Show indicators
+            const likeIndicator = cardElement.querySelector('.swipe-indicator.like');
+            const nopeIndicator = cardElement.querySelector('.swipe-indicator.nope');
+            
+            if (currentX > 50) {
+                likeIndicator.style.opacity = Math.min((currentX - 50) / 100, 1);
+                nopeIndicator.style.opacity = 0;
+            } else if (currentX < -50) {
+                nopeIndicator.style.opacity = Math.min((-currentX - 50) / 100, 1);
+                likeIndicator.style.opacity = 0;
+            } else {
+                likeIndicator.style.opacity = 0;
+                nopeIndicator.style.opacity = 0;
+            }
+        }
+
+        function finishSwipe() {
+            cardElement.classList.remove('dragging');
+            
+            if (currentX > 100) {
+                swipeAction('like');
+            } else if (currentX < -100) {
+                swipeAction('dislike');
+            } else {
+                cardElement.style.transform = '';
+                const likeIndicator = cardElement.querySelector('.swipe-indicator.like');
+                const nopeIndicator = cardElement.querySelector('.swipe-indicator.nope');
+                likeIndicator.style.opacity = 0;
+                nopeIndicator.style.opacity = 0;
+            }
+            
+            currentX = 0;
+        }
+
+        function swipeAction(action) {
+            const card = document.getElementById('swipe-card');
+            if (!card) return;
+
+            if (action === 'like') {
+                card.style.transform = 'translateX(150%) rotate(30deg)';
+                card.style.opacity = '0';
+                // Random match (30% chance)
+                if (Math.random() > 0.7) {
+                    setTimeout(() => showScreen('match-screen'), 300);
+                }
+            } else if (action === 'dislike') {
+                card.style.transform = 'translateX(-150%) rotate(-30deg)';
+                card.style.opacity = '0';
+            } else if (action === 'superlike') {
+                card.style.transform = 'translateY(-150%)';
+                card.style.opacity = '0';
+            }
+
+            setTimeout(() => {
+                resetCard();
+            }, 300);
+        }
+
+        function resetCard() {
+            const card = document.getElementById('swipe-card');
+            if (card) {
+                card.style.transition = 'none';
+                card.style.transform = '';
+                card.style.opacity = '1';
+                
+                const likeIndicator = card.querySelector('.swipe-indicator.like');
+                const nopeIndicator = card.querySelector('.swipe-indicator.nope');
+                if (likeIndicator) likeIndicator.style.opacity = 0;
+                if (nopeIndicator) nopeIndicator.style.opacity = 0;
+                
+                setTimeout(() => {
+                    card.style.transition = '';
+                }, 50);
+            }
+        }
+
+        // Roulette
+        function startRoulette() {
+            document.getElementById('roulette-initial').style.display = 'none';
+            document.getElementById('roulette-searching').classList.add('active');
+            
+            setTimeout(() => {
+                document.getElementById('roulette-searching').classList.remove('active');
+                document.getElementById('roulette-searching').style.display = 'none';
+                document.getElementById('roulette-found').style.display = 'flex';
+                document.getElementById('roulette-found').style.flexDirection = 'column';
+                document.getElementById('roulette-found').style.height = 'calc(100% - 160px)';
+            }, 2000);
+        }
+
+        function revealProfile() {
+            alert('Вы нажали "Открыться"! Ждём ответа собеседника...');
+        }
+
+        // Tap Game
+        let coins = 1250;
+        let energy = 750;
+        const maxEnergy = 1000;
+
+        function tapCoin(event) {
+            if (energy <= 0) {
+                alert('Энергия закончилась! Подожди или купи бустер.');
+                return;
+            }
+
+            coins += 1;
+            energy -= 1;
+
+            document.getElementById('coins-display').textContent = coins.toLocaleString();
+            document.getElementById('energy-bar').style.width = (energy / maxEnergy * 100) + '%';
+
+            // Create floating coin
+            createFloatingCoin(event.clientX, event.clientY);
+
+            // Visual feedback
+            const coin = document.getElementById('tap-coin');
+            coin.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                coin.style.transform = 'scale(1)';
+            }, 100);
+        }
+
+        function createFloatingCoin(x, y) {
+            const container = document.getElementById('floating-coins');
+            const coin = document.createElement('div');
+            coin.className = 'floating-coin';
+            coin.innerHTML = '+1 🪙';
+            coin.style.left = x + 'px';
+            coin.style.top = y + 'px';
+            container.appendChild(coin);
+
+            setTimeout(() => {
+                coin.remove();
+            }, 1000);
+        }
+
+        // Icebreaker
+        function sendIcebreaker(element) {
+            const text = element.textContent.trim();
+            const messagesContainer = document.querySelector('#chat-screen .chat-messages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message sent';
+            messageDiv.innerHTML = `<span>${text}</span><div class="message-time">Сейчас ✓</div>`;
+            
+            // Remove icebreaker card
+            const icebreakerCard = document.querySelector('.icebreaker-card');
+            if (icebreakerCard) {
+                icebreakerCard.remove();
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Radar
+        function showRadarProfile() {
+            alert('Мини-профиль пользователя поблизости');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initSwipe();
+            
+            // Energy regeneration
+            setInterval(() => {
+                if (energy < maxEnergy) {
+                    energy = Math.min(energy + 1, maxEnergy);
+                    const energyBar = document.getElementById('energy-bar');
+                    if (energyBar) {
+                        energyBar.style.width = (energy / maxEnergy * 100) + '%';
+                    }
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
