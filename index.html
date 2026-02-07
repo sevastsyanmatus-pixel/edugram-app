@@ -1,0 +1,4445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EduGram - Платформа курсов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --dark: #1a1a2e;
+            --light: #f5f5f5;
+            --gold: #ffd700;
+            --bg: #ffffff;
+            --text: #333333;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        body.dark-mode {
+            --bg: #1a1a2e;
+            --text: #ffffff;
+            --card-bg: #16213e;
+            --light: #16213e;
+            --border: #2a2a4a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 80px;
+        }
+
+        /* ===== ХЕДЕР ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .back-btn.visible {
+            display: flex;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .header-btn:active {
+            transform: scale(0.9);
+        }
+
+        .user-xp {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-xp:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .user-xp:active {
+            transform: scale(0.95);
+        }
+
+        .xp-value {
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .user-level {
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            color: #333;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .streak-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        /* ===== ХЕДЕР ЭКСПЕРТА ===== */
+        .expert-header-stat {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .expert-header-messages {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .messages-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* ===== БАННЕР ПОДПИСКИ ===== */
+        .subscription-banner {
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .subscription-banner.trial {
+            background: linear-gradient(135deg, var(--warning), #f57c00);
+            color: white;
+        }
+
+        .subscription-banner.active {
+            background: linear-gradient(135deg, var(--success), #388e3c);
+            color: white;
+        }
+
+        .subscription-banner.expired {
+            background: linear-gradient(135deg, var(--danger), #d32f2f);
+            color: white;
+            animation: pulse-danger 2s infinite;
+        }
+
+        @keyframes pulse-danger {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .banner-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .banner-btn {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ===== РЕЖИМЫ ===== */
+        .mode-switcher {
+            display: flex;
+            background: var(--light);
+            padding: 5px;
+            margin: 15px;
+            border-radius: 12px;
+            gap: 5px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* ===== ТАБЫ ===== */
+        .tabs {
+            display: flex;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            color: #999;
+            position: relative;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        /* ===== КАРТОЧКИ КУРСОВ ===== */
+        .courses-grid {
+            padding: 15px;
+            display: grid;
+            gap: 15px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid var(--border);
+        }
+
+        .course-card:active {
+            transform: scale(0.98);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .course-rating {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .course-content {
+            padding: 15px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .course-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .author-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-name {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .course-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .course-price-old {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .buy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .buy-btn.purchased {
+            background: var(--success);
+        }
+
+        /* ===== ПРОГРЕСС КУРСА ===== */
+        .course-progress {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 15px;
+            margin: 15px;
+            border-radius: 12px;
+        }
+
+        body.dark-mode .course-progress {
+            background: linear-gradient(135deg, #1b4332, #2d6a4f);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .progress-percent {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .progress-bar-full {
+            height: 8px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--success);
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        /* ===== ВИДЕОПЛЕЕР ===== */
+        .video-player {
+            width: 100%;
+            height: 220px;
+            background: #000;
+            position: relative;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .video-control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .video-time {
+            color: white;
+            font-size: 12px;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* ===== ТАБЫ УРОКА ===== */
+        .lesson-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .lesson-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .lesson-tab {
+            padding: 8px 16px;
+            background: var(--light);
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+
+        .lesson-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== УРОКИ ===== */
+        .lessons-list {
+            padding: 0 15px 15px;
+        }
+
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .lesson-item:active {
+            transform: scale(0.98);
+        }
+
+        .lesson-item.completed {
+            opacity: 0.7;
+        }
+
+        .lesson-item.current {
+            border: 2px solid var(--primary);
+        }
+
+        .lesson-number {
+            width: 36px;
+            height: 36px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .lesson-item.completed .lesson-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .lesson-info {
+            flex: 1;
+        }
+
+        .lesson-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .lesson-duration {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ===== КВИЗ ===== */
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .quiz-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quiz-timer {
+            background: var(--danger);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .quiz-question {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--success);
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .quiz-option.wrong {
+            border-color: var(--danger);
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .quiz-option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .quiz-submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* ===== Q&A ===== */
+        .qa-section {
+            padding: 15px;
+        }
+
+        .qa-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .qa-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .qa-count {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .qa-input-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .qa-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+            outline: none;
+        }
+
+        .qa-input:focus {
+            border-color: var(--primary);
+        }
+
+        .qa-send-btn {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .qa-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .qa-question {
+            display: flex;
+            gap: 10px;
+        }
+
+        .qa-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .qa-content {
+            flex: 1;
+        }
+
+        .qa-author {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .qa-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .qa-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .qa-meta span {
+            cursor: pointer;
+        }
+
+        .qa-meta span:hover {
+            color: var(--primary);
+        }
+
+        .qa-answer {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 12px 0 0 46px;
+        }
+
+        .expert-badge {
+            background: var(--success);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-left: 8px;
+        }
+
+        /* ===== ОТЗЫВЫ ===== */
+        .reviews-section {
+            padding: 15px;
+        }
+
+        .reviews-summary {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .rating-big {
+            font-size: 48px;
+            font-weight: bold;
+        }
+
+        .rating-stars {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .rating-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .rating-bars {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .rating-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .rating-bar-label {
+            width: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .rating-bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--light);
+            border-radius: 3px;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 3px;
+        }
+
+        .review-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .review-author-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .add-review-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* ===== ЗАМЕТКИ ===== */
+        .notes-section {
+            padding: 15px;
+        }
+
+        .note-item {
+            background: #fffde7;
+            border-left: 4px solid var(--gold);
+            padding: 12px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .note-item {
+            background: #3d3d00;
+        }
+
+        .note-timestamp {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .note-timestamp span {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+
+        .note-text {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .note-action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .add-note-fab {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 50;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-note-fab.visible {
+            display: flex;
+        }
+
+        /* ===== СТАТИСТИКА ===== */
+        .stats-section {
+            padding: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .stat-card:active {
+            transform: scale(0.98);
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .achievements-section {
+            margin-top: 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .see-all-btn {
+            color: var(--primary);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .achievement-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px 8px;
+            text-align: center;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .achievement-item:active {
+            transform: scale(0.95);
+        }
+
+        .achievement-item.locked {
+            opacity: 0.4;
+        }
+
+        .achievement-item.unlocked {
+            background: linear-gradient(135deg, #fff9e6, #ffecb3);
+            border-color: var(--gold);
+        }
+
+        body.dark-mode .achievement-item.unlocked {
+            background: linear-gradient(135deg, #3d3d00, #4a4a00);
+        }
+
+        .achievement-icon {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .achievement-name {
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* ===== ПАНЕЛЬ ЭКСПЕРТА ===== */
+        .expert-dashboard {
+            padding: 15px;
+        }
+
+        .subscription-card {
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .subscription-card.trial {
+            background: linear-gradient(135deg, var(--warning), #f57c00);
+            color: white;
+        }
+
+        .subscription-card.active {
+            background: linear-gradient(135deg, var(--success), #388E3C);
+            color: white;
+        }
+
+        .subscription-card.expired {
+            background: linear-gradient(135deg, var(--danger), #d32f2f);
+            color: white;
+        }
+
+        .subscription-card::after {
+            content: '👑';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 40px;
+            opacity: 0.3;
+        }
+
+        .sub-status {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .sub-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .sub-btn {
+            background: rgba(255,255,255,0.3);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .expert-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .expert-stat {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+        }
+
+        .expert-stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .expert-stat-label {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+
+        .create-course-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .create-course-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .my-courses-list {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .my-course-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .my-course-item:last-child {
+            border-bottom: none;
+        }
+
+        .my-course-thumb {
+            width: 50px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .my-course-info {
+            flex: 1;
+        }
+
+        .my-course-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .my-course-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .share-link-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== ПРОМОКОДЫ ===== */
+        .promo-section {
+            padding: 15px;
+        }
+
+        .promo-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .promo-code {
+            font-family: monospace;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .promo-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .promo-discount {
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .promo-uses {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .create-promo-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--light);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* ===== АНАЛИТИКА ===== */
+        .analytics-section {
+            padding: 15px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chart-period {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 100px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary), var(--secondary));
+            border-radius: 4px 4px 0 0;
+            min-height: 10px;
+            transition: height 0.3s;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .metric-big {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .metric-change {
+            color: var(--success);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* ===== НИЖНЯЯ НАВИГАЦИЯ ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            padding: 8px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 8px 4px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #999;
+            font-size: 10px;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .modal-close {
+            background: var(--light);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        /* ===== МОДАЛКА ДОСТИЖЕНИЙ ===== */
+        .achievements-modal-header {
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            padding: 25px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .achievements-modal-header h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .xp-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        .xp-item {
+            text-align: center;
+        }
+
+        .xp-item-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .xp-item-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .level-progress {
+            margin-top: 20px;
+            background: rgba(0,0,0,0.1);
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .level-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .achievements-list {
+            padding: 20px;
+        }
+
+        .achievement-category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .achievement-full {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .achievement-full.unlocked {
+            background: linear-gradient(135deg, #fff9e6, #ffecb3);
+        }
+
+        body.dark-mode .achievement-full.unlocked {
+            background: linear-gradient(135deg, #3d3d00, #4a4a00);
+        }
+
+        .achievement-full .achievement-icon {
+            font-size: 32px;
+            margin: 0;
+        }
+
+        .achievement-full.locked .achievement-icon {
+            filter: grayscale(100%);
+            opacity: 0.3;
+        }
+
+        .achievement-details {
+            flex: 1;
+        }
+
+        .achievement-full-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .achievement-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .achievement-xp {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ===== МОДАЛКА ПОДПИСКИ ===== */
+        .pricing-header {
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+
+        .pricing-header::before {
+            content: '👑';
+            font-size: 50px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .pricing-header h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .pricing-header p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .trial-info {
+            background: white;
+            margin: -15px 20px 0;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .trial-days {
+            font-size: 48px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .trial-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .trial-progress {
+            height: 6px;
+            background: #eee;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .trial-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--warning), var(--danger));
+            border-radius: 10px;
+        }
+
+        .pricing-plans {
+            padding: 20px;
+        }
+
+        .plan-card {
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            border-color: var(--primary);
+        }
+
+        .plan-card.selected {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .plan-card.popular {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, #fffef0, #fff9e6);
+        }
+
+        .plan-card.popular::before {
+            content: '🔥 ВЫГОДНО';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            color: #333;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .plan-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .plan-badge {
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .plan-price {
+            margin-bottom: 10px;
+        }
+
+        .plan-price-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .plan-price-old {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .plan-price-period {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .plan-features li {
+            padding: 6px 0;
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            font-size: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .payment-note {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding: 0 20px 20px;
+        }
+
+        /* ===== МОДАЛКА СООБЩЕНИЙ ===== */
+        .messages-list {
+            padding: 0;
+        }
+
+        .message-item {
+            display: flex;
+            gap: 12px;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .message-item:hover {
+            background: var(--light);
+        }
+
+        .message-item.unread {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .message-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .message-preview {
+            font-size: 13px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .message-course {
+            font-size: 11px;
+            color: var(--primary);
+            margin-top: 4px;
+        }
+
+        .unread-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+            align-self: center;
+        }
+
+        /* ===== МОДАЛКА УЧЕНИКОВ ===== */
+        .students-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .students-stat {
+            text-align: center;
+            color: white;
+        }
+
+        .students-stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .students-stat-label {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .student-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .student-course {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .student-progress {
+            text-align: right;
+        }
+
+        .student-progress-value {
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .student-progress-label {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* ===== ЧАТ ===== */
+        .chat-modal-content {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+            max-height: 600px;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-user-info {
+            flex: 1;
+        }
+
+        .chat-user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .chat-user-status {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .chat-messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--bg);
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .chat-message.incoming {
+            align-self: flex-start;
+            background: var(--light);
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-message.outgoing {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message-time {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        .chat-send-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* ===== РЕГИСТРАЦИЯ ===== */
+        .auth-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+            padding: 20px;
+        }
+
+        .auth-screen.hidden {
+            display: none;
+        }
+
+        .auth-logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .auth-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--light);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 25px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-input-group {
+            margin-bottom: 15px;
+        }
+
+        .auth-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .auth-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .auth-role-select {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0 20px;
+        }
+
+        .auth-role {
+            flex: 1;
+            padding: 20px 15px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-role:hover {
+            border-color: var(--primary);
+        }
+
+        .auth-role.selected {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .auth-role-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .auth-role-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .auth-role-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-submit:active {
+            transform: scale(0.98);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .auth-divider span {
+            padding: 0 15px;
+        }
+
+        .auth-telegram-btn {
+            width: 100%;
+            padding: 14px;
+            background: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ===== СЕРТИФИКАТ ===== */
+        .certificate {
+            background: linear-gradient(135deg, #fffef0, #fff9e6);
+            border: 6px solid var(--gold);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .certificate-seal {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .certificate-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .certificate-subtitle {
+            color: #666;
+            margin: 5px 0 20px;
+        }
+
+        .certificate-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+            font-family: Georgia, serif;
+            margin: 15px 0;
+        }
+
+        .certificate-course {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .certificate-date {
+            font-size: 14px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .certificate-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .cert-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .cert-btn.download {
+            background: var(--primary);
+            color: white;
+        }
+
+        .cert-btn.share {
+            background: var(--light);
+            color: #333;
+        }
+
+        /* ===== REVIEW MODAL ===== */
+        .review-form {
+            padding: 20px;
+        }
+
+        .rating-select {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .rating-star {
+            font-size: 36px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            filter: grayscale(100%);
+        }
+
+        .rating-star:hover {
+            transform: scale(1.2);
+        }
+
+        .rating-star.selected {
+            filter: none;
+        }
+
+        .review-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            resize: none;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .review-textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .submit-review-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* ===== PROMO MODAL ===== */
+        .promo-form {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .discount-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .discount-option {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .discount-option.selected {
+            border-color: var(--primary);
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary);
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 3000;
+            transition: top 0.3s;
+            max-width: 90%;
+            border: 1px solid var(--border);
+        }
+
+        .toast.show {
+            top: 20px;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast-text {
+            font-size: 14px;
+        }
+
+        /* ===== SUCCESS OVERLAY ===== */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(76, 175, 80, 0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            color: white;
+            text-align: center;
+        }
+
+        .success-overlay.active {
+            display: flex;
+        }
+
+        .success-checkmark {
+            font-size: 80px;
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .success-text {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* ===== BLOCKED OVERLAY ===== */
+        .blocked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            padding: 40px;
+            text-align: center;
+        }
+
+        body.dark-mode .blocked-overlay {
+            background: rgba(26, 26, 46, 0.95);
+        }
+
+        .blocked-overlay.active {
+            display: flex;
+        }
+
+        .blocked-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .blocked-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .blocked-text {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .blocked-btn {
+            background: linear-gradient(135deg, var(--gold), #ffed4e);
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ===== СТРАНИЦЫ ===== */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ЭКРАН РЕГИСТРАЦИИ -->
+<div class="auth-screen" id="authScreen">
+    <div class="auth-logo">📚</div>
+    <div class="auth-title">EduGram</div>
+    <div class="auth-subtitle">Платформа для экспертов и учеников</div>
+    
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchAuthTab('login')">Вход</button>
+            <button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
+        </div>
+        
+        <!-- Форма входа -->
+        <div class="auth-form active" id="loginForm">
+            <div class="auth-input-group">
+                <label class="auth-label">Email</label>
+                <input type="email" class="auth-input" id="loginEmail" placeholder="email@example.com">
+            </div>
+            <div class="auth-input-group">
+                <label class="auth-label">Пароль</label>
+                <input type="password" class="auth-input" id="loginPassword" placeholder="••••••••">
+            </div>
+            <button class="auth-submit" onclick="handleLogin()">Войти</button>
+            
+            <div class="auth-divider"><span>или</span></div>
+            
+            <button class="auth-telegram-btn" onclick="loginWithTelegram()">
+                <span>📱</span> Войти через Telegram
+            </button>
+        </div>
+        
+        <!-- Форма регистрации -->
+        <div class="auth-form" id="registerForm">
+            <div class="auth-input-group">
+                <label class="auth-label">Ваше имя</label>
+                <input type="text" class="auth-input" id="registerName" placeholder="Иван Петров">
+            </div>
+            <div class="auth-input-group">
+                <label class="auth-label">Email</label>
+                <input type="email" class="auth-input" id="registerEmail" placeholder="email@example.com">
+            </div>
+            <div class="auth-input-group">
+                <label class="auth-label">Пароль</label>
+                <input type="password" class="auth-input" id="registerPassword" placeholder="Минимум 6 символов">
+            </div>
+            
+            <label class="auth-label">Я хочу:</label>
+            <div class="auth-role-select">
+                <div class="auth-role selected" onclick="selectAuthRole('student', this)">
+                    <div class="auth-role-icon">🎓</div>
+                    <div class="auth-role-name">Учиться</div>
+                    <div class="auth-role-desc">Покупать курсы</div>
+                </div>
+                <div class="auth-role" onclick="selectAuthRole('expert', this)">
+                    <div class="auth-role-icon">👨‍🏫</div>
+                    <div class="auth-role-name">Преподавать</div>
+                    <div class="auth-role-desc">Продавать курсы</div>
+                </div>
+            </div>
+            
+            <button class="auth-submit" onclick="handleRegister()">Создать аккаунт</button>
+            
+            <div class="auth-divider"><span>или</span></div>
+            
+            <button class="auth-telegram-btn" onclick="loginWithTelegram()">
+                <span>📱</span> Регистрация через Telegram
+            </button>
+        </div>
+        
+        <div class="auth-footer">
+            Нажимая кнопку, вы соглашаетесь с <a href="#">условиями</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- ХЕДЕР -->
+    <header>
+        <div class="header-top">
+            <div class="header-left">
+                <button class="back-btn" id="backBtn" onclick="goBack()">←</button>
+                <div class="logo" id="headerTitle">📚 EduGram</div>
+            </div>
+            
+            <!-- Хедер для УЧЕНИКА -->
+            <div class="header-actions" id="headerStudent">
+                <div class="streak-badge" onclick="showStreakInfo()">
+                    🔥 <span id="streakCount">7</span>
+                </div>
+                <div class="user-xp" onclick="showAchievementsModal()">
+                    🏆 <span class="xp-value" id="userXP">1,250</span>
+                    <span class="user-level" id="userLevel">LVL 5</span>
+                </div>
+                <button class="header-btn" onclick="toggleDarkMode()">🌙</button>
+            </div>
+            
+            <!-- Хедер для ЭКСПЕРТА -->
+            <div class="header-actions" id="headerExpert" style="display: none;">
+                <div class="expert-header-stat" onclick="showStudentsModal()">
+                    👥 <span id="headerStudentsCount">234</span>
+                </div>
+                <div class="expert-header-messages" onclick="showMessagesModal()">
+                    💬
+                    <span class="messages-badge" id="messagesBadge">5</span>
+                </div>
+                <button class="header-btn" onclick="toggleDarkMode()">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- БАННЕР ПОДПИСКИ -->
+    <div class="subscription-banner trial" id="subBanner" style="display: none;" onclick="showSubscriptionModal()">
+        <div class="banner-text">
+            <span>⏰</span>
+            <span id="bannerText">Пробный период: 10 дней</span>
+        </div>
+        <button class="banner-btn">Подробнее</button>
+    </div>
+
+    <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
+    <div id="mainPage" class="page active">
+        <!-- Переключатель режимов -->
+        <div class="mode-switcher">
+            <button class="mode-btn active" id="studentModeBtn" onclick="switchMode('student')">🎓 Ученик</button>
+            <button class="mode-btn" id="expertModeBtn" onclick="switchMode('expert')">👨‍🏫 Эксперт</button>
+        </div>
+
+        <!-- === РЕЖИМ УЧЕНИКА === -->
+        <div id="studentMode">
+            <div class="tabs">
+                <button class="tab active" onclick="switchStudentTab('catalog')">🏪 Каталог</button>
+                <button class="tab" onclick="switchStudentTab('myCourses')">📚 Мои курсы</button>
+                <button class="tab" onclick="switchStudentTab('stats')">📊 Статистика</button>
+            </div>
+
+            <div id="catalogTab" class="tab-content">
+                <div class="courses-grid" id="catalogCourses"></div>
+            </div>
+
+            <div id="myCoursesTab" class="tab-content" style="display: none;">
+                <div class="courses-grid" id="purchasedCourses">
+                    <p style="text-align: center; color: #666; padding: 40px;">
+                        У вас пока нет курсов.<br>Перейдите в каталог!
+                    </p>
+                </div>
+            </div>
+
+            <div id="statsTab" class="tab-content" style="display: none;">
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card" onclick="showAchievementsModal()">
+                            <div class="stat-icon">🏆</div>
+                            <div class="stat-value" id="statXP">1,250</div>
+                            <div class="stat-label">Очки XP</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📚</div>
+                            <div class="stat-value" id="statCourses">0</div>
+                            <div class="stat-label">Курсов</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱</div>
+                            <div class="stat-value">12ч</div>
+                            <div class="stat-label">Времени</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-value" id="statStreak">7</div>
+                            <div class="stat-label">Дней подряд</div>
+                        </div>
+                    </div>
+                    <div class="achievements-section">
+                        <div class="section-header">
+                            <span class="section-title">🏅 Достижения</span>
+                            <span class="see-all-btn" onclick="showAchievementsModal()">Все →</span>
+                        </div>
+                        <div class="achievements-grid" id="achievementsPreview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === РЕЖИМ ЭКСПЕРТА === -->
+        <div id="expertMode" style="display: none; position: relative;">
+            <div class="blocked-overlay" id="blockedOverlay">
+                <div class="blocked-icon">🔒</div>
+                <div class="blocked-title">Подписка истекла</div>
+                <div class="blocked-text">Продлите подписку для размещения курсов</div>
+                <button class="blocked-btn" onclick="showSubscriptionModal()">👑 Продлить</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="switchExpertTab('dashboard')">📊 Панель</button>
+                <button class="tab" onclick="switchExpertTab('myCourses')">📚 Курсы</button>
+                <button class="tab" onclick="switchExpertTab('promo')">🏷️ Промо</button>
+                <button class="tab" onclick="switchExpertTab('analytics')">📈 Аналитика</button>
+            </div>
+
+            <div id="dashboardTab" class="expert-tab-content">
+                <div class="expert-dashboard">
+                    <div class="subscription-card trial" id="subCard" onclick="showSubscriptionModal()">
+                        <div class="sub-status">Статус подписки</div>
+                        <div class="sub-value" id="subStatus">Пробный период: 10 дней</div>
+                        <button class="sub-btn">Улучшить план →</button>
+                    </div>
+
+                    <div class="expert-stats">
+                        <div class="expert-stat">
+                            <div class="expert-stat-value">45.6K ⭐</div>
+                            <div class="expert-stat-label">Заработано</div>
+                        </div>
+                        <div class="expert-stat">
+                            <div class="expert-stat-value" id="expertStudentsCount">234</div>
+                            <div class="expert-stat-label">Учеников</div>
+                        </div>
+                        <div class="expert-stat">
+                            <div class="expert-stat-value" id="expertCoursesCount">2</div>
+                            <div class="expert-stat-label">Курсов</div>
+                        </div>
+                    </div>
+
+                    <button class="create-course-btn" id="createCourseBtn" onclick="createCourse()">
+                        ➕ Создать новый курс
+                    </button>
+
+                    <div class="section-header">
+                        <span class="section-title">📚 Мои курсы</span>
+                    </div>
+                    <div class="my-courses-list" id="expertCoursesList"></div>
+                </div>
+            </div>
+
+            <div id="myCoursesExpertTab" class="expert-tab-content" style="display: none;">
+                <div style="padding: 15px;">
+                    <button class="create-course-btn" onclick="createCourse()">➕ Добавить курс</button>
+                    <div id="expertCoursesFullList"></div>
+                </div>
+            </div>
+
+            <div id="promoTab" class="expert-tab-content" style="display: none;">
+                <div class="promo-section">
+                    <div class="section-header">
+                        <span class="section-title">🏷️ Промокоды</span>
+                    </div>
+                    <div id="promoList"></div>
+                    <button class="create-promo-btn" onclick="showCreatePromoModal()">➕ Создать промокод</button>
+                </div>
+            </div>
+
+            <div id="analyticsTab" class="expert-tab-content" style="display: none;">
+                <div class="analytics-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">💰 Продажи</span>
+                            <select class="chart-period">
+                                <option>7 дней</option>
+                                <option>30 дней</option>
+                            </select>
+                        </div>
+                        <div class="chart-bars">
+                            <div class="chart-bar" style="height: 40%;"></div>
+                            <div class="chart-bar" style="height: 65%;"></div>
+                            <div class="chart-bar" style="height: 45%;"></div>
+                            <div class="chart-bar" style="height: 80%;"></div>
+                            <div class="chart-bar" style="height: 55%;"></div>
+                            <div class="chart-bar" style="height: 90%;"></div>
+                            <div class="chart-bar" style="height: 100%;"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <span class="chart-title">📊 Конверсия</span>
+                        </div>
+                        <div class="metric-big">
+                            <div class="metric-value">12.4%</div>
+                            <div class="metric-label">из просмотров в покупки</div>
+                            <div class="metric-change">↑ 2.3% за неделю</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== СТРАНИЦА КУРСА ===== -->
+    <div id="coursePage" class="page">
+        <div class="video-player">
+            <div class="video-placeholder" id="videoPlaceholder">
+                <div class="play-btn" onclick="toggleVideo()">▶️</div>
+                <div id="currentLessonTitle">Урок 1: Введение</div>
+            </div>
+            <div class="video-controls">
+                <button class="video-control-btn" id="playPauseBtn" onclick="toggleVideo()">▶️</button>
+                <div class="progress-bar" onclick="seekVideo(event)">
+                    <div class="progress-fill" id="videoProgress"></div>
+                </div>
+                <span class="video-time" id="videoTime">00:00 / 15:30</span>
+            </div>
+        </div>
+
+        <div class="course-progress">
+            <div class="progress-header">
+                <span class="progress-title">📊 Прогресс курса</span>
+                <span class="progress-percent" id="courseProgressPercent">0%</span>
+            </div>
+            <div class="progress-bar-full">
+                <div class="progress-bar-fill" id="courseProgressBar" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <div class="lesson-tabs">
+            <button class="lesson-tab active" onclick="switchLessonTab('lessons')">📚 Уроки</button>
+            <button class="lesson-tab" onclick="switchLessonTab('quiz')">📝 Тест</button>
+            <button class="lesson-tab" onclick="switchLessonTab('qa')">❓ Q&A</button>
+            <button class="lesson-tab" onclick="switchLessonTab('reviews')">⭐ Отзывы</button>
+            <button class="lesson-tab" onclick="switchLessonTab('notes')">📌 Заметки</button>
+        </div>
+
+        <div id="lessonsContent" class="lesson-content">
+            <div class="lessons-list" id="lessonsList"></div>
+        </div>
+
+        <div id="quizContent" class="lesson-content" style="display: none;">
+            <div class="quiz-card">
+                <div class="quiz-progress-header">
+                    <span>Вопрос <span id="quizQuestionNum">1</span>/5</span>
+                    <span class="quiz-timer">⏱ 00:30</span>
+                </div>
+                <div class="quiz-question" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+                <button class="quiz-submit-btn" onclick="submitQuizAnswer()">Ответить →</button>
+            </div>
+        </div>
+
+        <div id="qaContent" class="lesson-content" style="display: none;">
+            <div class="qa-section">
+                <div class="qa-header">
+                    <span class="qa-title">❓ Вопросы</span>
+                    <span class="qa-count" id="qaCount">24</span>
+                </div>
+                <div class="qa-input-box">
+                    <input type="text" class="qa-input" placeholder="Задайте вопрос..." id="qaInput">
+                    <button class="qa-send-btn" onclick="sendQuestion()">➤</button>
+                </div>
+                <div id="qaList"></div>
+            </div>
+        </div>
+
+        <div id="reviewsContent" class="lesson-content" style="display: none;">
+            <div class="reviews-section">
+                <div class="reviews-summary">
+                    <div class="rating-big">4.8</div>
+                    <div class="rating-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="rating-count">234 отзыва</div>
+                </div>
+                <div id="reviewsList"></div>
+                <button class="add-review-btn" onclick="showReviewModal()">✍️ Написать отзыв</button>
+            </div>
+        </div>
+
+        <div id="notesContent" class="lesson-content" style="display: none;">
+            <div class="notes-section">
+                <div id="notesList"></div>
+            </div>
+        </div>
+
+        <button class="add-note-fab" id="addNoteFab" onclick="showAddNoteModal()">📝</button>
+    </div>
+
+    <!-- НАВИГАЦИЯ -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="navigateTo('home')">
+            <span class="nav-icon">🏠</span>
+            <span>Главная</span>
+        </button>
+        <button class="nav-item" onclick="showSearch()">
+            <span class="nav-icon">🔍</span>
+            <span>Поиск</span>
+        </button>
+        <button class="nav-item" onclick="showAchievementsModal()">
+            <span class="nav-icon">🏆</span>
+            <span>Награды</span>
+        </button>
+        <button class="nav-item" onclick="showProfile()">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </button>
+    </div>
+</div>
+
+<!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
+
+<!-- Модалка достижений -->
+<div class="modal" id="achievementsModal" onclick="closeModalOnBackdrop(event, 'achievementsModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="achievements-modal-header">
+            <h2>🏆 Достижения</h2>
+            <div class="xp-display">
+                <div class="xp-item">
+                    <div class="xp-item-value" id="modalXP">1,250</div>
+                    <div class="xp-item-label">XP</div>
+                </div>
+                <div class="xp-item">
+                    <div class="xp-item-value" id="modalLevel">5</div>
+                    <div class="xp-item-label">Уровень</div>
+                </div>
+                <div class="xp-item">
+                    <div class="xp-item-value" id="modalAchievements">4</div>
+                    <div class="xp-item-label">Награды</div>
+                </div>
+            </div>
+            <div class="level-progress">
+                <div class="level-progress-fill" id="levelProgressFill" style="width: 60%;"></div>
+            </div>
+            <div class="level-text">250 XP до уровня 6</div>
+        </div>
+        <div class="achievements-list" id="achievementsList"></div>
+        <div style="padding: 0 20px 20px;">
+            <button class="add-review-btn" onclick="closeModal('achievementsModal')">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка подписки -->
+<div class="modal" id="subscriptionModal" onclick="closeModalOnBackdrop(event, 'subscriptionModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="pricing-header">
+            <h2>EduGram PRO</h2>
+            <p>Размещайте курсы без ограничений</p>
+        </div>
+        <div class="trial-info">
+            <div class="trial-days" id="trialDays">10</div>
+            <div class="trial-label">дней бесплатно</div>
+            <div class="trial-progress">
+                <div class="trial-progress-fill" id="trialProgressFill" style="width: 100%;"></div>
+            </div>
+        </div>
+        <div class="pricing-plans">
+            <div class="plan-card" onclick="selectPlan('month')">
+                <div class="plan-header">
+                    <span class="plan-name">📅 1 месяц</span>
+                </div>
+                <div class="plan-price">
+                    <span class="plan-price-value">990 ₽</span>
+                    <div class="plan-price-period">990 ₽/мес</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Неограниченные курсы</li>
+                    <li>Аналитика</li>
+                    <li>Промокоды</li>
+                </ul>
+            </div>
+            <div class="plan-card popular selected" onclick="selectPlan('year')">
+                <div class="plan-header">
+                    <span class="plan-name">🎉 12 месяцев</span>
+                    <span class="plan-badge">-40%</span>
+                </div>
+                <div class="plan-price">
+                    <span class="plan-price-value">7,128 ₽</span>
+                    <span class="plan-price-old">11,880 ₽</span>
+                    <div class="plan-price-period">594 ₽/мес</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Все преимущества</li>
+                    <li>Персональный менеджер</li>
+                    <li>Продвижение курсов</li>
+                </ul>
+            </div>
+            <button class="subscribe-btn" onclick="processPayment()">
+                💳 Оплатить <span id="selectedPlanPrice">7,128 ₽</span>
+            </button>
+        </div>
+        <div class="payment-methods">💳 🏦 💎 ⭐</div>
+        <div class="payment-note">🔒 Безопасная оплата</div>
+    </div>
+</div>
+
+<!-- Модалка сообщений -->
+<div class="modal" id="messagesModal" onclick="closeModalOnBackdrop(event, 'messagesModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span class="modal-title">💬 Сообщения</span>
+            <button class="modal-close" onclick="closeModal('messagesModal')">✕</button>
+        </div>
+        <div class="messages-list" id="messagesList"></div>
+    </div>
+</div>
+
+<!-- Модалка учеников -->
+<div class="modal" id="studentsModal" onclick="closeModalOnBackdrop(event, 'studentsModal')">
+    <div class="modal-content" onclick="event.stopPropagation()" style="padding: 0; overflow: hidden;">
+        <div style="padding: 20px; background: var(--card-bg);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="modal-title">👥 Ученики</span>
+                <button class="modal-close" onclick="closeModal('studentsModal')">✕</button>
+            </div>
+        </div>
+        <div class="students-stats">
+            <div class="students-stat">
+                <div class="students-stat-value" id="totalStudents">234</div>
+                <div class="students-stat-label">Всего</div>
+            </div>
+            <div class="students-stat">
+                <div class="students-stat-value" id="activeStudents">156</div>
+                <div class="students-stat-label">Активных</div>
+            </div>
+            <div class="students-stat">
+                <div class="students-stat-value" id="completedStudents">78</div>
+                <div class="students-stat-label">Завершили</div>
+            </div>
+        </div>
+        <div id="studentsList" style="max-height: 400px; overflow-y: auto;"></div>
+    </div>
+</div>
+
+<!-- Модалка чата -->
+<div class="modal" id="chatModal" onclick="closeModalOnBackdrop(event, 'chatModal')">
+    <div class="modal-content chat-modal-content" onclick="event.stopPropagation()" style="padding: 0;">
+        <div class="chat-header">
+            <div class="message-avatar" id="chatAvatar">МС</div>
+            <div class="chat-user-info">
+                <div class="chat-user-name" id="chatUserName">Мария</div>
+                <div class="chat-user-status">Telegram Mini Apps</div>
+            </div>
+            <button class="modal-close" style="background: rgba(255,255,255,0.2); color: white;" onclick="closeModal('chatModal')">✕</button>
+        </div>
+        <div class="chat-messages-container" id="chatMessagesContainer"></div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatMessageInput" placeholder="Сообщение...">
+            <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка сертификата -->
+<div class="modal" id="certificateModal" onclick="closeModalOnBackdrop(event, 'certificateModal')">
+    <div class="certificate" onclick="event.stopPropagation()">
+        <div class="certificate-seal">🎓</div>
+        <div class="certificate-title">СЕРТИФИКАТ</div>
+        <div class="certificate-subtitle">о прохождении курса</div>
+        <div class="certificate-name" id="certName">Артем Иванов</div>
+        <div class="certificate-course">
+            успешно завершил<br><strong id="certCourse">"Курс"</strong>
+        </div>
+        <div class="certificate-date" id="certDate">15 декабря 2024</div>
+        <div class="certificate-actions">
+            <button class="cert-btn download" onclick="downloadCertificate()">📥 Скачать</button>
+            <button class="cert-btn share" onclick="closeModal('certificateModal')">✕</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка отзыва -->
+<div class="modal" id="reviewModal" onclick="closeModalOnBackdrop(event, 'reviewModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span class="modal-title">✍️ Отзыв</span>
+            <button class="modal-close" onclick="closeModal('reviewModal')">✕</button>
+        </div>
+        <div class="review-form">
+            <p style="text-align: center;">Оцените курс:</p>
+            <div class="rating-select" id="ratingSelect">
+                <span class="rating-star" onclick="selectRating(1)">⭐</span>
+                <span class="rating-star" onclick="selectRating(2)">⭐</span>
+                <span class="rating-star" onclick="selectRating(3)">⭐</span>
+                <span class="rating-star" onclick="selectRating(4)">⭐</span>
+                <span class="rating-star" onclick="selectRating(5)">⭐</span>
+            </div>
+            <textarea class="review-textarea" id="reviewText" placeholder="Ваш отзыв..."></textarea>
+            <button class="submit-review-btn" onclick="submitReview()">Отправить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка промокода -->
+<div class="modal" id="promoModal" onclick="closeModalOnBackdrop(event, 'promoModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span class="modal-title">🏷️ Промокод</span>
+            <button class="modal-close" onclick="closeModal('promoModal')">✕</button>
+        </div>
+        <div class="promo-form">
+            <div class="form-group">
+                <label class="form-label">Код</label>
+                <input type="text" class="form-input" id="promoCodeInput" placeholder="SALE20" style="text-transform: uppercase;">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Скидка</label>
+                <div class="discount-options">
+                    <div class="discount-option" onclick="selectDiscount(10, this)">10%</div>
+                    <div class="discount-option selected" onclick="selectDiscount(20, this)">20%</div>
+                    <div class="discount-option" onclick="selectDiscount(30, this)">30%</div>
+                    <div class="discount-option" onclick="selectDiscount(50, this)">50%</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Лимит</label>
+                <input type="number" class="form-input" id="promoLimitInput" value="100">
+            </div>
+            <button class="submit-review-btn" onclick="createPromoCode()">Создать</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модалка заметки -->
+<div class="modal" id="noteModal" onclick="closeModalOnBackdrop(event, 'noteModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span class="modal-title">📝 Заметка</span>
+            <button class="modal-close" onclick="closeModal('noteModal')">✕</button>
+        </div>
+        <div style="padding: 20px;">
+            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
+                📹 Момент: <span id="noteTimestamp">00:00</span>
+            </p>
+            <textarea class="review-textarea" id="noteText" placeholder="Ваша заметка..."></textarea>
+            <button class="submit-review-btn" onclick="saveNote()">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+    <span class="toast-icon">✅</span>
+    <span class="toast-text">Сообщение</span>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-checkmark">✅</div>
+    <div class="success-title">Оплата успешна!</div>
+    <div class="success-text">Добро пожаловать в PRO</div>
+</div>
+
+<script>
+// ===== TELEGRAM WEBAPP =====
+const tg = window.Telegram?.WebApp;
+let videoTimer = null; // Фикс утечки памяти
+
+// ===== TELEGRAM ФУНКЦИИ =====
+function initTelegramApp() {
+    if (!tg) {
+        console.warn('⚠️ Telegram WebApp API недоступен. Работаем в standalone режиме.');
+        return;
+    }
+    
+    // 1. Инициализация приложения
+    tg.ready();
+    tg.expand(); // Развернуть на весь экран
+    tg.enableClosingConfirmation(); // Подтверждение перед закрытием
+    
+    // 2. Применить цветовую схему Telegram
+    applyTelegramTheme();
+    
+    // 3. Получить данные пользователя
+    const user = tg.initDataUnsafe?.user;
+    if (user) {
+        autoLoginFromTelegram(user);
+    }
+    
+    // 4. Настроить кнопку "Назад"
+    setupBackButton();
+    
+    // 5. Обработать deep link (если открыли по ссылке на курс)
+    handleDeepLink();
+    
+    console.log('✅ Telegram WebApp инициализирован');
+}
+
+function applyTelegramTheme() {
+    if (tg.colorScheme === 'dark') {
+        state.darkMode = true;
+        document.body.classList.add('dark-mode');
+    }
+    
+    // Применить цвета из темы Telegram (опционально)
+    const root = document.documentElement;
+    root.style.setProperty('--tg-bg', tg.backgroundColor || '#ffffff');
+    root.style.setProperty('--tg-text', tg.themeParams?.text_color || '#000000');
+    
+    // Слушать изменения темы
+    tg.onEvent('themeChanged', () => {
+        state.darkMode = tg.colorScheme === 'dark';
+        document.body.classList.toggle('dark-mode', state.darkMode);
+    });
+}
+
+function autoLoginFromTelegram(user) {
+    state.user = {
+        isLoggedIn: true,
+        name: `${user.first_name}${user.last_name ? ' ' + user.last_name : ''}`,
+        telegramId: user.id,
+        username: user.username || '',
+        photoUrl: user.photo_url || '',
+        role: state.user.role || 'student'
+    };
+    
+    document.getElementById('authScreen').classList.add('hidden');
+    console.log('✅ Пользователь авторизован:', state.user.name);
+}
+
+function setupBackButton() {
+    tg.BackButton.onClick(() => {
+        hapticFeedback('light');
+        
+        if (state.currentPage === 'course') {
+            navigateTo('home');
+        } else if (document.querySelector('.modal.active')) {
+            const activeModal = document.querySelector('.modal.active');
+            closeModal(activeModal.id);
+        } else {
+            tg.close();
+        }
+    });
+}
+
+function handleDeepLink() {
+    const startParam = tg.initDataUnsafe?.start_param;
+    if (startParam) {
+        const match = startParam.match(/course_(\d+)/);
+        if (match) {
+            const courseId = parseInt(match[1]);
+            setTimeout(() => openCourse(courseId), 1000);
+        }
+    }
+}
+
+function hapticFeedback(type = 'light') {
+    if (!tg?.HapticFeedback) return;
+    
+    switch(type) {
+        case 'light':
+            tg.HapticFeedback.impactOccurred('light');
+            break;
+        case 'medium':
+            tg.HapticFeedback.impactOccurred('medium');
+            break;
+        case 'heavy':
+            tg.HapticFeedback.impactOccurred('heavy');
+            break;
+        case 'success':
+            tg.HapticFeedback.notificationOccurred('success');
+            break;
+        case 'warning':
+            tg.HapticFeedback.notificationOccurred('warning');
+            break;
+        case 'error':
+            tg.HapticFeedback.notificationOccurred('error');
+            break;
+    }
+}
+
+function showMainButton(text, onClick) {
+    if (!tg) return;
+    
+    tg.MainButton.setText(text);
+    tg.MainButton.show();
+    tg.MainButton.onClick(onClick);
+}
+
+function hideMainButton() {
+    if (!tg) return;
+    tg.MainButton.hide();
+    tg.MainButton.offClick();
+}
+// ===== ДАННЫЕ =====
+const coursesData = [
+    { id: 1, title: 'Telegram Mini Apps с нуля', author: 'Иван Петров', authorInitials: 'ИП', price: 2999, rating: 4.8, students: 234, lessons: 15, hours: 12, badge: 'ХИТ', badgeColor: '#4CAF50', icon: '💻', gradient: 'linear-gradient(135deg, #667eea, #764ba2)' },
+    { id: 2, title: 'Продажи через чат-боты', author: 'Мария Сидорова', authorInitials: 'МС', price: 4999, oldPrice: 6999, rating: 4.9, students: 567, lessons: 20, hours: 8, badge: 'NEW', badgeColor: '#ff6b6b', icon: '🤖', gradient: 'linear-gradient(135deg, #f093fb, #f5576c)' },
+    { id: 3, title: 'TON Блокчейн', author: 'Алексей К.', authorInitials: 'АК', price: 9999, rating: 4.7, students: 89, lessons: 25, hours: 20, badge: null, icon: '💎', gradient: 'linear-gradient(135deg, #fa709a, #fee140)' }
+];
+
+const achievementsData = [
+    { id: 1, icon: '🎯', name: 'Первый урок', desc: 'Посмотрите урок', xp: 50, unlocked: true },
+    { id: 2, icon: '📚', name: 'Книголюб', desc: 'Купите курс', xp: 100, unlocked: true },
+    { id: 3, icon: '🔥', name: '7 дней', desc: 'Учитесь неделю', xp: 150, unlocked: true },
+    { id: 4, icon: '💬', name: 'Активист', desc: '5 вопросов', xp: 100, unlocked: true },
+    { id: 5, icon: '⭐', name: 'Критик', desc: '3 отзыва', xp: 100, unlocked: false },
+    { id: 6, icon: '🏆', name: 'Чемпион', desc: 'Завершите курс', xp: 500, unlocked: false },
+    { id: 7, icon: '📝', name: 'Отличник', desc: 'Все тесты', xp: 200, unlocked: false },
+    { id: 8, icon: '👑', name: 'Легенда', desc: '5 курсов', xp: 1000, unlocked: false }
+];
+
+const expertCoursesData = [
+    { id: 1, title: 'Telegram Mini Apps', icon: '💻', students: 234, earnings: '701K ⭐' },
+    { id: 2, title: 'Продажи через боты', icon: '🤖', students: 156, earnings: '468K ⭐' }
+];
+
+const promoCodesData = [
+    { code: 'NEWYEAR2024', discount: 20, uses: 45, limit: 100 },
+    { code: 'WELCOME', discount: 10, uses: 128, limit: null }
+];
+
+const lessonsData = [
+    { id: 1, title: 'Введение', duration: '15 мин', completed: true },
+    { id: 2, title: 'Настройка', duration: '20 мин', completed: true },
+    { id: 3, title: 'Bot API', duration: '25 мин', completed: false, current: true },
+    { id: 4, title: 'Web Apps SDK', duration: '30 мин', completed: false },
+    { id: 5, title: 'Стилизация', duration: '25 мин', completed: false }
+];
+
+const quizData = [
+    { question: 'Какой метод отправляет сообщение?', options: ['sendMessage()', 'postMessage()', 'writeMessage()', 'pushMessage()'], correct: 0 },
+    { question: 'Что такое Webhook?', options: ['База данных', 'Получение обновлений', 'Язык', 'Библиотека'], correct: 1 }
+];
+
+const qaData = [
+    { author: 'Алексей К.', initials: 'АК', text: 'Ошибка 409 при webhook?', likes: 5, time: '2ч',
+      answer: { author: 'Иван Петров', initials: 'ИП', text: 'Сначала deleteWebhook().' } }
+];
+
+const reviewsData = [
+    { author: 'Мария С.', initials: 'МС', rating: 5, text: 'Отличный курс!', time: '3 дня' },
+    { author: 'Дмитрий П.', initials: 'ДП', rating: 5, text: 'Рекомендую!', time: '1 нед' }
+];
+
+const messagesData = [
+    { id: 1, sender: 'Мария Сидорова', initials: 'МС', preview: 'Вопрос по 3 уроку...', course: 'Telegram Mini Apps', time: '5 мин', unread: true,
+      messages: [
+        { text: 'Здравствуйте! Вопрос по 3 уроку.', incoming: true, time: '14:30' },
+        { text: 'Добрый день! Слушаю.', incoming: false, time: '14:32' }
+    ]},
+    { id: 2, sender: 'Алексей Козлов', initials: 'АК', preview: 'Спасибо за курс!', course: 'Продажи', time: '1 час', unread: true,
+      messages: [{ text: 'Спасибо за курс!', incoming: true, time: '13:15' }]
+    },
+    { id: 3, sender: 'Дмитрий Петров', initials: 'ДП', preview: 'Когда новый урок?', course: 'Telegram Mini Apps', time: '2 часа', unread: false,
+      messages: [
+        { text: 'Когда новый урок?', incoming: true, time: '12:00' },
+        { text: 'Завтра в 18:00!', incoming: false, time: '12:05' }
+    ]}
+];
+
+const studentsData = [
+    { id: 1, name: 'Мария Сидорова', initials: 'МС', course: 'Telegram Mini Apps', progress: 75, status: 'active' },
+    { id: 2, name: 'Алексей Козлов', initials: 'АК', course: 'Продажи', progress: 100, status: 'completed' },
+    { id: 3, name: 'Дмитрий Петров', initials: 'ДП', course: 'Telegram Mini Apps', progress: 45, status: 'active' },
+    { id: 4, name: 'Анна Иванова', initials: 'АИ', course: 'Telegram Mini Apps', progress: 90, status: 'active' },
+    { id: 5, name: 'Сергей Волков', initials: 'СВ', course: 'Продажи', progress: 100, status: 'completed' }
+];
+
+// ===== СОСТОЯНИЕ =====
+let state = {
+    currentMode: 'student',
+    currentPage: 'main',
+    currentCourse: null,
+    darkMode: false,
+    xp: 1250,
+    level: 5,
+    streak: 7,
+    purchasedCourses: [],
+    notes: [],
+    selectedPlan: 'year',
+    selectedRating: 0,
+    selectedDiscount: 20,
+    subscription: { status: 'trial', daysLeft: 10 },
+    quizState: { currentQuestion: 0, score: 0, selectedAnswer: -1 },
+    videoProgress: 0,
+    isPlaying: false,
+    user: { isLoggedIn: false, name: '', email: '', role: 'student' },
+    currentChatUser: null,
+    unreadMessages: 2
+};
+
+// ===== ИНИЦИАЛИЗАЦИЯ =====
+document.addEventListener('DOMContentLoaded', () => {
+    initTelegramApp(); // Новая функция для Telegram
+    loadState();
+    checkAuth();
+    renderCatalog();
+    renderAchievementsPreview();
+    renderExpertCourses();
+    renderPromoCodes();
+    updateMessagesCount();
+    
+    if (state.user.isLoggedIn) {
+        setTimeout(() => showToast('👋', `С возвращением, ${state.user.name}!`), 1000);
+    }
+});
+
+function loadState() {
+    const saved = localStorage.getItem('edugramState');
+    if (saved) state = { ...state, ...JSON.parse(saved) };
+}
+
+function saveState() {
+    localStorage.setItem('edugramState', JSON.stringify(state));
+}
+
+// ===== АВТОРИЗАЦИЯ =====
+function checkAuth() {
+    document.getElementById('authScreen').classList.toggle('hidden', state.user.isLoggedIn);
+}
+
+function switchAuthTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+    document.getElementById(tab + 'Form').classList.add('active');
+}
+
+function selectAuthRole(role, el) {
+    state.user.role = role;
+    document.querySelectorAll('.auth-role').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    if (!email || !password) { showToast('⚠️', 'Заполните все поля'); return; }
+    
+    state.user.isLoggedIn = true;
+    state.user.email = email;
+    state.user.name = email.split('@')[0];
+    if (email.includes('expert')) state.user.role = 'expert';
+    completeAuth();
+}
+
+function handleRegister() {
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+    if (!name || !email || !password) { showToast('⚠️', 'Заполните поля'); return; }
+    if (password.length < 6) { showToast('⚠️', 'Пароль мин. 6 символов'); return; }
+    
+    state.user.isLoggedIn = true;
+    state.user.name = name;
+    state.user.email = email;
+    completeAuth();
+}
+
+function loginWithTelegram() {
+    state.user.isLoggedIn = true;
+    state.user.name = 'Telegram User';
+    showToast('📱', 'Вход через Telegram...');
+    setTimeout(completeAuth, 1000);
+}
+
+function completeAuth() {
+    document.getElementById('authScreen').classList.add('hidden');
+    saveState();
+    if (state.user.role === 'expert') switchMode('expert');
+    showToast('👋', `Добро пожаловать, ${state.user.name}!`);
+}
+
+// ===== РЕНДЕР =====
+function renderCatalog() {
+    document.getElementById('catalogCourses').innerHTML = coursesData.map(c => `
+        <div class="course-card" onclick="openCourse(${c.id})">
+            <div class="course-image" style="background: ${c.gradient}">
+                ${c.icon}
+                ${c.badge ? `<div class="course-badge" style="background: ${c.badgeColor}">${c.badge}</div>` : ''}
+                <div class="course-rating">⭐ ${c.rating}</div>
+            </div>
+            <div class="course-content">
+                <h3 class="course-title">${c.title}</h3>
+                <div class="course-author">
+                    <div class="author-avatar">${c.authorInitials}</div>
+                    <span class="author-name">${c.author}</span>
+                </div>
+                <div class="course-stats">
+                    <span>👥 ${c.students}</span>
+                    <span>📚 ${c.lessons}</span>
+                    <span>⏱ ${c.hours}ч</span>
+                </div>
+                <div class="course-footer">
+                    <div>
+                        <span class="course-price">${c.price.toLocaleString()} ⭐</span>
+                        ${c.oldPrice ? `<span class="course-price-old">${c.oldPrice.toLocaleString()}</span>` : ''}
+                    </div>
+                    <button class="buy-btn ${state.purchasedCourses.includes(c.id) ? 'purchased' : ''}" onclick="buyCourse(event, ${c.id})">
+                        ${state.purchasedCourses.includes(c.id) ? '✓' : 'Купить'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderPurchasedCourses() {
+    const container = document.getElementById('purchasedCourses');
+    if (state.purchasedCourses.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Нет курсов</p>';
+        return;
+    }
+    container.innerHTML = coursesData.filter(c => state.purchasedCourses.includes(c.id)).map(c => `
+        <div class="course-card" onclick="openCourse(${c.id})">
+            <div class="course-image" style="background: ${c.gradient}">${c.icon}</div>
+            <div class="course-content">
+                <h3 class="course-title">${c.title}</h3>
+                <div class="course-progress">
+                    <div class="progress-header">
+                        <span class="progress-title">Прогресс</span>
+                        <span class="progress-percent">65%</span>
+                    </div>
+                    <div class="progress-bar-full"><div class="progress-bar-fill" style="width: 65%;"></div></div>
+                </div>
+                <button class="buy-btn" style="width: 100%; margin-top: 12px;">Продолжить →</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderAchievementsPreview() {
+    document.getElementById('achievementsPreview').innerHTML = achievementsData.slice(0, 4).map(a => `
+        <div class="achievement-item ${a.unlocked ? 'unlocked' : 'locked'}" onclick="showAchievementsModal()">
+            <div class="achievement-icon">${a.icon}</div>
+            <div class="achievement-name">${a.name}</div>
+        </div>
+    `).join('');
+}
+
+function renderAchievementsFull() {
+    const unlocked = achievementsData.filter(a => a.unlocked);
+    const locked = achievementsData.filter(a => !a.unlocked);
+    document.getElementById('achievementsList').innerHTML = `
+        <div class="achievement-category">
+            <div class="category-title">🏆 Разблокировано (${unlocked.length})</div>
+            ${unlocked.map(a => `
+                <div class="achievement-full unlocked">
+                    <div class="achievement-icon">${a.icon}</div>
+                    <div class="achievement-details">
+                        <div class="achievement-full-name">${a.name}</div>
+                        <div class="achievement-desc">${a.desc}</div>
+                    </div>
+                    <div class="achievement-xp">+${a.xp}</div>
+                </div>
+            `).join('')}
+        </div>
+        <div class="achievement-category">
+            <div class="category-title">🔒 Заблокировано (${locked.length})</div>
+            ${locked.map(a => `
+                <div class="achievement-full locked">
+                    <div class="achievement-icon">${a.icon}</div>
+                    <div class="achievement-details">
+                        <div class="achievement-full-name">${a.name}</div>
+                        <div class="achievement-desc">${a.desc}</div>
+                    </div>
+                    <div class="achievement-xp">+${a.xp}</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function renderExpertCourses() {
+    document.getElementById('expertCoursesList').innerHTML = expertCoursesData.map(c => `
+        <div class="my-course-item">
+            <div class="my-course-thumb">${c.icon}</div>
+            <div class="my-course-info">
+                <div class="my-course-title">${c.title}</div>
+                <div class="my-course-stats"><span>👥 ${c.students}</span><span>💰 ${c.earnings}</span></div>
+            </div>
+            <button class="share-link-btn" onclick="copyLink(event, ${c.id})">📋</button>
+        </div>
+    `).join('');
+}
+
+function renderPromoCodes() {
+    document.getElementById('promoList').innerHTML = promoCodesData.map(p => `
+        <div class="promo-card">
+            <div class="promo-code">${p.code}</div>
+            <div class="promo-info"><div class="promo-uses">${p.uses}/${p.limit || '∞'}</div></div>
+            <div class="promo-discount">-${p.discount}%</div>
+        </div>
+    `).join('');
+}
+
+function renderLessons() {
+    document.getElementById('lessonsList').innerHTML = lessonsData.map((l, i) => `
+        <div class="lesson-item ${l.completed ? 'completed' : ''} ${l.current ? 'current' : ''}" onclick="selectLesson(${i})">
+            <div class="lesson-number">${l.completed ? '✓' : i + 1}</div>
+            <div class="lesson-info">
+                <div class="lesson-title">${l.title}</div>
+                <div class="lesson-duration">${l.duration}</div>
+            </div>
+            <span>${l.completed ? '✅' : l.current ? '▶️' : '🔒'}</span>
+        </div>
+    `).join('');
+}
+
+function renderQuiz() {
+    const q = quizData[state.quizState.currentQuestion];
+    if (!q) return;
+    document.getElementById('quizQuestionNum').textContent = state.quizState.currentQuestion + 1;
+    document.getElementById('quizQuestion').textContent = q.question;
+    document.getElementById('quizOptions').innerHTML = q.options.map((opt, i) => `
+        <div class="quiz-option" onclick="selectQuizOption(${i})">
+            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+            <span>${opt}</span>
+        </div>
+    `).join('');
+}
+
+function renderQA() {
+    document.getElementById('qaList').innerHTML = qaData.map(q => `
+        <div class="qa-item">
+            <div class="qa-question">
+                <div class="qa-avatar">${q.initials}</div>
+                <div class="qa-content">
+                    <div class="qa-author">${q.author}</div>
+                    <div class="qa-text">${q.text}</div>
+                    <div class="qa-meta"><span>👍 ${q.likes}</span><span>${q.time}</span></div>
+                </div>
+            </div>
+            ${q.answer ? `<div class="qa-answer"><div class="qa-question"><div class="qa-avatar" style="background: var(--success)">${q.answer.initials}</div><div class="qa-content"><div class="qa-author">${q.answer.author} <span class="expert-badge">Эксперт</span></div><div class="qa-text">${q.answer.text}</div></div></div></div>` : ''}
+        </div>
+    `).join('');
+}
+
+function renderReviews() {
+    document.getElementById('reviewsList').innerHTML = reviewsData.map(r => `
+        <div class="review-item">
+            <div class="review-header">
+                <div class="review-author-info">
+                    <div class="qa-avatar">${r.initials}</div>
+                    <div><div class="qa-author">${r.author}</div><div class="review-stars">${'⭐'.repeat(r.rating)}</div></div>
+                </div>
+                <span style="font-size: 12px; color: #666;">${r.time}</span>
+            </div>
+            <div class="qa-text">${r.text}</div>
+        </div>
+    `).join('');
+}
+
+function renderNotes() {
+    const container = document.getElementById('notesList');
+    if (state.notes.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">Нет заметок</p>';
+        return;
+    }
+    container.innerHTML = state.notes.map((n, i) => `
+        <div class="note-item">
+            <div class="note-timestamp">📹 ${n.lesson} • <span>${n.timestamp}</span></div>
+            <div class="note-text">${n.text}</div>
+            <div class="note-actions"><button class="note-action-btn" onclick="deleteNote(${i})">🗑</button></div>
+        </div>
+    `).join('');
+}
+
+function renderMessages() {
+    document.getElementById('messagesList').innerHTML = messagesData.map(m => `
+        <div class="message-item ${m.unread ? 'unread' : ''}" onclick="openChat(${m.id})">
+            <div class="message-avatar">${m.initials}</div>
+            <div class="message-content">
+                <div class="message-header">
+                    <span class="message-sender">${m.sender}</span>
+                    <span class="message-time">${m.time}</span>
+                </div>
+                <div class="message-preview">${m.preview}</div>
+                <div class="message-course">📚 ${m.course}</div>
+            </div>
+            ${m.unread ? '<div class="unread-dot"></div>' : ''}
+        </div>
+    `).join('');
+}
+
+function renderStudents() {
+    const total = studentsData.length;
+    const active = studentsData.filter(s => s.status === 'active').length;
+    const completed = studentsData.filter(s => s.status === 'completed').length;
+    
+    document.getElementById('totalStudents').textContent = total;
+    document.getElementById('activeStudents').textContent = active;
+    document.getElementById('completedStudents').textContent = completed;
+    document.getElementById('headerStudentsCount').textContent = total;
+    document.getElementById('expertStudentsCount').textContent = total;
+    
+    document.getElementById('studentsList').innerHTML = studentsData.map(s => `
+        <div class="student-item">
+            <div class="student-avatar">${s.initials}</div>
+            <div class="student-info">
+                <div class="student-name">${s.name}</div>
+                <div class="student-course">📚 ${s.course}</div>
+            </div>
+            <div class="student-progress">
+                <div class="student-progress-value">${s.progress}%</div>
+                <div class="student-progress-label">${s.status === 'completed' ? '✅' : '📖'}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ===== НАВИГАЦИЯ =====
+function navigateTo(page) {
+    hapticFeedback('light'); // НОВОЕ: вибрация
+    
+    if (page === 'home') {
+        document.getElementById('mainPage').classList.add('active');
+        document.getElementById('coursePage').classList.remove('active');
+        document.getElementById('backBtn').classList.remove('visible');
+        document.getElementById('headerTitle').textContent = '📚 EduGram';
+        document.getElementById('addNoteFab').classList.remove('visible');
+        state.currentPage = 'main';
+        
+        // НОВОЕ: скрыть кнопки Telegram
+        if (tg) {
+            tg.BackButton.hide();
+            tg.MainButton.hide();
+        }
+    }
+}
+
+function goBack() { navigateTo('home'); }
+
+function openCourse(id) {
+    hapticFeedback('light'); // НОВОЕ: вибрация
+    
+    state.currentCourse = coursesData.find(c => c.id === id);
+    document.getElementById('mainPage').classList.remove('active');
+    document.getElementById('coursePage').classList.add('active');
+    document.getElementById('backBtn').classList.add('visible');
+    document.getElementById('headerTitle').textContent = state.currentCourse.title;
+    document.getElementById('addNoteFab').classList.add('visible');
+    state.currentPage = 'course';
+    
+    // НОВОЕ: Telegram кнопки
+    if (tg) {
+        tg.BackButton.show();
+        
+        if (!state.purchasedCourses.includes(id)) {
+            showMainButton(`Купить за ${state.currentCourse.price} ⭐`, () => {
+                buyCourse(null, id);
+            });
+        }
+    }
+    
+    renderLessons(); 
+    renderQuiz(); 
+    renderQA(); 
+    renderReviews(); 
+    renderNotes();
+    switchLessonTab('lessons');
+}
+
+function buyCourse(event, id) {
+    event?.stopPropagation();
+    if (state.purchasedCourses.includes(id)) { 
+        openCourse(id); 
+        return; 
+    }
+    
+    hapticFeedback('medium'); // НОВОЕ: вибрация
+    
+    state.purchasedCourses.push(id);
+    addXP(100);
+    saveState();
+    renderCatalog(); 
+    renderPurchasedCourses();
+    document.getElementById('statCourses').textContent = state.purchasedCourses.length;
+    showToast('✅', 'Курс куплен! +100 XP');
+    
+    hideMainButton(); // НОВОЕ: скрыть кнопку покупки
+}
+
+// ===== РЕЖИМЫ И ТАБЫ =====
+function switchMode(mode) {
+    state.currentMode = mode;
+    document.getElementById('studentModeBtn').classList.toggle('active', mode === 'student');
+    document.getElementById('expertModeBtn').classList.toggle('active', mode === 'expert');
+    document.getElementById('studentMode').style.display = mode === 'student' ? 'block' : 'none';
+    document.getElementById('expertMode').style.display = mode === 'expert' ? 'block' : 'none';
+    document.getElementById('subBanner').style.display = mode === 'expert' ? 'flex' : 'none';
+    document.getElementById('headerStudent').style.display = mode === 'student' ? 'flex' : 'none';
+    document.getElementById('headerExpert').style.display = mode === 'expert' ? 'flex' : 'none';
+    
+    if (mode === 'expert') { updateSubscriptionUI(); updateMessagesCount(); }
+}
+
+function switchStudentTab(tab) {
+    document.querySelectorAll('#studentMode .tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('#studentMode .tab-content').forEach(c => c.style.display = 'none');
+    document.getElementById(tab + 'Tab').style.display = 'block';
+    if (tab === 'myCourses') renderPurchasedCourses();
+}
+
+function switchExpertTab(tab) {
+    document.querySelectorAll('#expertMode .tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.expert-tab-content').forEach(c => c.style.display = 'none');
+    const tabMap = { 'dashboard': 'dashboardTab', 'myCourses': 'myCoursesExpertTab', 'promo': 'promoTab', 'analytics': 'analyticsTab' };
+    document.getElementById(tabMap[tab]).style.display = 'block';
+}
+
+function switchLessonTab(tab) {
+    document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.lesson-content').forEach(c => c.style.display = 'none');
+    document.getElementById(tab + 'Content').style.display = 'block';
+}
+
+// ===== ВИДЕО =====
+function toggleVideo() {
+    state.isPlaying = !state.isPlaying;
+    
+    if (state.isPlaying) {
+        simulateVideoProgress();
+        document.querySelector('.play-btn').textContent = '⏸️';
+        document.getElementById('playPauseBtn').textContent = '⏸️';
+    } else {
+        // НОВОЕ: очистка таймера
+        if (videoTimer) {
+            clearTimeout(videoTimer);
+            videoTimer = null;
+        }
+        document.querySelector('.play-btn').textContent = '▶️';
+        document.getElementById('playPauseBtn').textContent = '▶️';
+    }
+}
+
+function simulateVideoProgress() {
+    if (!state.isPlaying) {
+        if (videoTimer) clearTimeout(videoTimer); // НОВОЕ: очистка таймера
+        return;
+    }
+    
+    state.videoProgress += 1;
+    document.getElementById('videoProgress').style.width = state.videoProgress + '%';
+    
+    const current = Math.floor(state.videoProgress * 9.3);
+    const mins = Math.floor(current / 60);
+    const secs = current % 60;
+    document.getElementById('videoTime').textContent = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} / 15:30`;
+    
+    if (state.videoProgress < 100) {
+        videoTimer = setTimeout(simulateVideoProgress, 100); // НОВОЕ: сохраняем ID таймера
+    } else {
+        state.isPlaying = false;
+        document.querySelector('.play-btn').textContent = '▶️';
+        document.getElementById('playPauseBtn').textContent = '▶️';
+        addXP(50);
+        showToast('🎉', 'Урок завершен! +50 XP');
+    }
+}
+
+function seekVideo(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    state.videoProgress = ((event.clientX - rect.left) / rect.width) * 100;
+    document.getElementById('videoProgress').style.width = state.videoProgress + '%';
+}
+
+function selectLesson(index) {
+    lessonsData.forEach((l, i) => {
+        l.current = i === index;
+    });
+    document.getElementById('currentLessonTitle').textContent = lessonsData[index].title;
+    state.videoProgress = 0;
+    renderLessons();
+}
+
+// ===== КВИЗ =====
+function selectQuizOption(index) {
+    state.quizState.selectedAnswer = index;
+    document.querySelectorAll('.quiz-option').forEach((o, i) => {
+        o.classList.toggle('selected', i === index);
+    });
+}
+
+function submitQuizAnswer() {
+    if (state.quizState.selectedAnswer === -1) {
+        showToast('⚠️', 'Выберите ответ');
+        return;
+    }
+    
+    const q = quizData[state.quizState.currentQuestion];
+    const options = document.querySelectorAll('.quiz-option');
+    
+    if (state.quizState.selectedAnswer === q.correct) {
+        options[state.quizState.selectedAnswer].classList.add('correct');
+        state.quizState.score++;
+        addXP(20);
+        showToast('✅', 'Правильно! +20 XP');
+    } else {
+        options[state.quizState.selectedAnswer].classList.add('wrong');
+        options[q.correct].classList.add('correct');
+        showToast('❌', 'Неправильно');
+    }
+    
+    setTimeout(() => {
+        state.quizState.currentQuestion++;
+        state.quizState.selectedAnswer = -1;
+        
+        if (state.quizState.currentQuestion >= quizData.length) {
+            showToast('🎓', `Тест завершен! Результат: ${state.quizState.score}/${quizData.length}`);
+            if (state.quizState.score === quizData.length) {
+                setTimeout(() => showCertificate(), 1500);
+            }
+            state.quizState.currentQuestion = 0;
+            state.quizState.score = 0;
+        }
+        renderQuiz();
+    }, 1500);
+}
+
+// ===== Q&A =====
+function sendQuestion() {
+    const input = document.getElementById('qaInput');
+    if (!input.value.trim()) return;
+    
+    qaData.unshift({
+        author: 'Вы',
+        initials: 'ВЫ',
+        text: input.value,
+        likes: 0,
+        time: 'Только что',
+        answer: null
+    });
+    
+    input.value = '';
+    renderQA();
+    addXP(5);
+    showToast('✅', 'Вопрос отправлен! +5 XP');
+}
+
+function likeQuestion(el) {
+    const current = parseInt(el.textContent.split(' ')[1]);
+    el.textContent = `👍 ${current + 1}`;
+}
+
+// ===== ОТЗЫВЫ =====
+function showReviewModal() {
+    document.getElementById('reviewModal').classList.add('active');
+    state.selectedRating = 0;
+    updateRatingStars();
+}
+
+function selectRating(rating) {
+    state.selectedRating = rating;
+    updateRatingStars();
+}
+
+function updateRatingStars() {
+    document.querySelectorAll('#ratingSelect .rating-star').forEach((s, i) => {
+        s.classList.toggle('selected', i < state.selectedRating);
+    });
+}
+
+function submitReview() {
+    const text = document.getElementById('reviewText').value;
+    if (!text.trim() || state.selectedRating === 0) {
+        showToast('⚠️', 'Заполните все поля');
+        return;
+    }
+    
+    reviewsData.unshift({
+        author: 'Вы',
+        initials: 'ВЫ',
+        rating: state.selectedRating,
+        text: text,
+        time: 'Только что'
+    });
+    
+    document.getElementById('reviewText').value = '';
+    closeModal('reviewModal');
+    renderReviews();
+    addXP(30);
+    showToast('✅', 'Отзыв отправлен! +30 XP');
+}
+
+// ===== ЗАМЕТКИ =====
+function showAddNoteModal() {
+    const mins = Math.floor(state.videoProgress * 9.3 / 60);
+    const secs = Math.floor(state.videoProgress * 9.3 % 60);
+    document.getElementById('noteTimestamp').textContent = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    document.getElementById('noteModal').classList.add('active');
+}
+
+function saveNote() {
+    const text = document.getElementById('noteText').value;
+    if (!text.trim()) {
+        showToast('⚠️', 'Введите текст заметки');
+        return;
+    }
+    
+    state.notes.unshift({
+        lesson: lessonsData.find(l => l.current)?.title || 'Урок',
+        timestamp: document.getElementById('noteTimestamp').textContent,
+        text: text
+    });
+    
+    document.getElementById('noteText').value = '';
+    closeModal('noteModal');
+    renderNotes();
+    saveState();
+    showToast('📝', 'Заметка сохранена');
+}
+
+function deleteNote(index) {
+    state.notes.splice(index, 1);
+    renderNotes();
+    saveState();
+    showToast('🗑', 'Заметка удалена');
+}
+
+// ===== ПРОМОКОДЫ =====
+function showCreatePromoModal() {
+    document.getElementById('promoModal').classList.add('active');
+}
+
+function selectDiscount(discount, el) {
+    state.selectedDiscount = discount;
+    document.querySelectorAll('.discount-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+function createPromoCode() {
+    const code = document.getElementById('promoCodeInput').value.toUpperCase();
+    const limit = document.getElementById('promoLimitInput').value;
+    
+    if (!code) {
+        showToast('⚠️', 'Введите код промокода');
+        return;
+    }
+    
+    promoCodesData.push({
+        code: code,
+        discount: state.selectedDiscount,
+        uses: 0,
+        limit: limit ? parseInt(limit) : null
+    });
+    
+    document.getElementById('promoCodeInput').value = '';
+    closeModal('promoModal');
+    renderPromoCodes();
+    showToast('✅', `Промокод ${code} создан!`);
+}
+
+// ===== ПОДПИСКА =====
+function updateSubscriptionUI() {
+    const banner = document.getElementById('subBanner');
+    const bannerText = document.getElementById('bannerText');
+    const subCard = document.getElementById('subCard');
+    const subStatus = document.getElementById('subStatus');
+    const blockedOverlay = document.getElementById('blockedOverlay');
+    const createBtn = document.getElementById('createCourseBtn');
+    
+    switch (state.subscription.status) {
+        case 'trial':
+            banner.className = 'subscription-banner trial';
+            bannerText.textContent = `⏰ Пробный период: ${state.subscription.daysLeft} дней`;
+            subCard.className = 'subscription-card trial';
+            subStatus.textContent = `Пробный период: ${state.subscription.daysLeft} дней`;
+            blockedOverlay.classList.remove('active');
+            createBtn.disabled = false;
+            break;
+        case 'active':
+            banner.className = 'subscription-banner active';
+            bannerText.textContent = '👑 PRO подписка активна';
+            subCard.className = 'subscription-card active';
+            subStatus.textContent = 'PRO подписка активна';
+            blockedOverlay.classList.remove('active');
+            createBtn.disabled = false;
+            break;
+        case 'expired':
+            banner.className = 'subscription-banner expired';
+            bannerText.textContent = '🔒 Подписка истекла';
+            subCard.className = 'subscription-card expired';
+            subStatus.textContent = 'Подписка истекла';
+            blockedOverlay.classList.add('active');
+            createBtn.disabled = true;
+            break;
+    }
+    
+    // Обновляем модалку
+    document.getElementById('trialDays').textContent = state.subscription.daysLeft;
+    document.getElementById('trialProgressFill').style.width = (state.subscription.daysLeft / 10 * 100) + '%';
+}
+
+function selectPlan(plan) {
+    state.selectedPlan = plan;
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    document.getElementById('selectedPlanPrice').textContent = plan === 'year' ? '7,128 ₽' : '990 ₽';
+}
+
+function processPayment() {
+    const btn = event.currentTarget;
+    btn.innerHTML = '⏳ Обработка...';
+    btn.disabled = true;
+    
+    setTimeout(() => {
+        closeModal('subscriptionModal');
+        document.getElementById('successOverlay').classList.add('active');
+        
+        state.subscription.status = 'active';
+        state.subscription.daysLeft = state.selectedPlan === 'year' ? 365 : 30;
+        saveState();
+        
+        setTimeout(() => {
+            document.getElementById('successOverlay').classList.remove('active');
+            updateSubscriptionUI();
+            showToast('🎉', 'Добро пожаловать в PRO!');
+        }, 2500);
+        
+        btn.innerHTML = '💳 Оплатить <span id="selectedPlanPrice">7,128 ₽</span>';
+        btn.disabled = false;
+    }, 2000);
+}
+
+// ===== ДОСТИЖЕНИЯ И XP =====
+function addXP(amount) {
+    state.xp += amount;
+    document.getElementById('userXP').textContent = state.xp.toLocaleString();
+    document.getElementById('statXP').textContent = state.xp.toLocaleString();
+    document.getElementById('modalXP').textContent = state.xp.toLocaleString();
+    
+    const newLevel = Math.floor(state.xp / 300) + 1;
+    if (newLevel > state.level) {
+        state.level = newLevel;
+        document.getElementById('userLevel').textContent = `LVL ${state.level}`;
+        document.getElementById('modalLevel').textContent = state.level;
+        showToast('🎉', `Новый уровень: ${state.level}!`);
+    }
+    saveState();
+}
+
+function showAchievementsModal() {
+    document.getElementById('modalXP').textContent = state.xp.toLocaleString();
+    document.getElementById('modalLevel').textContent = state.level;
+    document.getElementById('modalAchievements').textContent = achievementsData.filter(a => a.unlocked).length;
+    document.getElementById('levelProgressFill').style.width = ((state.xp % 300) / 300 * 100) + '%';
+    renderAchievementsFull();
+    document.getElementById('achievementsModal').classList.add('active');
+}
+
+function showStreakInfo() {
+    showToast('🔥', `Вы учитесь ${state.streak} дней подряд!`);
+}
+
+// ===== СЕРТИФИКАТ =====
+function showCertificate() {
+    document.getElementById('certName').textContent = 'Артем Иванов';
+    document.getElementById('certCourse').textContent = `"${state.currentCourse?.title || 'Курс'}"`;
+    document.getElementById('certDate').textContent = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('certificateModal').classList.add('active');
+}
+
+function downloadCertificate() {
+    showToast('📥', 'Сертификат скачивается...');
+}
+
+function shareCertificate() {
+    showToast('📤', 'Поделиться сертификатом');
+}
+
+// ===== ПРОЧЕЕ =====
+function copyLink(event, id) {
+    event.stopPropagation();
+    const link = `t.me/EduGramBot/app?course=${id}`;
+    navigator.clipboard?.writeText(link);
+    showToast('📋', `Ссылка скопирована: ${link}`);
+}
+
+function createCourse() {
+    if (state.subscription.status === 'expired') {
+        showSubscriptionModal();
+        return;
+    }
+    const name = prompt('Название курса:');
+    if (name) {
+        expertCoursesData.push({
+            id: expertCoursesData.length + 1,
+            title: name,
+            icon: '📚',
+            students: 0,
+            earnings: '0 ⭐'
+        });
+        renderExpertCourses();
+        document.getElementById('expertCoursesCount').textContent = expertCoursesData.length;
+        showToast('✅', `Курс "${name}" создан!`);
+    }
+}
+
+function toggleDarkMode() {
+    state.darkMode = !state.darkMode;
+    document.body.classList.toggle('dark-mode', state.darkMode);
+    saveState();
+    showToast('🌙', state.darkMode ? 'Темная тема' : 'Светлая тема');
+}
+
+function showSearch() {
+    showToast('🔍', 'Поиск скоро будет доступен');
+}
+
+function showProfile() {
+    switchMode('student');
+    switchStudentTab('stats');
+}
+
+// ===== МОДАЛКИ =====
+function showSubscriptionModal() {
+    document.getElementById('subscriptionModal').classList.add('active');
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+}
+
+function closeModalOnBackdrop(event, id) {
+    if (event.target === event.currentTarget) {
+        closeModal(id);
+    }
+}
+
+// ===== TOAST =====
+function showToast(icon, text) {
+    // НОВОЕ: вибрация по типу уведомления
+    if (icon === '✅') hapticFeedback('success');
+    else if (icon === '⚠️' || icon === '❌') hapticFeedback('error');
+    else hapticFeedback('light');
+    
+    const toast = document.getElementById('toast');
+    toast.querySelector('.toast-icon').textContent = icon;
+    toast.querySelector('.toast-text').textContent = text;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+</script>
+
+</body>
+</html>
