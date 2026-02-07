@@ -11,36 +11,69 @@
             box-sizing: border-box;
         }
 
+        
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --success: #4CAF50;
-            --warning: #ff9800;
-            --danger: #f44336;
-            --dark: #1a1a2e;
-            --light: #f5f5f5;
-            --gold: #ffd700;
-            --bg: #ffffff;
-            --text: #333333;
-            --card-bg: #ffffff;
-            --border: #e0e0e0;
-        }
+    /* Telegram цвета - светлая тема */
+    --primary: #3390ec;
+    --primary-dark: #2b7cd3;
+    --primary-light: #6ab2f2;
+    --secondary: #3390ec;
+    
+    --success: #31b545;
+    --warning: #f5a623;
+    --danger: #e53935;
+    
+    --bg: #ffffff;
+    --bg-secondary: #f4f4f5;
+    --text: #000000;
+    --text-secondary: #707579;
+    --hint: #999999;
+    
+    --card-bg: #ffffff;
+    --light: #f4f4f5;
+    --border: #e7e7e7;
+    --divider: #ececec;
+    
+    --link: #3390ec;
+    --gold: #ffc107;
+    
+    /* Дополнительные */
+    --online: #0ac630;
+    --message-out: #effdde;
+    --header-bg: #3390ec;
+}
 
-        body.dark-mode {
-            --bg: #1a1a2e;
-            --text: #ffffff;
-            --card-bg: #16213e;
-            --light: #16213e;
-            --border: #2a2a4a;
-        }
+body.dark-mode {
+    /* Telegram цвета - тёмная тема */
+    --primary: #3390ec;
+    --primary-dark: #2b7cd3;
+    --primary-light: #6ab2f2;
+    --secondary: #3390ec;
+    
+    --success: #4dd964;
+    --warning: #f5a623;
+    --danger: #ff5c5c;
+    
+    --bg: #17212b;
+    --bg-secondary: #232e3c;
+    --text: #ffffff;
+    --text-secondary: #708499;
+    --hint: #6c7883;
+    
+    --card-bg: #232e3c;
+    --light: #1e2c3a;
+    --border: #344352;
+    --divider: #2b3a49;
+    
+    --link: #6ab2f2;
+    --gold: #ffc107;
+    
+    --online: #4dd964;
+    --message-out: #2b5278;
+    --header-bg: #242f3d;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        
 
         .container {
             max-width: 480px;
@@ -52,14 +85,14 @@
         }
 
         /* ===== ХЕДЕР ===== */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 15px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+       header {
+    background: var(--header-bg);
+    color: white;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
 
         .header-top {
             display: flex;
@@ -341,15 +374,15 @@
         }
 
         .course-image {
-            width: 100%;
-            height: 160px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            position: relative;
-        }
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+}
 
         .course-badge {
             position: absolute;
@@ -439,16 +472,20 @@
         }
 
         .buy-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.buy-btn:hover {
+    background: var(--primary-dark);
+}
 
         .buy-btn:active {
             transform: scale(0.95);
@@ -759,7 +796,7 @@
         .quiz-submit-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 12px;
@@ -817,7 +854,7 @@
         .qa-send-btn {
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 50%;
             color: white;
@@ -1250,7 +1287,7 @@
         }
 
         .expert-stat {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border-radius: 12px;
             padding: 15px 10px;
@@ -1312,7 +1349,7 @@
         .my-course-thumb {
             width: 50px;
             height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-radius: 8px;
             display: flex;
             align-items: center;
@@ -1491,18 +1528,19 @@
 
         /* ===== НИЖНЯЯ НАВИГАЦИЯ ===== */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            display: flex;
-            padding: 8px;
-            z-index: 100;
-        }
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 6px 8px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom));
+    z-index: 100;
+}
 
         .nav-item {
             flex: 1;
@@ -1879,7 +1917,7 @@
         .subscribe-btn {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 12px;
@@ -1931,7 +1969,7 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1992,7 +2030,7 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         }
 
         .students-stat {
@@ -2022,7 +2060,7 @@
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2069,7 +2107,7 @@
 
         .chat-header {
             padding: 15px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             display: flex;
             align-items: center;
@@ -2117,7 +2155,7 @@
 
         .chat-message.outgoing {
             align-self: flex-end;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border-bottom-right-radius: 4px;
         }
@@ -2154,7 +2192,7 @@
         .chat-send-btn {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 50%;
             color: white;
@@ -2169,7 +2207,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -2315,7 +2353,7 @@
         .auth-submit {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 12px;
@@ -2714,7 +2752,7 @@
         }
         /* ===== СТРАНИЦА ПРОФИЛЯ ===== */
 .profile-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: var(--primary);
     padding: 40px 20px;
     text-align: center;
     color: white;
@@ -2901,7 +2939,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
     width: 100%;
     max-width: 300px;
     padding: 16px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     border-radius: 12px;
@@ -3001,7 +3039,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 }
 
 .empty-btn {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     padding: 12px 24px;
@@ -3136,7 +3174,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 .expert-course-thumb {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -3235,7 +3273,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 
 /* ===== РЕДАКТОР КУРСА ===== */
 .editor-header {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: var(--primary);
     padding: 15px 20px;
     display: flex;
     align-items: center;
@@ -3395,7 +3433,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 .editor-icon-preview {
     width: 100px;
     height: 100px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: var(--primary);
     border-radius: 24px;
     display: inline-flex;
     align-items: center;
@@ -3403,7 +3441,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
     font-size: 48px;
     cursor: pointer;
     transition: transform 0.2s;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(51, 144, 236, 0.3);
 }
 
 .editor-icon-preview:active {
@@ -3457,7 +3495,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 .add-lesson-btn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     border-radius: 12px;
@@ -3806,7 +3844,7 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 .editor-submit-btn {
     flex: 2;
     padding: 14px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
     border: none;
     border-radius: 12px;
@@ -3977,6 +4015,49 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 
 .icon-item:active {
     transform: scale(0.95);
+}
+
+/* ===== TELEGRAM СТИЛЬ ===== */
+a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+/* Улучшенные тени для Telegram стиля */
+.course-card {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.course-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Telegram-стиль скроллбара */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--hint);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Плавные переходы для темы */
+body {
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.card-bg, .course-card, .modal-content, .bottom-nav {
+    transition: background-color 0.2s, border-color 0.2s;
 }
     </style>
 </head>
