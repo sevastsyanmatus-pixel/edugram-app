@@ -2925,6 +2925,313 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 #expertPanel {
     padding-bottom: 20px;
 }
+/* ===== ПАНЕЛЬ ЭКСПЕРТА (НОВАЯ) ===== */
+.expert-panel-tab {
+    padding: 0;
+}
+
+.quick-actions {
+    margin-top: 20px;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.quick-action-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.quick-action-item:active {
+    transform: scale(0.95);
+}
+
+.quick-action-icon {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.quick-action-text {
+    font-size: 11px;
+    color: #666;
+}
+
+.quick-action-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--danger);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 18px;
+}
+
+/* Пустое состояние */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-state.small {
+    padding: 20px;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-text {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.empty-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Метрики аналитики */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+}
+
+.metric-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.metric-change {
+    font-size: 12px;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.metric-change.positive {
+    color: var(--success);
+}
+
+.metric-change.negative {
+    color: var(--danger);
+}
+
+.metric-change.neutral {
+    color: #666;
+}
+
+/* Топ курсы */
+.top-courses-list {
+    padding: 10px 0;
+}
+
+.top-course-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: var(--light);
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+.top-course-rank {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.top-course-rank.gold {
+    background: linear-gradient(135deg, var(--gold), #ffed4e);
+    color: #333;
+}
+
+.top-course-info {
+    flex: 1;
+}
+
+.top-course-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.top-course-stats {
+    font-size: 12px;
+    color: #666;
+}
+
+.top-course-earnings {
+    font-weight: bold;
+    color: var(--success);
+}
+
+/* Карточка курса эксперта */
+.expert-course-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.expert-course-card:active {
+    transform: scale(0.98);
+}
+
+.expert-course-thumb {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.expert-course-info {
+    flex: 1;
+}
+
+.expert-course-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.expert-course-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: #666;
+}
+
+.expert-course-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.expert-course-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.expert-course-btn.edit {
+    background: var(--light);
+}
+
+.expert-course-btn.share {
+    background: var(--primary);
+    color: white;
+}
+
+/* Промокоды */
+.promo-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.promo-code-text {
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+    background: var(--light);
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.promo-item-info {
+    flex: 1;
+}
+
+.promo-item-discount {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--success);
+}
+
+.promo-item-stats {
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.promo-item-delete {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px;
+}
     </style>
 </head>
 <body>
@@ -3399,9 +3706,198 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
         </div>
 
         <!-- Если уже эксперт - показываем панель -->
-        <div id="expertPanel" style="display: none;">
-            <!-- Сюда перенесём содержимое expertMode -->
+<div id="expertPanel" style="display: none;">
+    
+    <!-- Табы эксперта -->
+    <div class="tabs">
+        <button class="tab active" onclick="switchExpertPanelTab('dashboard')">📊 Панель</button>
+        <button class="tab" onclick="switchExpertPanelTab('courses')">📚 Курсы</button>
+        <button class="tab" onclick="switchExpertPanelTab('promo')">🏷️ Промо</button>
+        <button class="tab" onclick="switchExpertPanelTab('analytics')">📈 Аналитика</button>
+    </div>
+
+    <!-- Таб: Панель управления -->
+    <div id="expertDashboardTab" class="expert-panel-tab">
+        <div class="expert-dashboard">
+            
+            <!-- Карточка подписки -->
+            <div class="subscription-card trial" id="expertSubCard" onclick="showSubscriptionModal()">
+                <div class="sub-status">Статус подписки</div>
+                <div class="sub-value" id="expertSubStatus">Пробный период: 10 дней</div>
+                <button class="sub-btn">Улучшить план →</button>
+            </div>
+
+            <!-- Статистика -->
+            <div class="expert-stats">
+                <div class="expert-stat" onclick="showEarningsDetails()">
+                    <div class="expert-stat-value" id="expertEarnings">0 ⭐</div>
+                    <div class="expert-stat-label">Заработано</div>
+                </div>
+                <div class="expert-stat" onclick="showStudentsModal()">
+                    <div class="expert-stat-value" id="expertStudents">0</div>
+                    <div class="expert-stat-label">Учеников</div>
+                </div>
+                <div class="expert-stat">
+                    <div class="expert-stat-value" id="expertCoursesNum">0</div>
+                    <div class="expert-stat-label">Курсов</div>
+                </div>
+            </div>
+
+            <!-- Кнопка создания курса -->
+            <button class="create-course-btn" onclick="createNewCourse()">
+                ➕ Создать новый курс
+            </button>
+
+            <!-- Быстрые действия -->
+            <div class="quick-actions">
+                <div class="section-header">
+                    <span class="section-title">⚡ Быстрые действия</span>
+                </div>
+                <div class="quick-actions-grid">
+                    <div class="quick-action-item" onclick="showMessagesModal()">
+                        <span class="quick-action-icon">💬</span>
+                        <span class="quick-action-text">Сообщения</span>
+                        <span class="quick-action-badge" id="quickMsgBadge">0</span>
+                    </div>
+                    <div class="quick-action-item" onclick="showStudentsModal()">
+                        <span class="quick-action-icon">👥</span>
+                        <span class="quick-action-text">Ученики</span>
+                    </div>
+                    <div class="quick-action-item" onclick="showCreatePromoModal()">
+                        <span class="quick-action-icon">🏷️</span>
+                        <span class="quick-action-text">Промокод</span>
+                    </div>
+                    <div class="quick-action-item" onclick="showWithdrawModal()">
+                        <span class="quick-action-icon">💰</span>
+                        <span class="quick-action-text">Вывод</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Мои курсы -->
+            <div class="section-header" style="margin-top: 20px;">
+                <span class="section-title">📚 Мои курсы</span>
+                <span class="see-all-btn" onclick="switchExpertPanelTab('courses')">Все →</span>
+            </div>
+            <div class="my-courses-list" id="expertCoursesDashboard">
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <div class="empty-text">У вас пока нет курсов</div>
+                    <button class="empty-btn" onclick="createNewCourse()">Создать первый курс</button>
+                </div>
+            </div>
+
         </div>
+    </div>
+
+    <!-- Таб: Курсы -->
+    <div id="expertCoursesTab" class="expert-panel-tab" style="display: none;">
+        <div style="padding: 15px;">
+            <button class="create-course-btn" onclick="createNewCourse()">
+                ➕ Создать новый курс
+            </button>
+            
+            <div id="expertCoursesFullList" class="my-courses-list" style="margin-top: 15px;">
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <div class="empty-text">Создайте свой первый курс</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Таб: Промокоды -->
+    <div id="expertPromoTab" class="expert-panel-tab" style="display: none;">
+        <div class="promo-section">
+            <div class="section-header">
+                <span class="section-title">🏷️ Мои промокоды</span>
+            </div>
+            
+            <div id="expertPromoList">
+                <div class="empty-state">
+                    <div class="empty-icon">🏷️</div>
+                    <div class="empty-text">Нет активных промокодов</div>
+                </div>
+            </div>
+            
+            <button class="create-promo-btn" onclick="showCreatePromoModal()">
+                ➕ Создать промокод
+            </button>
+        </div>
+    </div>
+
+    <!-- Таб: Аналитика -->
+    <div id="expertAnalyticsTab" class="expert-panel-tab" style="display: none;">
+        <div class="analytics-section">
+            
+            <!-- График продаж -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <span class="chart-title">💰 Продажи</span>
+                    <select class="chart-period" onchange="updateAnalytics(this.value)">
+                        <option value="7">7 дней</option>
+                        <option value="30">30 дней</option>
+                        <option value="90">3 месяца</option>
+                    </select>
+                </div>
+                <div class="chart-bars" id="salesChart">
+                    <div class="chart-bar" style="height: 20%;"></div>
+                    <div class="chart-bar" style="height: 45%;"></div>
+                    <div class="chart-bar" style="height: 30%;"></div>
+                    <div class="chart-bar" style="height: 60%;"></div>
+                    <div class="chart-bar" style="height: 40%;"></div>
+                    <div class="chart-bar" style="height: 75%;"></div>
+                    <div class="chart-bar" style="height: 55%;"></div>
+                </div>
+                <div class="chart-labels">
+                    <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+                </div>
+            </div>
+
+            <!-- Метрики -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">👁️</div>
+                    <div class="metric-value" id="metricViews">0</div>
+                    <div class="metric-label">Просмотров</div>
+                    <div class="metric-change positive">+0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🛒</div>
+                    <div class="metric-value" id="metricSales">0</div>
+                    <div class="metric-label">Продаж</div>
+                    <div class="metric-change positive">+0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">📊</div>
+                    <div class="metric-value" id="metricConversion">0%</div>
+                    <div class="metric-label">Конверсия</div>
+                    <div class="metric-change neutral">0%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">⭐</div>
+                    <div class="metric-value" id="metricRating">0.0</div>
+                    <div class="metric-label">Рейтинг</div>
+                    <div class="metric-change positive">+0.0</div>
+                </div>
+            </div>
+
+            <!-- Топ курсы -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <span class="chart-title">🏆 Топ курсы</span>
+                </div>
+                <div id="topCoursesList" class="top-courses-list">
+                    <div class="empty-state small">
+                        <div class="empty-text">Пока нет данных</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
     </div>
 
 <!-- НАВИГАЦИЯ -->
@@ -4356,10 +4852,8 @@ function openExpertMode() {
         // Уже эксперт - показываем панель
         document.getElementById('expertRegistration').style.display = 'none';
         document.getElementById('expertPanel').style.display = 'block';
-        
-        // Переносим контент панели эксперта
-        moveExpertPanelContent();
-        updateSubscriptionUI();
+        updateExpertPanel();
+        switchExpertPanelTab('dashboard');
     } else {
         // Не эксперт - показываем регистрацию
         document.getElementById('expertRegistration').style.display = 'block';
@@ -4395,6 +4889,17 @@ function registerAsExpert() {
     state.user.expertSince = new Date().toISOString();
     state.subscription = { status: 'trial', daysLeft: 10 };
     
+    // Инициализируем данные эксперта
+    if (!state.expertData) {
+        state.expertData = {
+            courses: [],
+            students: 0,
+            earnings: 0,
+            promoCodes: [],
+            messages: []
+        };
+    }
+    
     saveState();
     
     showToast('🎉', 'Добро пожаловать в эксперты!');
@@ -4403,26 +4908,11 @@ function registerAsExpert() {
     setTimeout(() => {
         document.getElementById('expertRegistration').style.display = 'none';
         document.getElementById('expertPanel').style.display = 'block';
-        moveExpertPanelContent();
-        updateSubscriptionUI();
+        updateExpertPanel();
     }, 500);
 }
 
-function moveExpertPanelContent() {
-    const panel = document.getElementById('expertPanel');
-    const expertMode = document.getElementById('expertMode');
-    
-    // Если контент еще не перенесен
-    if (panel.innerHTML.trim() === '') {
-        // Клонируем содержимое
-        panel.innerHTML = expertMode.innerHTML;
-        
-        // Переключаем на панель управления
-        setTimeout(() => {
-            switchExpertTab('dashboard');
-        }, 100);
-    }
-}
+
 
 // ===== ВЫХОД ИЗ АККАУНТА =====
 function logout() {
@@ -5008,6 +5498,309 @@ function showToast(icon, text) {
     toast.querySelector('.toast-text').textContent = text;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
+}
+// ===== ПАНЕЛЬ ЭКСПЕРТА =====
+
+function switchExpertPanelTab(tab) {
+    hapticFeedback('light');
+    
+    // Убираем активный класс со всех табов
+    document.querySelectorAll('#expertPanel .tab').forEach(t => t.classList.remove('active'));
+    
+    // Скрываем все табы
+    document.querySelectorAll('.expert-panel-tab').forEach(t => t.style.display = 'none');
+    
+    // Активируем нужный таб
+    const tabIndex = { 'dashboard': 0, 'courses': 1, 'promo': 2, 'analytics': 3 };
+    const tabs = document.querySelectorAll('#expertPanel .tab');
+    if (tabs[tabIndex[tab]]) {
+        tabs[tabIndex[tab]].classList.add('active');
+    }
+    
+    // Показываем контент таба
+    const tabMap = {
+        'dashboard': 'expertDashboardTab',
+        'courses': 'expertCoursesTab',
+        'promo': 'expertPromoTab',
+        'analytics': 'expertAnalyticsTab'
+    };
+    
+    const tabElement = document.getElementById(tabMap[tab]);
+    if (tabElement) {
+        tabElement.style.display = 'block';
+    }
+    
+    // Обновляем данные таба
+    if (tab === 'dashboard') updateExpertDashboard();
+    if (tab === 'courses') updateExpertCourses();
+    if (tab === 'promo') updateExpertPromo();
+    if (tab === 'analytics') updateExpertAnalytics();
+}
+
+function updateExpertPanel() {
+    updateExpertDashboard();
+    updateSubscriptionUIExpert();
+}
+
+function updateExpertDashboard() {
+    const data = state.expertData || { courses: [], students: 0, earnings: 0 };
+    
+    // Обновляем статистику
+    document.getElementById('expertEarnings').textContent = data.earnings.toLocaleString() + ' ⭐';
+    document.getElementById('expertStudents').textContent = data.students;
+    document.getElementById('expertCoursesNum').textContent = data.courses.length;
+    document.getElementById('quickMsgBadge').textContent = state.unreadMessages || 0;
+    
+    // Обновляем список курсов
+    const coursesList = document.getElementById('expertCoursesDashboard');
+    
+    if (data.courses.length === 0) {
+        coursesList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📚</div>
+                <div class="empty-text">У вас пока нет курсов</div>
+                <button class="empty-btn" onclick="createNewCourse()">Создать первый курс</button>
+            </div>
+        `;
+    } else {
+        coursesList.innerHTML = data.courses.slice(0, 3).map(course => `
+            <div class="expert-course-card" onclick="editCourse(${course.id})">
+                <div class="expert-course-thumb">${course.icon || '📚'}</div>
+                <div class="expert-course-info">
+                    <div class="expert-course-title">${course.title}</div>
+                    <div class="expert-course-meta">
+                        <span>👥 ${course.students || 0}</span>
+                        <span>💰 ${(course.earnings || 0).toLocaleString()} ⭐</span>
+                    </div>
+                </div>
+                <div class="expert-course-actions">
+                    <button class="expert-course-btn share" onclick="event.stopPropagation(); shareCourse(${course.id})">📤</button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function updateExpertCourses() {
+    const data = state.expertData || { courses: [] };
+    const coursesList = document.getElementById('expertCoursesFullList');
+    
+    if (data.courses.length === 0) {
+        coursesList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📚</div>
+                <div class="empty-text">Создайте свой первый курс</div>
+            </div>
+        `;
+    } else {
+        coursesList.innerHTML = data.courses.map(course => `
+            <div class="expert-course-card" onclick="editCourse(${course.id})">
+                <div class="expert-course-thumb">${course.icon || '📚'}</div>
+                <div class="expert-course-info">
+                    <div class="expert-course-title">${course.title}</div>
+                    <div class="expert-course-meta">
+                        <span>👥 ${course.students || 0}</span>
+                        <span>⭐ ${course.rating || 0}</span>
+                        <span>💰 ${(course.earnings || 0).toLocaleString()} ⭐</span>
+                    </div>
+                </div>
+                <div class="expert-course-actions">
+                    <button class="expert-course-btn edit" onclick="event.stopPropagation(); editCourse(${course.id})">✏️</button>
+                    <button class="expert-course-btn share" onclick="event.stopPropagation(); shareCourse(${course.id})">📤</button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function updateExpertPromo() {
+    const data = state.expertData || { promoCodes: [] };
+    const promoList = document.getElementById('expertPromoList');
+    
+    if (data.promoCodes.length === 0) {
+        promoList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">🏷️</div>
+                <div class="empty-text">Нет активных промокодов</div>
+            </div>
+        `;
+    } else {
+        promoList.innerHTML = data.promoCodes.map((promo, index) => `
+            <div class="promo-item">
+                <div class="promo-code-text">${promo.code}</div>
+                <div class="promo-item-info">
+                    <div class="promo-item-discount">-${promo.discount}%</div>
+                    <div class="promo-item-stats">Использовано: ${promo.uses || 0}/${promo.limit || '∞'}</div>
+                </div>
+                <button class="promo-item-delete" onclick="deletePromo(${index})">🗑️</button>
+            </div>
+        `).join('');
+    }
+}
+
+function updateExpertAnalytics() {
+    const data = state.expertData || { courses: [] };
+    
+    // Симуляция данных (в реальном приложении - с сервера)
+    document.getElementById('metricViews').textContent = Math.floor(Math.random() * 1000);
+    document.getElementById('metricSales').textContent = Math.floor(Math.random() * 50);
+    document.getElementById('metricConversion').textContent = (Math.random() * 15).toFixed(1) + '%';
+    document.getElementById('metricRating').textContent = (4 + Math.random()).toFixed(1);
+    
+    // Топ курсы
+    const topList = document.getElementById('topCoursesList');
+    if (data.courses.length === 0) {
+        topList.innerHTML = `<div class="empty-state small"><div class="empty-text">Пока нет данных</div></div>`;
+    } else {
+        topList.innerHTML = data.courses
+            .sort((a, b) => (b.earnings || 0) - (a.earnings || 0))
+            .slice(0, 3)
+            .map((course, index) => `
+                <div class="top-course-item">
+                    <div class="top-course-rank ${index === 0 ? 'gold' : ''}">${index + 1}</div>
+                    <div class="top-course-info">
+                        <div class="top-course-title">${course.title}</div>
+                        <div class="top-course-stats">👥 ${course.students || 0} учеников</div>
+                    </div>
+                    <div class="top-course-earnings">${(course.earnings || 0).toLocaleString()} ⭐</div>
+                </div>
+            `).join('');
+    }
+}
+
+function updateSubscriptionUIExpert() {
+    const subCard = document.getElementById('expertSubCard');
+    const subStatus = document.getElementById('expertSubStatus');
+    
+    if (!subCard || !subStatus) return;
+    
+    switch (state.subscription.status) {
+        case 'trial':
+            subCard.className = 'subscription-card trial';
+            subStatus.textContent = `Пробный период: ${state.subscription.daysLeft} дней`;
+            break;
+        case 'active':
+            subCard.className = 'subscription-card active';
+            subStatus.textContent = 'PRO подписка активна';
+            break;
+        case 'expired':
+            subCard.className = 'subscription-card expired';
+            subStatus.textContent = 'Подписка истекла';
+            break;
+    }
+}
+
+// ===== ДЕЙСТВИЯ ЭКСПЕРТА =====
+
+function createNewCourse() {
+    hapticFeedback('medium');
+    
+    const title = prompt('Название курса:');
+    if (!title || !title.trim()) return;
+    
+    const icons = ['📚', '💻', '🎨', '📊', '🚀', '💡', '🎯', '🔧'];
+    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+    
+    if (!state.expertData) {
+        state.expertData = { courses: [], students: 0, earnings: 0, promoCodes: [] };
+    }
+    
+    const newCourse = {
+        id: Date.now(),
+        title: title.trim(),
+        icon: randomIcon,
+        price: 1990,
+        students: 0,
+        earnings: 0,
+        rating: 0,
+        lessons: [],
+        createdAt: new Date().toISOString()
+    };
+    
+    state.expertData.courses.push(newCourse);
+    saveState();
+    
+    updateExpertDashboard();
+    updateExpertCourses();
+    
+    showToast('✅', `Курс "${title}" создан!`);
+}
+
+function editCourse(courseId) {
+    hapticFeedback('light');
+    const course = state.expertData?.courses.find(c => c.id === courseId);
+    if (course) {
+        showToast('✏️', `Редактирование: ${course.title}`);
+        // Здесь будет открытие редактора курса
+    }
+}
+
+function shareCourse(courseId) {
+    hapticFeedback('light');
+    const link = `t.me/YourBot/app?startapp=course_${courseId}`;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(link);
+        showToast('📋', 'Ссылка скопирована!');
+    } else {
+        showToast('🔗', link);
+    }
+}
+
+function deletePromo(index) {
+    if (confirm('Удалить промокод?')) {
+        state.expertData.promoCodes.splice(index, 1);
+        saveState();
+        updateExpertPromo();
+        showToast('🗑️', 'Промокод удалён');
+    }
+}
+
+function showEarningsDetails() {
+    showToast('💰', `Заработано: ${state.expertData?.earnings || 0} ⭐`);
+}
+
+function showWithdrawModal() {
+    showToast('💰', 'Вывод средств в разработке');
+}
+
+function updateAnalytics(period) {
+    hapticFeedback('light');
+    showToast('📊', `Аналитика за ${period} дней`);
+    // Обновление графика
+}
+
+// Обновляем функцию создания промокода
+function createPromoCode() {
+    const code = document.getElementById('promoCodeInput').value.toUpperCase();
+    const limit = document.getElementById('promoLimitInput').value;
+    
+    if (!code) {
+        showToast('⚠️', 'Введите код промокода');
+        return;
+    }
+    
+    if (!state.expertData) {
+        state.expertData = { courses: [], students: 0, earnings: 0, promoCodes: [] };
+    }
+    
+    state.expertData.promoCodes.push({
+        code: code,
+        discount: state.selectedDiscount,
+        uses: 0,
+        limit: limit ? parseInt(limit) : null,
+        createdAt: new Date().toISOString()
+    });
+    
+    document.getElementById('promoCodeInput').value = '';
+    closeModal('promoModal');
+    
+    if (state.isExpertModeOpen) {
+        updateExpertPromo();
+    }
+    
+    saveState();
+    showToast('✅', `Промокод ${code} создан!`);
 }
 </script>
 
