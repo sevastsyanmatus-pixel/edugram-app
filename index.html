@@ -2712,6 +2712,219 @@
         .page.active {
             display: block;
         }
+        /* ===== СТРАНИЦА ПРОФИЛЯ ===== */
+.profile-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 40px 20px;
+    text-align: center;
+    color: white;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 15px;
+    border: 3px solid rgba(255,255,255,0.3);
+}
+
+.profile-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.profile-email {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.profile-stat {
+    text-align: center;
+}
+
+.profile-stat-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.profile-stat-label {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.profile-menu {
+    padding: 15px;
+}
+
+.profile-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+}
+
+.profile-menu-item:active {
+    transform: scale(0.98);
+}
+
+.profile-menu-item.expert-mode-btn {
+    background: linear-gradient(135deg, #fff9e6, #ffecb3);
+    border: 2px solid var(--gold);
+}
+
+body.dark-mode .profile-menu-item.expert-mode-btn {
+    background: linear-gradient(135deg, #3d3d00, #4a4a00);
+}
+
+.profile-menu-item.logout {
+    background: rgba(244, 67, 54, 0.1);
+    border-color: var(--danger);
+}
+
+.profile-menu-icon {
+    font-size: 24px;
+    width: 40px;
+    text-align: center;
+}
+
+.profile-menu-text {
+    flex: 1;
+}
+
+.profile-menu-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.profile-menu-desc {
+    font-size: 12px;
+    color: #666;
+}
+
+.profile-menu-arrow {
+    font-size: 18px;
+    color: #999;
+}
+
+.profile-menu-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 15px 0;
+}
+
+/* ===== РЕЖИМ ЭКСПЕРТА ===== */
+.expert-mode-header {
+    background: linear-gradient(135deg, var(--gold), #ffed4e);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.expert-back-btn {
+    background: rgba(0,0,0,0.1);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #333;
+}
+
+.expert-mode-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.expert-registration {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.expert-reg-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.expert-registration h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.expert-registration p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.expert-benefits {
+    text-align: left;
+    max-width: 300px;
+    margin: 0 auto 30px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.benefit-item span:first-child {
+    font-size: 20px;
+}
+
+.become-expert-btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.become-expert-btn:active {
+    transform: scale(0.98);
+}
+
+.expert-note {
+    font-size: 12px;
+    color: #999;
+    margin-top: 15px;
+}
+
+/* Панель эксперта внутри режима */
+#expertPanel {
+    padding-bottom: 20px;
+}
     </style>
 </head>
 <body>
@@ -2762,19 +2975,7 @@
                 <input type="password" class="auth-input" id="registerPassword" placeholder="Минимум 6 символов">
             </div>
             
-            <label class="auth-label">Я хочу:</label>
-            <div class="auth-role-select">
-                <div class="auth-role selected" onclick="selectAuthRole('student', this)">
-                    <div class="auth-role-icon">🎓</div>
-                    <div class="auth-role-name">Учиться</div>
-                    <div class="auth-role-desc">Покупать курсы</div>
-                </div>
-                <div class="auth-role" onclick="selectAuthRole('expert', this)">
-                    <div class="auth-role-icon">👨‍🏫</div>
-                    <div class="auth-role-name">Преподавать</div>
-                    <div class="auth-role-desc">Продавать курсы</div>
-                </div>
-            </div>
+        
             
             <button class="auth-submit" onclick="handleRegister()">Создать аккаунт</button>
             
@@ -2837,11 +3038,7 @@
 
     <!-- ===== ГЛАВНАЯ СТРАНИЦА ===== -->
     <div id="mainPage" class="page active">
-        <!-- Переключатель режимов -->
-        <div class="mode-switcher">
-            <button class="mode-btn active" id="studentModeBtn" onclick="switchMode('student')">🎓 Ученик</button>
-            <button class="mode-btn" id="expertModeBtn" onclick="switchMode('expert')">👨‍🏫 Эксперт</button>
-        </div>
+        
 
         <!-- === РЕЖИМ УЧЕНИКА === -->
         <div id="studentMode">
@@ -3087,26 +3284,145 @@
 
         <button class="add-note-fab" id="addNoteFab" onclick="showAddNoteModal()">📝</button>
     </div>
+    <!-- ===== СТРАНИЦА ПРОФИЛЯ ===== -->
+    <div id="profilePage" class="page">
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">👤</div>
+            <div class="profile-name" id="profileName">Пользователь</div>
+            <div class="profile-email" id="profileEmail">email@example.com</div>
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileXP">0</div>
+                    <div class="profile-stat-label">XP</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileCourses">0</div>
+                    <div class="profile-stat-label">Курсов</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileStreak">0</div>
+                    <div class="profile-stat-label">Дней</div>
+                </div>
+            </div>
+        </div>
 
-    <!-- НАВИГАЦИЯ -->
-    <div class="bottom-nav">
-        <button class="nav-item active" onclick="navigateTo('home')">
-            <span class="nav-icon">🏠</span>
-            <span>Главная</span>
-        </button>
-        <button class="nav-item" onclick="showSearch()">
-            <span class="nav-icon">🔍</span>
-            <span>Поиск</span>
-        </button>
-        <button class="nav-item" onclick="showAchievementsModal()">
-            <span class="nav-icon">🏆</span>
-            <span>Награды</span>
-        </button>
-        <button class="nav-item" onclick="showProfile()">
-            <span class="nav-icon">👤</span>
-            <span>Профиль</span>
-        </button>
+        <div class="profile-menu">
+            <!-- Кнопка режима эксперта -->
+            <div class="profile-menu-item expert-mode-btn" id="expertModeBtn" onclick="openExpertMode()">
+                <span class="profile-menu-icon">👨‍🏫</span>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title" id="expertBtnTitle">Стать экспертом</div>
+                    <div class="profile-menu-desc" id="expertBtnDesc">Создавайте и продавайте курсы</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-divider"></div>
+
+            <div class="profile-menu-item" onclick="showAchievementsModal()">
+                <span class="profile-menu-icon">🏆</span>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Достижения</div>
+                    <div class="profile-menu-desc">Ваши награды и XP</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="showMyPurchases()">
+                <span class="profile-menu-icon">📚</span>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Мои покупки</div>
+                    <div class="profile-menu-desc">История покупок курсов</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-item" onclick="showSettings()">
+                <span class="profile-menu-icon">⚙️</span>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Настройки</div>
+                    <div class="profile-menu-desc">Уведомления, тема, язык</div>
+                </div>
+                <span class="profile-menu-arrow">→</span>
+            </div>
+
+            <div class="profile-menu-divider"></div>
+
+            <div class="profile-menu-item logout" onclick="logout()">
+                <span class="profile-menu-icon">🚪</span>
+                <div class="profile-menu-text">
+                    <div class="profile-menu-title">Выйти</div>
+                    <div class="profile-menu-desc">Выход из аккаунта</div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- ===== РЕЖИМ ЭКСПЕРТА (отдельный экран) ===== -->
+    <div id="expertModePage" class="page">
+        <!-- Хедер режима эксперта -->
+        <div class="expert-mode-header">
+            <button class="expert-back-btn" onclick="closeExpertMode()">← Назад</button>
+            <div class="expert-mode-title">👨‍🏫 Режим эксперта</div>
+        </div>
+
+        <!-- Если не зарегистрирован как эксперт -->
+        <div id="expertRegistration" class="expert-registration">
+            <div class="expert-reg-icon">👨‍🏫</div>
+            <h2>Станьте экспертом</h2>
+            <p>Создавайте курсы и зарабатывайте</p>
+            
+            <div class="expert-benefits">
+                <div class="benefit-item">
+                    <span>💰</span>
+                    <span>Зарабатывайте на своих знаниях</span>
+                </div>
+                <div class="benefit-item">
+                    <span>👥</span>
+                    <span>Набирайте аудиторию</span>
+                </div>
+                <div class="benefit-item">
+                    <span>📊</span>
+                    <span>Подробная аналитика</span>
+                </div>
+                <div class="benefit-item">
+                    <span>🎁</span>
+                    <span>10 дней бесплатно</span>
+                </div>
+            </div>
+
+            <button class="become-expert-btn" onclick="registerAsExpert()">
+                🚀 Начать бесплатно
+            </button>
+            
+            <p class="expert-note">Пробный период 10 дней, потом от 990₽/мес</p>
+        </div>
+
+        <!-- Если уже эксперт - показываем панель -->
+        <div id="expertPanel" style="display: none;">
+            <!-- Сюда перенесём содержимое expertMode -->
+        </div>
+    </div>
+
+<!-- НАВИГАЦИЯ -->
+<div class="bottom-nav" id="mainNav">
+    <button class="nav-item active" onclick="navigateToTab('home')">
+        <span class="nav-icon">🏠</span>
+        <span>Главная</span>
+    </button>
+    <button class="nav-item" onclick="navigateToTab('search')">
+        <span class="nav-icon">🔍</span>
+        <span>Поиск</span>
+    </button>
+    <button class="nav-item" onclick="navigateToTab('my-courses')">
+        <span class="nav-icon">📚</span>
+        <span>Мои курсы</span>
+    </button>
+    <button class="nav-item" onclick="navigateToTab('profile')">
+        <span class="nav-icon">👤</span>
+        <span>Профиль</span>
+    </button>
+</div>
 </div>
 
 <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
@@ -3424,14 +3740,27 @@ function setupBackButton() {
     tg.BackButton.onClick(() => {
         hapticFeedback('light');
         
+        // Если открыт режим эксперта
+        if (state.isExpertModeOpen) {
+            closeExpertMode();
+            return;
+        }
+        
+        // Если открыт курс
         if (state.currentPage === 'course') {
             navigateTo('home');
-        } else if (document.querySelector('.modal.active')) {
-            const activeModal = document.querySelector('.modal.active');
-            closeModal(activeModal.id);
-        } else {
-            tg.close();
+            return;
         }
+        
+        // Если открыта модалка
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+            closeModal(activeModal.id);
+            return;
+        }
+        
+        // Иначе закрываем приложение
+        tg.close();
     });
 }
 
@@ -3561,8 +3890,8 @@ const studentsData = [
 
 // ===== СОСТОЯНИЕ =====
 let state = {
-    currentMode: 'student',
     currentPage: 'main',
+    currentTab: 'home', // home, search, my-courses, profile
     currentCourse: null,
     darkMode: false,
     xp: 1250,
@@ -3577,21 +3906,36 @@ let state = {
     quizState: { currentQuestion: 0, score: 0, selectedAnswer: -1 },
     videoProgress: 0,
     isPlaying: false,
-    user: { isLoggedIn: false, name: '', email: '', role: 'student' },
+    user: { 
+        isLoggedIn: false, 
+        name: '', 
+        email: '', 
+        telegramId: null,
+        isExpert: false, // Зарегистрирован как эксперт?
+        expertSince: null // Дата регистрации эксперта
+    },
     currentChatUser: null,
-    unreadMessages: 2
+    unreadMessages: 2,
+    isExpertModeOpen: false // Открыт ли режим эксперта
 };
 
 // ===== ИНИЦИАЛИЗАЦИЯ =====
 document.addEventListener('DOMContentLoaded', () => {
-    initTelegramApp(); // Новая функция для Telegram
+    initTelegramApp();
     loadState();
     checkAuth();
+    
+    // Показываем режим ученика по умолчанию
+    document.getElementById('studentMode').style.display = 'block';
+    document.getElementById('expertMode').style.display = 'none';
+    document.getElementById('subBanner').style.display = 'none';
+    document.getElementById('headerStudent').style.display = 'flex';
+    document.getElementById('headerExpert').style.display = 'none';
+    
     renderCatalog();
     renderAchievementsPreview();
     renderExpertCourses();
     renderPromoCodes();
-    updateMessagesCount();
     
     if (state.user.isLoggedIn) {
         setTimeout(() => showToast('👋', `С возвращением, ${state.user.name}!`), 1000);
@@ -3902,6 +4246,208 @@ function renderStudents() {
     `).join('');
 }
 
+// ===== НАВИГАЦИЯ ПО ТАБАМ =====
+function navigateToTab(tab) {
+    hapticFeedback('light');
+    state.currentTab = tab;
+    
+    // Убираем active со всех табов
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    
+    // Скрываем все страницы
+    document.getElementById('mainPage').classList.remove('active');
+    document.getElementById('coursePage').classList.remove('active');
+    document.getElementById('profilePage').classList.remove('active');
+    document.getElementById('expertModePage').classList.remove('active');
+    
+    // Активируем нужный таб
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    switch(tab) {
+        case 'home':
+            document.getElementById('mainPage').classList.add('active');
+            document.getElementById('studentMode').style.display = 'block';
+            document.getElementById('expertMode').style.display = 'none';
+            switchStudentTab('catalog');
+            navItems[0].classList.add('active');
+            if (tg) tg.BackButton.hide();
+            break;
+            
+        case 'search':
+            showToast('🔍', 'Поиск скоро будет доступен');
+            navItems[1].classList.add('active');
+            break;
+            
+        case 'my-courses':
+            document.getElementById('mainPage').classList.add('active');
+            document.getElementById('studentMode').style.display = 'block';
+            document.getElementById('expertMode').style.display = 'none';
+            switchStudentTab('myCourses');
+            navItems[2].classList.add('active');
+            if (tg) tg.BackButton.hide();
+            break;
+            
+        case 'profile':
+            document.getElementById('profilePage').classList.add('active');
+            navItems[3].classList.add('active');
+            updateProfilePage();
+            if (tg) tg.BackButton.hide();
+            break;
+    }
+    
+    state.currentPage = 'main';
+    document.getElementById('headerTitle').textContent = '📚 EduGram';
+}
+
+function navigateTo(page) {
+    hapticFeedback('light');
+    
+    if (page === 'home') {
+        navigateToTab('home');
+    }
+}
+
+// ===== СТРАНИЦА ПРОФИЛЯ =====
+function updateProfilePage() {
+    document.getElementById('profileName').textContent = state.user.name || 'Пользователь';
+    document.getElementById('profileEmail').textContent = state.user.email || 'Не указан';
+    document.getElementById('profileXP').textContent = state.xp.toLocaleString();
+    document.getElementById('profileCourses').textContent = state.purchasedCourses.length;
+    document.getElementById('profileStreak').textContent = state.streak;
+    
+    // Обновляем кнопку эксперта
+    const expertBtn = document.getElementById('expertModeBtn');
+    const expertTitle = document.getElementById('expertBtnTitle');
+    const expertDesc = document.getElementById('expertBtnDesc');
+    
+    if (state.user.isExpert) {
+        expertTitle.textContent = 'Режим эксперта';
+        expertDesc.textContent = 'Управление курсами и учениками';
+    } else {
+        expertTitle.textContent = 'Стать экспертом';
+        expertDesc.textContent = 'Создавайте и продавайте курсы';
+    }
+}
+
+function showProfile() {
+    navigateToTab('profile');
+}
+
+function showMyPurchases() {
+    navigateToTab('my-courses');
+}
+
+function showSettings() {
+    showToast('⚙️', 'Настройки в разработке');
+}
+
+// ===== РЕЖИМ ЭКСПЕРТА =====
+function openExpertMode() {
+    hapticFeedback('medium');
+    
+    // Скрываем все страницы
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // Показываем страницу эксперта
+    document.getElementById('expertModePage').classList.add('active');
+    
+    // Показываем нужный контент
+    if (state.user.isExpert) {
+        // Уже эксперт - показываем панель
+        document.getElementById('expertRegistration').style.display = 'none';
+        document.getElementById('expertPanel').style.display = 'block';
+        
+        // Переносим контент панели эксперта
+        moveExpertPanelContent();
+        updateSubscriptionUI();
+    } else {
+        // Не эксперт - показываем регистрацию
+        document.getElementById('expertRegistration').style.display = 'block';
+        document.getElementById('expertPanel').style.display = 'none';
+    }
+    
+    state.isExpertModeOpen = true;
+    
+    // Скрываем нижнюю навигацию
+    document.getElementById('mainNav').style.display = 'none';
+    
+    // Показываем кнопку назад Telegram
+    if (tg) tg.BackButton.show();
+}
+
+function closeExpertMode() {
+    hapticFeedback('light');
+    
+    state.isExpertModeOpen = false;
+    
+    // Показываем навигацию
+    document.getElementById('mainNav').style.display = 'flex';
+    
+    // Возвращаемся в профиль
+    navigateToTab('profile');
+}
+
+function registerAsExpert() {
+    hapticFeedback('success');
+    
+    // Регистрируем как эксперта
+    state.user.isExpert = true;
+    state.user.expertSince = new Date().toISOString();
+    state.subscription = { status: 'trial', daysLeft: 10 };
+    
+    saveState();
+    
+    showToast('🎉', 'Добро пожаловать в эксперты!');
+    
+    // Показываем панель эксперта
+    setTimeout(() => {
+        document.getElementById('expertRegistration').style.display = 'none';
+        document.getElementById('expertPanel').style.display = 'block';
+        moveExpertPanelContent();
+        updateSubscriptionUI();
+    }, 500);
+}
+
+function moveExpertPanelContent() {
+    const panel = document.getElementById('expertPanel');
+    const expertMode = document.getElementById('expertMode');
+    
+    // Если контент еще не перенесен
+    if (panel.innerHTML.trim() === '') {
+        // Клонируем содержимое
+        panel.innerHTML = expertMode.innerHTML;
+        
+        // Переключаем на панель управления
+        setTimeout(() => {
+            switchExpertTab('dashboard');
+        }, 100);
+    }
+}
+
+// ===== ВЫХОД ИЗ АККАУНТА =====
+function logout() {
+    if (confirm('Выйти из аккаунта?')) {
+        hapticFeedback('medium');
+        
+        state.user = { 
+            isLoggedIn: false, 
+            name: '', 
+            email: '', 
+            telegramId: null,
+            isExpert: false,
+            expertSince: null
+        };
+        
+        saveState();
+        
+        // Показываем экран авторизации
+        document.getElementById('authScreen').classList.remove('hidden');
+        navigateToTab('home');
+        
+        showToast('👋', 'До свидания!');
+    }
+}
+
 // ===== НАВИГАЦИЯ =====
 function navigateTo(page) {
     hapticFeedback('light'); // НОВОЕ: вибрация
@@ -3997,11 +4543,35 @@ function switchStudentTab(tab) {
 }
 
 function switchExpertTab(tab) {
-    document.querySelectorAll('#expertMode .tab').forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    document.querySelectorAll('.expert-tab-content').forEach(c => c.style.display = 'none');
-    const tabMap = { 'dashboard': 'dashboardTab', 'myCourses': 'myCoursesExpertTab', 'promo': 'promoTab', 'analytics': 'analyticsTab' };
-    document.getElementById(tabMap[tab]).style.display = 'block';
+    // Ищем табы внутри expertPanel если режим открыт, иначе в expertMode
+    const container = state.isExpertModeOpen ? 
+        document.getElementById('expertPanel') : 
+        document.getElementById('expertMode');
+    
+    if (!container) return;
+    
+    container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+    // Находим и активируем нужный таб
+    const tabs = container.querySelectorAll('.tab');
+    const tabIndex = { 'dashboard': 0, 'myCourses': 1, 'promo': 2, 'analytics': 3 };
+    if (tabs[tabIndex[tab]]) {
+        tabs[tabIndex[tab]].classList.add('active');
+    }
+    
+    container.querySelectorAll('.expert-tab-content').forEach(c => c.style.display = 'none');
+    
+    const tabMap = { 
+        'dashboard': 'dashboardTab', 
+        'myCourses': 'myCoursesExpertTab', 
+        'promo': 'promoTab', 
+        'analytics': 'analyticsTab' 
+    };
+    
+    const tabElement = container.querySelector('#' + tabMap[tab]);
+    if (tabElement) {
+        tabElement.style.display = 'block';
+    }
 }
 
 function switchLessonTab(tab) {
