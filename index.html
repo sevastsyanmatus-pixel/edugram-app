@@ -34,22 +34,38 @@
             --border: #2a2a4a;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+        html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 
         .container {
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--bg);
-            min-height: 100vh;
-            position: relative;
-            padding-bottom: 80px;
-        }
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--bg);
+    height: 100%;
+    position: relative;
+    padding-bottom: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
 
         /* ===== ХЕДЕР ===== */
         header {
@@ -3978,6 +3994,251 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
 .icon-item:active {
     transform: scale(0.95);
 }
+
+/* ===== TELEGRAM MINI APP АДАПТАЦИЯ ===== */
+
+/* Безопасные отступы для устройств с вырезом */
+.container {
+    padding-top: env(safe-area-inset-top);
+}
+
+header {
+    padding-top: calc(15px + env(safe-area-inset-top));
+}
+
+.bottom-nav {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+}
+
+/* Блокировка pull-to-refresh */
+.page {
+    overscroll-behavior: contain;
+    height: 100%;
+    overflow-y: auto;
+}
+
+/* Фикс для страниц */
+.page.active {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+}
+
+#mainPage.active,
+#profilePage.active,
+#expertModePage.active,
+#courseEditorPage.active {
+    display: block;
+    height: auto;
+    min-height: calc(100vh - 140px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#coursePage.active {
+    display: block;
+}
+
+/* ===== МОДАЛЬНЫЕ ОКНА - ИСПРАВЛЕНИЕ ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: flex-end; /* Открываем снизу как в Telegram */
+    justify-content: center;
+    z-index: 1000;
+    padding: 0;
+    overscroll-behavior: contain;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: slideUp 0.3s ease;
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Полоска для свайпа модалки */
+.modal-content::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 12px auto;
+}
+
+/* Модалки которые открываются по центру */
+.modal.center-modal .modal-content,
+#iconPickerModal .modal-content,
+#certificateModal .modal-content {
+    border-radius: 20px;
+    max-height: 80vh;
+    margin: auto;
+    animation: scaleIn 0.2s ease;
+}
+
+#iconPickerModal .modal-content::before,
+#certificateModal .modal-content::before {
+    display: none;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal.center-modal {
+    align-items: center;
+    padding: 20px;
+}
+
+#iconPickerModal,
+#certificateModal {
+    align-items: center;
+    padding: 20px;
+}
+
+/* ===== ФИКС СКРОЛЛА ВНУТРИ МОДАЛОК ===== */
+.modal-body,
+.achievements-list,
+.messages-list,
+.lesson-editor-body,
+.pricing-plans {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    max-height: 60vh;
+}
+
+#studentsList {
+    max-height: 50vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* ===== ХЕДЕР РЕЖИМА ЭКСПЕРТА ===== */
+.expert-mode-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: linear-gradient(135deg, var(--gold), #ffed4e);
+    padding: 15px 20px;
+    padding-top: calc(15px + env(safe-area-inset-top));
+}
+
+.editor-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding-top: calc(15px + env(safe-area-inset-top));
+}
+
+/* ===== TELEGRAM GRAB HANDLE (полоска сверху) ===== */
+.tg-grab-handle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 20px);
+    min-height: 20px;
+    background: transparent;
+    z-index: 9999;
+    touch-action: none;
+}
+
+/* ===== ПРЕДОТВРАЩЕНИЕ РЕЗИНКИ ===== */
+.courses-grid,
+.lessons-list,
+.reviews-section,
+.qa-section,
+.notes-section,
+.stats-section,
+.expert-dashboard,
+.promo-section,
+.analytics-section,
+.profile-menu,
+.editor-section {
+    overscroll-behavior: contain;
+}
+
+/* ===== УЛУЧШЕННЫЕ ТАБЫ ===== */
+.tabs,
+.lesson-tabs,
+.editor-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--card-bg);
+}
+
+/* ===== ПЛАВНЫЙ СКРОЛЛ ===== */
+* {
+    scroll-behavior: smooth;
+}
+
+/* ===== ФИКС ДЛЯ ВИДЕОПЛЕЕРА ===== */
+.video-player {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+
+/* ===== ПРАВИЛЬНЫЕ ОТСТУПЫ ДЛЯ КОНТЕНТА ===== */
+#coursePage .lesson-content {
+    min-height: calc(100vh - 400px);
+    padding-bottom: 100px;
+}
+
+/* ===== ФИКС КЛАВИАТУРЫ ===== */
+@supports (height: 100dvh) {
+    html, body {
+        height: 100dvh;
+    }
+    
+    .container {
+        height: 100dvh;
+    }
+}
     </style>
 </head>
 <body>
@@ -5262,19 +5523,26 @@ function initTelegramApp() {
         return;
     }
     
-    // 1. Инициализация приложения
+        // 1. Инициализация приложения
     tg.ready();
     tg.expand(); // Развернуть на весь экран
-    tg.enableClosingConfirmation(); // Подтверждение перед закрытием
     
-    // 2. Применить цветовую схему Telegram
-    applyTelegramTheme();
-    
-    // 3. Получить данные пользователя
-    const user = tg.initDataUnsafe?.user;
-    if (user) {
-        autoLoginFromTelegram(user);
+    // Отключаем вертикальные свайпы для закрытия
+    if (tg.disableVerticalSwipes) {
+        tg.disableVerticalSwipes();
     }
+    
+    // Устанавливаем цвет хедера
+    if (tg.setHeaderColor) {
+        tg.setHeaderColor('#667eea');
+    }
+    
+    // Устанавливаем цвет фона
+    if (tg.setBackgroundColor) {
+        tg.setBackgroundColor('#ffffff');
+    }
+    
+    tg.enableClosingConfirmation(); // Подтверждение перед закрытием
     
     // 4. Настроить кнопку "Назад"
     setupBackButton();
@@ -5283,6 +5551,47 @@ function initTelegramApp() {
     handleDeepLink();
     
     console.log('✅ Telegram WebApp инициализирован');
+        
+    // 6. Блокируем pull-to-close кроме верхней полоски
+    preventPullToClose();
+    
+    console.log('✅ Telegram WebApp инициализирован');
+}
+
+// Функция блокировки свайпа вниз
+function preventPullToClose() {
+    // Добавляем полоску для свайпа сверху
+    const grabHandle = document.createElement('div');
+    grabHandle.className = 'tg-grab-handle';
+    document.body.prepend(grabHandle);
+    
+    let startY = 0;
+    let isScrolling = false;
+    
+    const container = document.querySelector('.container');
+    
+    // Блокируем свайп на контейнере
+    container.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY;
+        isScrolling = container.scrollTop > 0;
+    }, { passive: true });
+    
+    container.addEventListener('touchmove', (e) => {
+        const currentY = e.touches[0].clientY;
+        const deltaY = currentY - startY;
+        
+        // Если скроллим вниз и уже в самом верху - блокируем
+        if (deltaY > 0 && container.scrollTop <= 0 && !isScrolling) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+    
+    // Для модальных окон
+    document.querySelectorAll('.modal-content').forEach(modal => {
+        modal.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        }, { passive: true });
+    });
 }
 
 function applyTelegramTheme() {
@@ -7416,6 +7725,73 @@ function editCourse(courseId) {
 function createNewCourse() {
     openCourseEditor(null);
 }
+
+// ===== СВАЙП ДЛЯ ЗАКРЫТИЯ МОДАЛОК =====
+function initModalSwipe() {
+    document.querySelectorAll('.modal-content').forEach(content => {
+        let startY = 0;
+        let currentY = 0;
+        let isDragging = false;
+        
+        content.addEventListener('touchstart', (e) => {
+            // Только если касаемся верхней части (первые 50px)
+            const rect = content.getBoundingClientRect();
+            const touchY = e.touches[0].clientY - rect.top;
+            
+            if (touchY < 50 && content.scrollTop === 0) {
+                startY = e.touches[0].clientY;
+                isDragging = true;
+                content.style.transition = 'none';
+            }
+        }, { passive: true });
+        
+        content.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            currentY = e.touches[0].clientY;
+            const deltaY = currentY - startY;
+            
+            if (deltaY > 0) {
+                content.style.transform = `translateY(${deltaY}px)`;
+                content.style.opacity = 1 - (deltaY / 400);
+            }
+        }, { passive: true });
+        
+        content.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            
+            const deltaY = currentY - startY;
+            content.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            
+            if (deltaY > 100) {
+                // Закрываем модалку
+                const modal = content.closest('.modal');
+                if (modal) {
+                    content.style.transform = 'translateY(100%)';
+                    content.style.opacity = '0';
+                    setTimeout(() => {
+                        modal.classList.remove('active');
+                        content.style.transform = '';
+                        content.style.opacity = '';
+                    }, 300);
+                }
+            } else {
+                // Возвращаем на место
+                content.style.transform = '';
+                content.style.opacity = '';
+            }
+            
+            isDragging = false;
+            startY = 0;
+            currentY = 0;
+        }, { passive: true });
+    });
+}
+
+// Вызываем после загрузки
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(initModalSwipe, 500);
+});
 </script>
 
 </body>
