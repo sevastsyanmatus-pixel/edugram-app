@@ -1543,1055 +1543,550 @@ body {
             font-size: 20px;
         }
 
-        /* ===== МОДАЛЬНЫЕ ОКНА ===== */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 400px;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .modal-close {
-            background: var(--light);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        /* ===== МОДАЛКА ДОСТИЖЕНИЙ ===== */
-        .achievements-modal-header {
-            background: linear-gradient(135deg, var(--gold), #ffed4e);
-            padding: 25px;
-            text-align: center;
-            border-radius: 20px 20px 0 0;
-        }
-
-        .achievements-modal-header h2 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .xp-display {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 15px;
-        }
-
-        .xp-item {
-            text-align: center;
-        }
-
-        .xp-item-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .xp-item-label {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .level-progress {
-            margin-top: 20px;
-            background: rgba(0,0,0,0.1);
-            height: 8px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .level-progress-fill {
-            height: 100%;
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        .level-text {
-            font-size: 12px;
-            color: #666;
-            margin-top: 8px;
-        }
-
-        .achievements-list {
-            padding: 20px;
-        }
-
-        .achievement-category {
-            margin-bottom: 20px;
-        }
-
-        .category-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .achievement-full {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            background: var(--light);
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
-
-        .achievement-full.unlocked {
-            background: linear-gradient(135deg, #fff9e6, #ffecb3);
-        }
-
-        body.dark-mode .achievement-full.unlocked {
-            background: linear-gradient(135deg, #3d3d00, #4a4a00);
-        }
-
-        .achievement-full .achievement-icon {
-            font-size: 32px;
-            margin: 0;
-        }
-
-        .achievement-full.locked .achievement-icon {
-            filter: grayscale(100%);
-            opacity: 0.3;
-        }
-
-        .achievement-details {
-            flex: 1;
-        }
-
-        .achievement-full-name {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-
-        .achievement-desc {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .achievement-xp {
-            background: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        /* ===== МОДАЛКА ПОДПИСКИ ===== */
-        .pricing-header {
-            background: linear-gradient(135deg, var(--gold), #ffed4e);
-            padding: 30px 20px;
-            text-align: center;
-            border-radius: 20px 20px 0 0;
-            position: relative;
-        }
-
-        .pricing-header::before {
-            content: '👑';
-            font-size: 50px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .pricing-header h2 {
-            font-size: 24px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .pricing-header p {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .trial-info {
-            background: white;
-            margin: -15px 20px 0;
-            padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .trial-days {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .trial-label {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .trial-progress {
-            height: 6px;
-            background: #eee;
-            border-radius: 10px;
-            margin-top: 15px;
-            overflow: hidden;
-        }
-
-        .trial-progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), var(--warning), var(--danger));
-            border-radius: 10px;
-        }
-
-        .pricing-plans {
-            padding: 20px;
-        }
-
-        .plan-card {
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .plan-card:hover {
-            border-color: var(--primary);
-        }
-
-        .plan-card.selected {
-            border-color: var(--primary);
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        .plan-card.popular {
-            border-color: var(--gold);
-            background: linear-gradient(135deg, #fffef0, #fff9e6);
-        }
-
-        .plan-card.popular::before {
-            content: '🔥 ВЫГОДНО';
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--gold), #ffed4e);
-            color: #333;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .plan-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .plan-name {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .plan-badge {
-            background: var(--success);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .plan-price {
-            margin-bottom: 10px;
-        }
-
-        .plan-price-value {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .plan-price-old {
-            font-size: 16px;
-            color: #999;
-            text-decoration: line-through;
-            margin-left: 10px;
-        }
-
-        .plan-price-period {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .plan-features {
-            list-style: none;
-            padding: 0;
-        }
-
-        .plan-features li {
-            padding: 6px 0;
-            font-size: 13px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .plan-features li::before {
-            content: '✓';
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        .subscribe-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .payment-methods {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            font-size: 24px;
-            border-top: 1px solid var(--border);
-        }
-
-        .payment-note {
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-            padding: 0 20px 20px;
-        }
-
-        /* ===== МОДАЛКА СООБЩЕНИЙ ===== */
-        .messages-list {
-            padding: 0;
-        }
-
-        .message-item {
-            display: flex;
-            gap: 12px;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .message-item:hover {
-            background: var(--light);
-        }
-
-        .message-item.unread {
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        .message-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .message-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .message-sender {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: #999;
-        }
-
-        .message-preview {
-            font-size: 13px;
-            color: #666;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .message-course {
-            font-size: 11px;
-            color: var(--primary);
-            margin-top: 4px;
-        }
-
-        .unread-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            flex-shrink: 0;
-            align-self: center;
-        }
-
-        /* ===== МОДАЛКА УЧЕНИКОВ ===== */
-        .students-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-        }
-
-        .students-stat {
-            text-align: center;
-            color: white;
-        }
-
-        .students-stat-value {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .students-stat-label {
-            font-size: 11px;
-            opacity: 0.9;
-        }
-
-        .student-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .student-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .student-info {
-            flex: 1;
-        }
-
-        .student-name {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 2px;
-        }
-
-        .student-course {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .student-progress {
-            text-align: right;
-        }
-
-        .student-progress-value {
-            font-weight: bold;
-            color: var(--success);
-        }
-
-        .student-progress-label {
-            font-size: 11px;
-            color: #666;
-        }
-
-        /* ===== ЧАТ ===== */
-        .chat-modal-content {
-            display: flex;
-            flex-direction: column;
-            height: 80vh;
-            max-height: 600px;
-        }
-
-        .chat-header {
-            padding: 15px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-radius: 20px 20px 0 0;
-        }
-
-        .chat-user-info {
-            flex: 1;
-        }
-
-        .chat-user-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .chat-user-status {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .chat-messages-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background: var(--bg);
-        }
-
-        .chat-message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .chat-message.incoming {
-            align-self: flex-start;
-            background: var(--light);
-            border-bottom-left-radius: 4px;
-        }
-
-        .chat-message.outgoing {
-            align-self: flex-end;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-message-time {
-            font-size: 10px;
-            opacity: 0.7;
-            margin-top: 4px;
-        }
-
-        .chat-input-container {
-            padding: 15px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            gap: 10px;
-            background: var(--card-bg);
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 12px 16px;
-            border: 2px solid var(--border);
-            border-radius: 25px;
-            font-size: 14px;
-            outline: none;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        .chat-input:focus {
-            border-color: var(--primary);
-        }
-
-        .chat-send-btn {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 50%;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        /* ===== РЕГИСТРАЦИЯ ===== */
-        .auth-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 5000;
-            padding: 20px;
-        }
-
-        .auth-screen.hidden {
-            display: none;
-        }
-
-        .auth-logo {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
-        .auth-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 10px;
-        }
-
-        .auth-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .auth-card {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            width: 100%;
-            max-width: 380px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .auth-tabs {
-            display: flex;
-            background: var(--light);
-            border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 25px;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            color: #666;
-            transition: all 0.3s;
-        }
-
-        .auth-tab.active {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
-        .auth-input-group {
-            margin-bottom: 15px;
-        }
-
-        .auth-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .auth-input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 15px;
-            transition: border-color 0.3s;
-        }
-
-        .auth-input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .auth-role-select {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0 20px;
-        }
-
-        .auth-role {
-            flex: 1;
-            padding: 20px 15px;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auth-role:hover {
-            border-color: var(--primary);
-        }
-
-        .auth-role.selected {
-            border-color: var(--primary);
-            background: rgba(102, 126, 234, 0.05);
-        }
-
-        .auth-role-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .auth-role-name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .auth-role-desc {
-            font-size: 11px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .auth-submit {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: transform 0.2s;
-        }
-
-        .auth-submit:hover {
-            transform: translateY(-2px);
-        }
-
-        .auth-submit:active {
-            transform: scale(0.98);
-        }
-
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            margin: 25px 0;
-            color: #999;
-            font-size: 13px;
-        }
-
-        .auth-divider::before,
-        .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .auth-divider span {
-            padding: 0 15px;
-        }
-
-        .auth-telegram-btn {
-            width: 100%;
-            padding: 14px;
-            background: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #666;
-        }
-
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* ===== СЕРТИФИКАТ ===== */
-        .certificate {
-            background: linear-gradient(135deg, #fffef0, #fff9e6);
-            border: 6px solid var(--gold);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .certificate-seal {
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 50px;
-            background: var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .certificate-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 15px;
-            color: #333;
-        }
-
-        .certificate-subtitle {
-            color: #666;
-            margin: 5px 0 20px;
-        }
-
-        .certificate-name {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary);
-            font-family: Georgia, serif;
-            margin: 15px 0;
-        }
-
-        .certificate-course {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .certificate-date {
-            font-size: 14px;
-            color: #666;
-            margin-top: 20px;
-        }
-
-        .certificate-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .cert-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .cert-btn.download {
-            background: var(--primary);
-            color: white;
-        }
-
-        .cert-btn.share {
-            background: var(--light);
-            color: #333;
-        }
-
-        /* ===== REVIEW MODAL ===== */
-        .review-form {
-            padding: 20px;
-        }
-
-        .rating-select {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .rating-star {
-            font-size: 36px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            filter: grayscale(100%);
-        }
-
-        .rating-star:hover {
-            transform: scale(1.2);
-        }
-
-        .rating-star.selected {
-            filter: none;
-        }
-
-        .review-textarea {
-            width: 100%;
-            height: 120px;
-            padding: 15px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 14px;
-            resize: none;
-            background: var(--card-bg);
-            color: var(--text);
-        }
-
-        .review-textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .submit-review-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        /* ===== PROMO MODAL ===== */
-        .promo-form {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 14px;
-            background: var(--card-bg);
-            color: var(--text);
-        }
-
-        .form-input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        .discount-options {
-            display: flex;
-            gap: 10px;
-        }
-
-        .discount-option {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .discount-option.selected {
-            border-color: var(--primary);
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary);
-        }
+/* ===== МОДАЛЬНЫЕ ОКНА - СОВРЕМЕННЫЙ ДИЗАЙН ===== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 1000;
+    padding: 0;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.modal.active {
+    display: flex;
+    animation: modalFadeIn 0.2s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--card-bg);
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideUp 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+    overflow: hidden;
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* Зона для свайпа - большая и удобная */
+.modal-drag-zone {
+    padding: 12px 20px 8px;
+    cursor: grab;
+    touch-action: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-drag-handle {
+    width: 48px;
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+}
+
+.modal-drag-zone:active .modal-drag-handle {
+    width: 56px;
+    background: var(--text-secondary, #999);
+}
+
+/* Хедер модалки */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header-simple {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 16px;
+}
+
+/* Кнопки в хедере */
+.modal-header-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s;
+    min-width: 70px;
+}
+
+.modal-header-btn.cancel {
+    color: var(--primary);
+}
+
+.modal-header-btn.cancel:active {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.modal-header-btn.save {
+    color: white;
+    background: var(--primary);
+    font-weight: 600;
+}
+
+.modal-header-btn.save:active {
+    background: var(--primary-dark, #5a6fd6);
+    transform: scale(0.96);
+}
+
+.modal-header-btn.save:disabled {
+    background: var(--border);
+    color: var(--text-secondary, #999);
+}
+
+/* Заголовок */
+.modal-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    flex: 1;
+}
+
+.modal-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary, #999);
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* Кнопка закрытия - большая и удобная */
+.modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--light);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--text-secondary, #666);
+    transition: all 0.2s;
+}
+
+.modal-close:active {
+    background: var(--border);
+    transform: scale(0.9);
+}
+
+/* Тело модалки */
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px;
+}
+
+.modal-body-no-padding {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Футер модалки */
+.modal-footer {
+    padding: 16px 20px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    background: var(--card-bg);
+}
+
+.modal-footer-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.modal-btn.primary:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+.modal-btn.secondary {
+    background: var(--light);
+    color: var(--text);
+}
+
+.modal-btn.secondary:active {
+    background: var(--border);
+}
+
+.modal-btn.danger {
+    background: var(--danger);
+    color: white;
+}
+
+.modal-btn.full {
+    width: 100%;
+}
+
+/* Центрированные модалки (для маленьких окон) */
+.modal.modal-center {
+    align-items: center;
+    padding: 20px;
+}
+
+.modal.modal-center .modal-content {
+    border-radius: 20px;
+    max-height: 80vh;
+    animation: modalScaleIn 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes modalScaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal.modal-center .modal-drag-zone {
+    display: none;
+}
+
+/* Алерт/Подтверждение */
+.modal.modal-alert .modal-content {
+    max-width: 320px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.modal-alert-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.modal-alert-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.modal-alert-text {
+    font-size: 14px;
+    color: var(--text-secondary, #666);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.modal-alert-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* ===== СПЕЦИФИЧНЫЕ МОДАЛКИ ===== */
+
+/* Модалка достижений */
+.achievements-modal-header {
+    background: linear-gradient(135deg, var(--gold), #ffed4e);
+    padding: 30px 20px;
+    text-align: center;
+    margin: -1px;
+    border-radius: 24px 24px 0 0;
+}
+
+.achievements-modal-header h2 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Модалка подписки */
+.pricing-modal .modal-content {
+    max-height: 95vh;
+}
+
+.pricing-header {
+    background: linear-gradient(135deg, var(--gold), #ffed4e);
+    padding: 30px 20px 40px;
+    text-align: center;
+    position: relative;
+    margin: -1px -1px 0;
+    border-radius: 24px 24px 0 0;
+}
+
+.pricing-header::before {
+    content: '👑';
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.pricing-header h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.pricing-header p {
+    font-size: 15px;
+    color: #666;
+}
+
+/* Модалка отзыва */
+.review-form {
+    padding: 20px;
+}
+
+.rating-select {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 0;
+}
+
+.rating-star {
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.2s;
+    filter: grayscale(100%);
+    opacity: 0.4;
+}
+
+.rating-star:active {
+    transform: scale(1.3);
+}
+
+.rating-star.selected {
+    filter: none;
+    opacity: 1;
+    animation: starPop 0.3s ease;
+}
+
+@keyframes starPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Модалка чата */
+.chat-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    max-height: 700px;
+}
+
+.chat-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 24px 24px 0 0;
+}
+
+.chat-header .modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Модалка промокода */
+.promo-form {
+    padding: 20px;
+}
+
+/* Модалка иконок */
+#iconPickerModal {
+    align-items: center;
+    padding: 20px;
+}
+
+#iconPickerModal .modal-content {
+    max-width: 360px;
+    border-radius: 20px;
+}
+
+.icon-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    padding: 20px;
+}
+
+.icon-item {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: var(--light);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-item:active {
+    transform: scale(0.9);
+    background: var(--primary);
+}
+
+/* Модалка сертификата */
+#certificateModal {
+    align-items: center;
+    padding: 20px;
+}
+
+#certificateModal .modal-content {
+    border-radius: 20px;
+    background: transparent;
+    box-shadow: none;
+}
+
+.certificate {
+    background: linear-gradient(135deg, #fffef0, #fff9e6);
+    border: 6px solid var(--gold);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== ПОЛЯ ВВОДА В МОДАЛКАХ ===== */
+
+.modal-input-group {
+    margin-bottom: 20px;
+}
+
+.modal-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    transition: all 0.2s;
+    -webkit-appearance: none;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.modal-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    background: var(--card-bg);
+    color: var(--text);
+    min-height: 120px;
+    resize: none;
+    font-family: inherit;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+}
+
+.modal-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Подсказка под полем */
+.modal-input-hint {
+    font-size: 13px;
+    color: var(--text-secondary, #999);
+    margin-top: 6px;
+}
+
+/* Toolbar для ввода (над клавиатурой) */
+.input-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--light);
+    border-top: 1px solid var(--border);
+}
+
+.input-toolbar-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.input-toolbar-btn:active {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.input-toolbar-btn.done {
+    font-weight: 600;
+}
 
         /* ===== TOAST ===== */
         .toast {
@@ -4239,6 +3734,36 @@ header {
         height: 100dvh;
     }
 }
+
+/* Опции скидок */
+.discount-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.discount-option {
+    padding: 14px 10px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s;
+    background: var(--card-bg);
+    color: var(--text);
+}
+
+.discount-option:active {
+    transform: scale(0.95);
+}
+
+.discount-option.selected {
+    border-color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+}
     </style>
 </head>
 <body>
@@ -5228,15 +4753,15 @@ header {
     </div>
 </div>
 
-<!-- ===== ВЫБОР ИКОНКИ (модалка) ===== -->
-<div class="modal" id="iconPickerModal" onclick="closeModalOnBackdrop(event, 'iconPickerModal')">
-    <div class="modal-content icon-picker-modal" onclick="event.stopPropagation()">
-        
+<!-- Выбор иконки (центрированная модалка) -->
+<div class="modal modal-center" id="iconPickerModal" onclick="closeModalOnBackdrop(event, 'iconPickerModal')">
+    <div class="modal-content" onclick="event.stopPropagation()">
         <div class="modal-header">
-            <span class="modal-title">🎨 Выберите иконку</span>
+            <div style="width: 36px;"></div>
+            <div class="modal-title">Выберите иконку</div>
             <button class="modal-close" onclick="closeModal('iconPickerModal')">✕</button>
         </div>
-
+        
         <div class="icon-picker-grid">
             <div class="icon-item" onclick="selectCourseIcon('📚')">📚</div>
             <div class="icon-item" onclick="selectCourseIcon('💻')">💻</div>
@@ -5263,7 +4788,6 @@ header {
             <div class="icon-item" onclick="selectCourseIcon('🧠')">🧠</div>
             <div class="icon-item" onclick="selectCourseIcon('📖')">📖</div>
         </div>
-
     </div>
 </div>
 
@@ -5272,6 +4796,10 @@ header {
 <!-- Модалка достижений -->
 <div class="modal" id="achievementsModal" onclick="closeModalOnBackdrop(event, 'achievementsModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-drag-zone" id="achievementsDragZone">
+            <div class="modal-drag-handle"></div>
+        </div>
+        
         <div class="achievements-modal-header">
             <h2>🏆 Достижения</h2>
             <div class="xp-display">
@@ -5293,9 +4821,13 @@ header {
             </div>
             <div class="level-text">250 XP до уровня 6</div>
         </div>
-        <div class="achievements-list" id="achievementsList"></div>
-        <div style="padding: 0 20px 20px;">
-            <button class="add-review-btn" onclick="closeModal('achievementsModal')">Закрыть</button>
+        
+        <div class="modal-body-no-padding">
+            <div class="achievements-list" id="achievementsList"></div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="modal-btn primary full" onclick="closeModal('achievementsModal')">Закрыть</button>
         </div>
     </div>
 </div>
@@ -5357,23 +4889,29 @@ header {
 <!-- Модалка сообщений -->
 <div class="modal" id="messagesModal" onclick="closeModalOnBackdrop(event, 'messagesModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-drag-zone">
+            <div class="modal-drag-handle"></div>
+        </div>
+        
         <div class="modal-header">
-            <span class="modal-title">💬 Сообщения</span>
+            <div style="width: 70px;"></div>
+            <div class="modal-title">💬 Сообщения</div>
             <button class="modal-close" onclick="closeModal('messagesModal')">✕</button>
         </div>
-        <div class="messages-list" id="messagesList"></div>
+        
+        <div class="modal-body-no-padding">
+            <div class="messages-list" id="messagesList"></div>
+        </div>
     </div>
 </div>
 
 <!-- Модалка учеников -->
 <div class="modal" id="studentsModal" onclick="closeModalOnBackdrop(event, 'studentsModal')">
-    <div class="modal-content" onclick="event.stopPropagation()" style="padding: 0; overflow: hidden;">
-        <div style="padding: 20px; background: var(--card-bg);">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span class="modal-title">👥 Ученики</span>
-                <button class="modal-close" onclick="closeModal('studentsModal')">✕</button>
-            </div>
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-drag-zone">
+            <div class="modal-drag-handle"></div>
         </div>
+        
         <div class="students-stats">
             <div class="students-stat">
                 <div class="students-stat-value" id="totalStudents">234</div>
@@ -5388,7 +4926,14 @@ header {
                 <div class="students-stat-label">Завершили</div>
             </div>
         </div>
-        <div id="studentsList" style="max-height: 400px; overflow-y: auto;"></div>
+        
+        <div class="modal-body-no-padding">
+            <div id="studentsList"></div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="modal-btn secondary full" onclick="closeModal('studentsModal')">Закрыть</button>
+        </div>
     </div>
 </div>
 
@@ -5432,12 +4977,20 @@ header {
 <!-- Модалка отзыва -->
 <div class="modal" id="reviewModal" onclick="closeModalOnBackdrop(event, 'reviewModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span class="modal-title">✍️ Отзыв</span>
-            <button class="modal-close" onclick="closeModal('reviewModal')">✕</button>
+        <div class="modal-drag-zone">
+            <div class="modal-drag-handle"></div>
         </div>
-        <div class="review-form">
-            <p style="text-align: center;">Оцените курс:</p>
+        
+        <div class="modal-header-simple">
+            <button class="modal-header-btn cancel" onclick="closeModal('reviewModal')">Отмена</button>
+            <div>
+                <div class="modal-title">Отзыв</div>
+            </div>
+            <button class="modal-header-btn save" onclick="submitReview()">Готово</button>
+        </div>
+        
+        <div class="modal-body">
+            <p style="text-align: center; color: var(--text-secondary, #666); margin-bottom: 10px;">Оцените курс</p>
             <div class="rating-select" id="ratingSelect">
                 <span class="rating-star" onclick="selectRating(1)">⭐</span>
                 <span class="rating-star" onclick="selectRating(2)">⭐</span>
@@ -5445,8 +4998,11 @@ header {
                 <span class="rating-star" onclick="selectRating(4)">⭐</span>
                 <span class="rating-star" onclick="selectRating(5)">⭐</span>
             </div>
-            <textarea class="review-textarea" id="reviewText" placeholder="Ваш отзыв..."></textarea>
-            <button class="submit-review-btn" onclick="submitReview()">Отправить</button>
+            
+            <div class="modal-input-group">
+                <label class="modal-label">Ваш отзыв</label>
+                <textarea class="modal-textarea" id="reviewText" placeholder="Расскажите о вашем опыте..."></textarea>
+            </div>
         </div>
     </div>
 </div>
@@ -5454,17 +5010,27 @@ header {
 <!-- Модалка промокода -->
 <div class="modal" id="promoModal" onclick="closeModalOnBackdrop(event, 'promoModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span class="modal-title">🏷️ Промокод</span>
-            <button class="modal-close" onclick="closeModal('promoModal')">✕</button>
+        <div class="modal-drag-zone">
+            <div class="modal-drag-handle"></div>
         </div>
-        <div class="promo-form">
-            <div class="form-group">
-                <label class="form-label">Код</label>
-                <input type="text" class="form-input" id="promoCodeInput" placeholder="SALE20" style="text-transform: uppercase;">
+        
+        <div class="modal-header-simple">
+            <button class="modal-header-btn cancel" onclick="closeModal('promoModal')">Отмена</button>
+            <div>
+                <div class="modal-title">Новый промокод</div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Скидка</label>
+            <button class="modal-header-btn save" onclick="createPromoCode()">Создать</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="modal-input-group">
+                <label class="modal-label">Код промокода</label>
+                <input type="text" class="modal-input" id="promoCodeInput" placeholder="SALE20" style="text-transform: uppercase;">
+                <div class="modal-input-hint">Латинские буквы и цифры</div>
+            </div>
+            
+            <div class="modal-input-group">
+                <label class="modal-label">Размер скидки</label>
                 <div class="discount-options">
                     <div class="discount-option" onclick="selectDiscount(10, this)">10%</div>
                     <div class="discount-option selected" onclick="selectDiscount(20, this)">20%</div>
@@ -5472,11 +5038,12 @@ header {
                     <div class="discount-option" onclick="selectDiscount(50, this)">50%</div>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Лимит</label>
-                <input type="number" class="form-input" id="promoLimitInput" value="100">
+            
+            <div class="modal-input-group">
+                <label class="modal-label">Лимит использований</label>
+                <input type="number" class="modal-input" id="promoLimitInput" placeholder="100" value="100">
+                <div class="modal-input-hint">Оставьте пустым для безлимита</div>
             </div>
-            <button class="submit-review-btn" onclick="createPromoCode()">Создать</button>
         </div>
     </div>
 </div>
@@ -5484,16 +5051,21 @@ header {
 <!-- Модалка заметки -->
 <div class="modal" id="noteModal" onclick="closeModalOnBackdrop(event, 'noteModal')">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-header">
-            <span class="modal-title">📝 Заметка</span>
-            <button class="modal-close" onclick="closeModal('noteModal')">✕</button>
+        <div class="modal-drag-zone">
+            <div class="modal-drag-handle"></div>
         </div>
-        <div style="padding: 20px;">
-            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">
-                📹 Момент: <span id="noteTimestamp">00:00</span>
-            </p>
-            <textarea class="review-textarea" id="noteText" placeholder="Ваша заметка..."></textarea>
-            <button class="submit-review-btn" onclick="saveNote()">Сохранить</button>
+        
+        <div class="modal-header-simple">
+            <button class="modal-header-btn cancel" onclick="closeModal('noteModal')">Отмена</button>
+            <div>
+                <div class="modal-title">📝 Заметка</div>
+                <div class="modal-subtitle">Момент: <span id="noteTimestamp">00:00</span></div>
+            </div>
+            <button class="modal-header-btn save" onclick="saveNote()">Готово</button>
+        </div>
+        
+        <div class="modal-body">
+            <textarea class="modal-textarea" id="noteText" placeholder="Напишите заметку к этому моменту видео..." style="min-height: 150px;"></textarea>
         </div>
     </div>
 </div>
@@ -6604,9 +6176,11 @@ function likeQuestion(el) {
 
 // ===== ОТЗЫВЫ =====
 function showReviewModal() {
-    document.getElementById('reviewModal').classList.add('active');
+    hapticFeedback('light');
     state.selectedRating = 0;
     updateRatingStars();
+    document.getElementById('reviewText').value = '';
+    document.getElementById('reviewModal').classList.add('active');
 }
 
 function selectRating(rating) {
@@ -6644,11 +6218,18 @@ function submitReview() {
 
 // ===== ЗАМЕТКИ =====
 function showAddNoteModal() {
+    hapticFeedback('light');
     const mins = Math.floor(state.videoProgress * 9.3 / 60);
     const secs = Math.floor(state.videoProgress * 9.3 % 60);
     document.getElementById('noteTimestamp').textContent = 
         `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    document.getElementById('noteText').value = '';
     document.getElementById('noteModal').classList.add('active');
+    
+    // Фокус на поле ввода
+    setTimeout(() => {
+        document.getElementById('noteText').focus();
+    }, 400);
 }
 
 function saveNote() {
@@ -6680,6 +6261,9 @@ function deleteNote(index) {
 
 // ===== ПРОМОКОДЫ =====
 function showCreatePromoModal() {
+    hapticFeedback('light');
+    document.getElementById('promoCodeInput').value = '';
+    document.getElementById('promoLimitInput').value = '100';
     document.getElementById('promoModal').classList.add('active');
 }
 
@@ -6801,6 +6385,7 @@ function addXP(amount) {
 }
 
 function showAchievementsModal() {
+    hapticFeedback('light');
     document.getElementById('modalXP').textContent = state.xp.toLocaleString();
     document.getElementById('modalLevel').textContent = state.level;
     document.getElementById('modalAchievements').textContent = achievementsData.filter(a => a.unlocked).length;
@@ -6876,6 +6461,18 @@ function showProfile() {
 // ===== МОДАЛКИ =====
 function showSubscriptionModal() {
     document.getElementById('subscriptionModal').classList.add('active');
+}
+
+function showMessagesModal() {
+    hapticFeedback('light');
+    renderMessages();
+    document.getElementById('messagesModal').classList.add('active');
+}
+
+function showStudentsModal() {
+    hapticFeedback('light');
+    renderStudents();
+    document.getElementById('studentsModal').classList.add('active');
 }
 
 function closeModal(id) {
@@ -7364,6 +6961,7 @@ function switchEditorTab(tab) {
 
 // Выбор иконки
 function showIconPicker() {
+    hapticFeedback('light');
     document.getElementById('iconPickerModal').classList.add('active');
 }
 
@@ -7729,23 +7327,20 @@ function createNewCourse() {
 // ===== СВАЙП ДЛЯ ЗАКРЫТИЯ МОДАЛОК =====
 function initModalSwipe() {
     document.querySelectorAll('.modal-content').forEach(content => {
+        const dragZone = content.querySelector('.modal-drag-zone');
+        if (!dragZone) return;
+        
         let startY = 0;
         let currentY = 0;
         let isDragging = false;
         
-        content.addEventListener('touchstart', (e) => {
-            // Только если касаемся верхней части (первые 50px)
-            const rect = content.getBoundingClientRect();
-            const touchY = e.touches[0].clientY - rect.top;
-            
-            if (touchY < 50 && content.scrollTop === 0) {
-                startY = e.touches[0].clientY;
-                isDragging = true;
-                content.style.transition = 'none';
-            }
+        dragZone.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+            isDragging = true;
+            content.style.transition = 'none';
         }, { passive: true });
         
-        content.addEventListener('touchmove', (e) => {
+        dragZone.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             
             currentY = e.touches[0].clientY;
@@ -7753,32 +7348,44 @@ function initModalSwipe() {
             
             if (deltaY > 0) {
                 content.style.transform = `translateY(${deltaY}px)`;
-                content.style.opacity = 1 - (deltaY / 400);
+                
+                // Визуальная обратная связь на полоске
+                const handle = dragZone.querySelector('.modal-drag-handle');
+                if (handle) {
+                    handle.style.width = Math.min(56, 48 + deltaY / 10) + 'px';
+                    handle.style.background = `rgba(0, 0, 0, ${0.2 + deltaY / 500})`;
+                }
             }
         }, { passive: true });
         
-        content.addEventListener('touchend', () => {
+        dragZone.addEventListener('touchend', () => {
             if (!isDragging) return;
             
             const deltaY = currentY - startY;
-            content.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+            content.style.transition = 'transform 0.3s cubic-bezier(0.32, 0.72, 0, 1)';
             
-            if (deltaY > 100) {
+            // Восстанавливаем полоску
+            const handle = dragZone.querySelector('.modal-drag-handle');
+            if (handle) {
+                handle.style.width = '';
+                handle.style.background = '';
+            }
+            
+            if (deltaY > 120) {
                 // Закрываем модалку
                 const modal = content.closest('.modal');
                 if (modal) {
+                    hapticFeedback('light');
                     content.style.transform = 'translateY(100%)';
-                    content.style.opacity = '0';
                     setTimeout(() => {
                         modal.classList.remove('active');
                         content.style.transform = '';
-                        content.style.opacity = '';
+                        content.style.transition = '';
                     }, 300);
                 }
             } else {
                 // Возвращаем на место
                 content.style.transform = '';
-                content.style.opacity = '';
             }
             
             isDragging = false;
@@ -7791,6 +7398,44 @@ function initModalSwipe() {
 // Вызываем после загрузки
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(initModalSwipe, 500);
+});
+
+// ===== УПРАВЛЕНИЕ КЛАВИАТУРОЙ =====
+
+// Скрыть клавиатуру
+function hideKeyboard() {
+    document.activeElement.blur();
+    
+    // Дополнительно для iOS
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach(input => input.blur());
+}
+
+// Скрыть клавиатуру при клике вне поля ввода
+document.addEventListener('touchstart', (e) => {
+    if (!e.target.matches('input, textarea')) {
+        // Если клик не по полю ввода, скрываем клавиатуру через небольшую задержку
+        if (document.activeElement.matches('input, textarea')) {
+            // Не скрываем сразу, только если свайп
+        }
+    }
+});
+
+// Обработка кнопки "Готово" на клавиатуре
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.target.matches('textarea')) {
+        e.preventDefault();
+        hideKeyboard();
+    }
+});
+
+// Скроллим к полю ввода при фокусе (для iOS)
+document.querySelectorAll('input, textarea').forEach(input => {
+    input.addEventListener('focus', () => {
+        setTimeout(() => {
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+    });
 });
 </script>
 
