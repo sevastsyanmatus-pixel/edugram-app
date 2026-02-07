@@ -3232,6 +3232,752 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
     cursor: pointer;
     padding: 8px;
 }
+
+/* ===== РЕДАКТОР КУРСА ===== */
+.editor-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+}
+
+.editor-back-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+}
+
+.editor-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.editor-save-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.editor-tabs {
+    display: flex;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.editor-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.editor-tab {
+    flex: 1;
+    min-width: 80px;
+    padding: 14px 12px;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.editor-tab.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.editor-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary);
+}
+
+.editor-tab-content {
+    padding: 0;
+}
+
+.editor-section {
+    padding: 20px 15px;
+}
+
+.editor-field {
+    margin-bottom: 20px;
+}
+
+.editor-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.editor-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    background: var(--card-bg);
+    color: var(--text);
+    transition: border-color 0.2s;
+}
+
+.editor-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.editor-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    background: var(--card-bg);
+    color: var(--text);
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.editor-textarea.large {
+    min-height: 200px;
+}
+
+.editor-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.editor-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 15px;
+    background: var(--card-bg);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.field-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+}
+
+/* Иконка курса */
+.editor-icon-picker {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.editor-icon-preview {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.editor-icon-preview:active {
+    transform: scale(0.95);
+}
+
+.editor-icon-hint {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Уровень сложности */
+.editor-level-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.level-option {
+    flex: 1;
+    padding: 15px 10px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.level-option:hover {
+    border-color: var(--primary);
+}
+
+.level-option.selected {
+    border-color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.level-option span:first-child {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.level-option span:last-child {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Уроки */
+.add-lesson-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.lessons-editor-list {
+    min-height: 200px;
+}
+
+.lesson-editor-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lesson-editor-item:active {
+    transform: scale(0.98);
+}
+
+.lesson-drag-handle {
+    color: #999;
+    font-size: 18px;
+    cursor: grab;
+}
+
+.lesson-editor-number {
+    width: 32px;
+    height: 32px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.lesson-editor-info {
+    flex: 1;
+}
+
+.lesson-editor-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.lesson-editor-meta {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    gap: 10px;
+}
+
+.lesson-editor-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.lesson-action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light);
+}
+
+.lesson-action-btn.delete {
+    background: rgba(244, 67, 54, 0.1);
+}
+
+/* Цена */
+.access-type-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.access-option {
+    flex: 1;
+    padding: 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.access-option.selected {
+    border-color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.access-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.access-name {
+    font-weight: 600;
+}
+
+.price-input-wrapper {
+    position: relative;
+}
+
+.price-input {
+    padding-right: 50px;
+}
+
+.price-currency {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+}
+
+.price-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+}
+
+.price-preview {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.price-preview-label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.price-preview-value .price-new {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.price-preview-value .price-old {
+    font-size: 18px;
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 10px;
+}
+
+/* Настройки */
+.status-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.status-option {
+    flex: 1;
+    padding: 20px 15px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.status-option.selected {
+    border-color: var(--primary);
+}
+
+.status-option.draft.selected {
+    background: rgba(255, 152, 0, 0.1);
+    border-color: var(--warning);
+}
+
+.status-option.published.selected {
+    background: rgba(76, 175, 80, 0.1);
+    border-color: var(--success);
+}
+
+.status-option span:first-child {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.status-option span:nth-child(2) {
+    font-weight: 600;
+    display: block;
+}
+
+.status-option small {
+    font-size: 11px;
+    color: #666;
+}
+
+/* Переключатели */
+.editor-toggle-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.toggle-info {
+    flex: 1;
+}
+
+.toggle-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.toggle-desc {
+    font-size: 12px;
+    color: #666;
+}
+
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ccc;
+    border-radius: 28px;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    position: absolute;
+    content: '';
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--success);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+}
+
+/* Опасная зона */
+.danger-zone {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(244, 67, 54, 0.05);
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    border-radius: 12px;
+}
+
+.danger-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--danger);
+    margin-bottom: 15px;
+}
+
+.delete-course-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Модалка редактора урока */
+.lesson-editor-modal {
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.lesson-editor-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.lesson-editor-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+}
+
+.editor-cancel-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--light);
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.editor-submit-btn {
+    flex: 2;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* Тип контента */
+.content-type-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.content-type {
+    flex: 1;
+    padding: 15px 10px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.content-type:hover {
+    border-color: var(--primary);
+}
+
+.content-type.selected {
+    border-color: var(--primary);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.content-type span:first-child {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.content-type span:last-child {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Редактор теста */
+.quiz-questions-list {
+    margin-bottom: 15px;
+}
+
+.quiz-question-item {
+    background: var(--light);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.quiz-question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.quiz-question-number {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.quiz-question-delete {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.quiz-question-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    background: var(--card-bg);
+    color: var(--text);
+}
+
+.quiz-options-list {
+    display: grid;
+    gap: 8px;
+}
+
+.quiz-option-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.quiz-option-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--card-bg);
+    color: var(--text);
+}
+
+.quiz-correct-btn {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz-correct-btn.selected {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+
+.add-question-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--light);
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Выбор иконки */
+.icon-picker-modal {
+    max-width: 340px;
+}
+
+.icon-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 20px;
+}
+
+.icon-item {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    background: var(--light);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-item:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+.icon-item:active {
+    transform: scale(0.95);
+}
     </style>
 </head>
 <body>
@@ -3920,6 +4666,345 @@ body.dark-mode .profile-menu-item.expert-mode-btn {
     </button>
 </div>
 </div>
+<!-- ===== РЕДАКТОР КУРСА ===== -->
+<div id="courseEditorPage" class="page">
+    
+    <!-- Хедер редактора -->
+    <div class="editor-header">
+        <button class="editor-back-btn" onclick="closeCourseEditor()">← Назад</button>
+        <div class="editor-title">✏️ Редактор курса</div>
+        <button class="editor-save-btn" onclick="saveCourse()">💾</button>
+    </div>
+
+    <!-- Табы редактора -->
+    <div class="editor-tabs">
+        <button class="editor-tab active" onclick="switchEditorTab('info')">📝 Инфо</button>
+        <button class="editor-tab" onclick="switchEditorTab('lessons')">📚 Уроки</button>
+        <button class="editor-tab" onclick="switchEditorTab('pricing')">💰 Цена</button>
+        <button class="editor-tab" onclick="switchEditorTab('settings')">⚙️ Настройки</button>
+    </div>
+
+    <!-- Таб: Основная информация -->
+    <div id="editorInfoTab" class="editor-tab-content">
+        <div class="editor-section">
+            
+            <!-- Иконка курса -->
+            <div class="editor-icon-picker">
+                <div class="editor-icon-preview" id="courseIconPreview" onclick="showIconPicker()">📚</div>
+                <span class="editor-icon-hint">Нажмите чтобы изменить</span>
+            </div>
+
+            <!-- Название -->
+            <div class="editor-field">
+                <label class="editor-label">Название курса *</label>
+                <input type="text" class="editor-input" id="courseTitle" placeholder="Например: JavaScript с нуля">
+            </div>
+
+            <!-- Описание -->
+            <div class="editor-field">
+                <label class="editor-label">Описание</label>
+                <textarea class="editor-textarea" id="courseDescription" placeholder="Опишите чему научится ученик..."></textarea>
+            </div>
+
+            <!-- Категория -->
+            <div class="editor-field">
+                <label class="editor-label">Категория</label>
+                <select class="editor-select" id="courseCategory">
+                    <option value="">Выберите категорию</option>
+                    <option value="programming">💻 Программирование</option>
+                    <option value="design">🎨 Дизайн</option>
+                    <option value="marketing">📈 Маркетинг</option>
+                    <option value="business">💼 Бизнес</option>
+                    <option value="languages">🌍 Языки</option>
+                    <option value="other">📦 Другое</option>
+                </select>
+            </div>
+
+            <!-- Уровень -->
+            <div class="editor-field">
+                <label class="editor-label">Уровень сложности</label>
+                <div class="editor-level-picker">
+                    <div class="level-option selected" onclick="selectLevel('beginner', this)">
+                        <span>🌱</span>
+                        <span>Начинающий</span>
+                    </div>
+                    <div class="level-option" onclick="selectLevel('intermediate', this)">
+                        <span>🌿</span>
+                        <span>Средний</span>
+                    </div>
+                    <div class="level-option" onclick="selectLevel('advanced', this)">
+                        <span>🌳</span>
+                        <span>Продвинутый</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Таб: Уроки -->
+    <div id="editorLessonsTab" class="editor-tab-content" style="display: none;">
+        <div class="editor-section">
+            
+            <!-- Кнопка добавления урока -->
+            <button class="add-lesson-btn" onclick="addLesson()">
+                ➕ Добавить урок
+            </button>
+
+            <!-- Список уроков -->
+            <div class="lessons-editor-list" id="lessonsEditorList">
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <div class="empty-text">Добавьте первый урок</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Таб: Цена -->
+    <div id="editorPricingTab" class="editor-tab-content" style="display: none;">
+        <div class="editor-section">
+            
+            <!-- Тип доступа -->
+            <div class="editor-field">
+                <label class="editor-label">Тип доступа</label>
+                <div class="access-type-picker">
+                    <div class="access-option" onclick="selectAccessType('paid', this)">
+                        <span class="access-icon">💰</span>
+                        <span class="access-name">Платный</span>
+                    </div>
+                    <div class="access-option" onclick="selectAccessType('free', this)">
+                        <span class="access-icon">🆓</span>
+                        <span class="access-name">Бесплатный</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Цена -->
+            <div class="editor-field" id="priceField">
+                <label class="editor-label">Цена (в Stars ⭐)</label>
+                <div class="price-input-wrapper">
+                    <input type="number" class="editor-input price-input" id="coursePrice" placeholder="1990" min="0">
+                    <span class="price-currency">⭐</span>
+                </div>
+                <div class="price-hint">Минимальная цена: 100 ⭐ (≈ 100₽)</div>
+            </div>
+
+            <!-- Старая цена (скидка) -->
+            <div class="editor-field" id="oldPriceField">
+                <label class="editor-label">Старая цена (для скидки)</label>
+                <div class="price-input-wrapper">
+                    <input type="number" class="editor-input price-input" id="courseOldPrice" placeholder="2990" min="0">
+                    <span class="price-currency">⭐</span>
+                </div>
+                <div class="price-hint">Оставьте пустым если без скидки</div>
+            </div>
+
+            <!-- Предпросмотр цены -->
+            <div class="price-preview">
+                <div class="price-preview-label">Как увидит ученик:</div>
+                <div class="price-preview-value">
+                    <span class="price-new" id="pricePreviewNew">1990 ⭐</span>
+                    <span class="price-old" id="pricePreviewOld"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Таб: Настройки -->
+    <div id="editorSettingsTab" class="editor-tab-content" style="display: none;">
+        <div class="editor-section">
+            
+            <!-- Статус публикации -->
+            <div class="editor-field">
+                <label class="editor-label">Статус курса</label>
+                <div class="status-picker">
+                    <div class="status-option draft" onclick="selectStatus('draft', this)">
+                        <span>📝</span>
+                        <span>Черновик</span>
+                        <small>Виден только вам</small>
+                    </div>
+                    <div class="status-option published" onclick="selectStatus('published', this)">
+                        <span>🌍</span>
+                        <span>Опубликован</span>
+                        <small>Виден всем</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сертификат -->
+            <div class="editor-toggle-field">
+                <div class="toggle-info">
+                    <div class="toggle-title">🎓 Сертификат</div>
+                    <div class="toggle-desc">Выдавать сертификат по окончании</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="courseCertificate" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Комментарии -->
+            <div class="editor-toggle-field">
+                <div class="toggle-info">
+                    <div class="toggle-title">💬 Комментарии</div>
+                    <div class="toggle-desc">Разрешить вопросы к урокам</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="courseComments" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Превью уроков -->
+            <div class="editor-toggle-field">
+                <div class="toggle-info">
+                    <div class="toggle-title">👁️ Превью</div>
+                    <div class="toggle-desc">Показывать первый урок бесплатно</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="coursePreview">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Удаление курса -->
+            <div class="danger-zone">
+                <div class="danger-title">⚠️ Опасная зона</div>
+                <button class="delete-course-btn" onclick="deleteCourse()">
+                    🗑️ Удалить курс
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== РЕДАКТОР УРОКА (модалка) ===== -->
+<div class="modal" id="lessonEditorModal" onclick="closeModalOnBackdrop(event, 'lessonEditorModal')">
+    <div class="modal-content lesson-editor-modal" onclick="event.stopPropagation()">
+        
+        <div class="modal-header">
+            <span class="modal-title" id="lessonEditorTitle">📚 Новый урок</span>
+            <button class="modal-close" onclick="closeModal('lessonEditorModal')">✕</button>
+        </div>
+
+        <div class="lesson-editor-body">
+            
+            <!-- Название урока -->
+            <div class="editor-field">
+                <label class="editor-label">Название урока *</label>
+                <input type="text" class="editor-input" id="lessonTitle" placeholder="Например: Введение в курс">
+            </div>
+
+            <!-- Тип контента -->
+            <div class="editor-field">
+                <label class="editor-label">Тип контента</label>
+                <div class="content-type-picker">
+                    <div class="content-type selected" onclick="selectContentType('video', this)">
+                        <span>🎬</span>
+                        <span>Видео</span>
+                    </div>
+                    <div class="content-type" onclick="selectContentType('text', this)">
+                        <span>📝</span>
+                        <span>Текст</span>
+                    </div>
+                    <div class="content-type" onclick="selectContentType('quiz', this)">
+                        <span>❓</span>
+                        <span>Тест</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Видео URL -->
+            <div class="editor-field" id="videoUrlField">
+                <label class="editor-label">Ссылка на видео</label>
+                <input type="url" class="editor-input" id="lessonVideoUrl" placeholder="https://youtube.com/... или прямая ссылка">
+                <div class="field-hint">YouTube, Vimeo или прямая ссылка на .mp4</div>
+            </div>
+
+            <!-- Текстовый контент -->
+            <div class="editor-field" id="textContentField" style="display: none;">
+                <label class="editor-label">Текст урока</label>
+                <textarea class="editor-textarea large" id="lessonTextContent" placeholder="Напишите содержание урока..."></textarea>
+            </div>
+
+            <!-- Тест -->
+            <div id="quizEditorField" style="display: none;">
+                <label class="editor-label">Вопросы теста</label>
+                
+                <div id="quizQuestionsList" class="quiz-questions-list">
+                    <!-- Вопросы будут добавляться сюда -->
+                </div>
+                
+                <button class="add-question-btn" onclick="addQuizQuestion()">
+                    ➕ Добавить вопрос
+                </button>
+            </div>
+
+            <!-- Длительность -->
+            <div class="editor-field">
+                <label class="editor-label">Длительность (минуты)</label>
+                <input type="number" class="editor-input" id="lessonDuration" placeholder="15" min="1">
+            </div>
+
+            <!-- Описание урока -->
+            <div class="editor-field">
+                <label class="editor-label">Описание (необязательно)</label>
+                <textarea class="editor-textarea" id="lessonDescription" placeholder="Краткое описание урока..."></textarea>
+            </div>
+
+        </div>
+
+        <div class="lesson-editor-footer">
+            <button class="editor-cancel-btn" onclick="closeModal('lessonEditorModal')">Отмена</button>
+            <button class="editor-submit-btn" onclick="saveLesson()">💾 Сохранить</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- ===== ВЫБОР ИКОНКИ (модалка) ===== -->
+<div class="modal" id="iconPickerModal" onclick="closeModalOnBackdrop(event, 'iconPickerModal')">
+    <div class="modal-content icon-picker-modal" onclick="event.stopPropagation()">
+        
+        <div class="modal-header">
+            <span class="modal-title">🎨 Выберите иконку</span>
+            <button class="modal-close" onclick="closeModal('iconPickerModal')">✕</button>
+        </div>
+
+        <div class="icon-picker-grid">
+            <div class="icon-item" onclick="selectCourseIcon('📚')">📚</div>
+            <div class="icon-item" onclick="selectCourseIcon('💻')">💻</div>
+            <div class="icon-item" onclick="selectCourseIcon('🎨')">🎨</div>
+            <div class="icon-item" onclick="selectCourseIcon('📊')">📊</div>
+            <div class="icon-item" onclick="selectCourseIcon('🚀')">🚀</div>
+            <div class="icon-item" onclick="selectCourseIcon('💡')">💡</div>
+            <div class="icon-item" onclick="selectCourseIcon('🎯')">🎯</div>
+            <div class="icon-item" onclick="selectCourseIcon('🔧')">🔧</div>
+            <div class="icon-item" onclick="selectCourseIcon('📱')">📱</div>
+            <div class="icon-item" onclick="selectCourseIcon('🌐')">🌐</div>
+            <div class="icon-item" onclick="selectCourseIcon('🤖')">🤖</div>
+            <div class="icon-item" onclick="selectCourseIcon('💎')">💎</div>
+            <div class="icon-item" onclick="selectCourseIcon('🎬')">🎬</div>
+            <div class="icon-item" onclick="selectCourseIcon('🎵')">🎵</div>
+            <div class="icon-item" onclick="selectCourseIcon('📷')">📷</div>
+            <div class="icon-item" onclick="selectCourseIcon('✏️')">✏️</div>
+            <div class="icon-item" onclick="selectCourseIcon('📈')">📈</div>
+            <div class="icon-item" onclick="selectCourseIcon('💼')">💼</div>
+            <div class="icon-item" onclick="selectCourseIcon('🏆')">🏆</div>
+            <div class="icon-item" onclick="selectCourseIcon('⭐')">⭐</div>
+            <div class="icon-item" onclick="selectCourseIcon('🔥')">🔥</div>
+            <div class="icon-item" onclick="selectCourseIcon('💪')">💪</div>
+            <div class="icon-item" onclick="selectCourseIcon('🧠')">🧠</div>
+            <div class="icon-item" onclick="selectCourseIcon('📖')">📖</div>
+        </div>
+
+    </div>
+</div>
 
 <!-- ===== МОДАЛЬНЫЕ ОКНА ===== -->
 
@@ -4235,6 +5320,14 @@ function autoLoginFromTelegram(user) {
 function setupBackButton() {
     tg.BackButton.onClick(() => {
         hapticFeedback('light');
+        
+        // Если открыт редактор курса
+        if (document.getElementById('courseEditorPage').classList.contains('active')) {
+            if (confirm('Выйти без сохранения?')) {
+                closeCourseEditor();
+            }
+            return;
+        }
         
         // Если открыт режим эксперта
         if (state.isExpertModeOpen) {
@@ -5801,6 +6894,527 @@ function createPromoCode() {
     
     saveState();
     showToast('✅', `Промокод ${code} создан!`);
+}
+
+// ===== РЕДАКТОР КУРСА =====
+
+// Состояние редактора
+let editorState = {
+    courseId: null,
+    isNewCourse: true,
+    currentLessonIndex: null,
+    selectedIcon: '📚',
+    selectedLevel: 'beginner',
+    selectedAccessType: 'paid',
+    selectedStatus: 'draft',
+    selectedContentType: 'video',
+    lessons: [],
+    quizQuestions: []
+};
+
+// Открыть редактор
+function openCourseEditor(courseId = null) {
+    hapticFeedback('medium');
+    
+    // Скрываем все страницы
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    
+    // Показываем редактор
+    document.getElementById('courseEditorPage').classList.add('active');
+    
+    if (courseId) {
+        // Редактируем существующий курс
+        editorState.isNewCourse = false;
+        editorState.courseId = courseId;
+        loadCourseToEditor(courseId);
+    } else {
+        // Новый курс
+        editorState.isNewCourse = true;
+        editorState.courseId = null;
+        resetEditor();
+    }
+    
+    // Скрываем навигацию
+    document.getElementById('mainNav').style.display = 'none';
+    
+    if (tg) tg.BackButton.show();
+}
+
+function closeCourseEditor() {
+    hapticFeedback('light');
+    
+    // Возвращаемся в режим эксперта
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('expertModePage').classList.add('active');
+    
+    updateExpertDashboard();
+    updateExpertCourses();
+}
+
+function resetEditor() {
+    editorState = {
+        courseId: null,
+        isNewCourse: true,
+        currentLessonIndex: null,
+        selectedIcon: '📚',
+        selectedLevel: 'beginner',
+        selectedAccessType: 'paid',
+        selectedStatus: 'draft',
+        selectedContentType: 'video',
+        lessons: [],
+        quizQuestions: []
+    };
+    
+    // Очищаем поля
+    document.getElementById('courseTitle').value = '';
+    document.getElementById('courseDescription').value = '';
+    document.getElementById('courseCategory').value = '';
+    document.getElementById('coursePrice').value = '';
+    document.getElementById('courseOldPrice').value = '';
+    document.getElementById('courseIconPreview').textContent = '📚';
+    
+    // Сбрасываем выбор
+    document.querySelectorAll('.level-option').forEach(el => el.classList.remove('selected'));
+    document.querySelector('.level-option').classList.add('selected');
+    
+    document.querySelectorAll('.access-option').forEach(el => el.classList.remove('selected'));
+    
+    document.querySelectorAll('.status-option').forEach(el => el.classList.remove('selected'));
+    document.querySelector('.status-option.draft').classList.add('selected');
+    
+    updatePricePreview();
+    renderLessonsEditor();
+    
+    // Переключаемся на первый таб
+    switchEditorTab('info');
+}
+
+function loadCourseToEditor(courseId) {
+    const course = state.expertData?.courses.find(c => c.id === courseId);
+    if (!course) return;
+    
+    editorState.selectedIcon = course.icon || '📚';
+    editorState.selectedLevel = course.level || 'beginner';
+    editorState.selectedAccessType = course.price > 0 ? 'paid' : 'free';
+    editorState.selectedStatus = course.status || 'draft';
+    editorState.lessons = course.lessons || [];
+    
+    document.getElementById('courseTitle').value = course.title || '';
+    document.getElementById('courseDescription').value = course.description || '';
+    document.getElementById('courseCategory').value = course.category || '';
+    document.getElementById('coursePrice').value = course.price || '';
+    document.getElementById('courseOldPrice').value = course.oldPrice || '';
+    document.getElementById('courseIconPreview').textContent = editorState.selectedIcon;
+    
+    // Устанавливаем уровень
+    document.querySelectorAll('.level-option').forEach(el => el.classList.remove('selected'));
+    const levelIndex = { 'beginner': 0, 'intermediate': 1, 'advanced': 2 };
+    document.querySelectorAll('.level-option')[levelIndex[editorState.selectedLevel]]?.classList.add('selected');
+    
+    // Устанавливаем тип доступа
+    document.querySelectorAll('.access-option').forEach(el => el.classList.remove('selected'));
+    if (editorState.selectedAccessType === 'free') {
+        document.querySelectorAll('.access-option')[1].classList.add('selected');
+        document.getElementById('priceField').style.display = 'none';
+        document.getElementById('oldPriceField').style.display = 'none';
+    } else {
+        document.querySelectorAll('.access-option')[0].classList.add('selected');
+    }
+    
+    // Устанавливаем статус
+    document.querySelectorAll('.status-option').forEach(el => el.classList.remove('selected'));
+    if (editorState.selectedStatus === 'published') {
+        document.querySelector('.status-option.published').classList.add('selected');
+    } else {
+        document.querySelector('.status-option.draft').classList.add('selected');
+    }
+    
+    updatePricePreview();
+    renderLessonsEditor();
+}
+
+// Переключение табов
+function switchEditorTab(tab) {
+    hapticFeedback('light');
+    
+    document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.editor-tab-content').forEach(c => c.style.display = 'none');
+    
+    const tabIndex = { 'info': 0, 'lessons': 1, 'pricing': 2, 'settings': 3 };
+    document.querySelectorAll('.editor-tab')[tabIndex[tab]]?.classList.add('active');
+    
+    const tabMap = {
+        'info': 'editorInfoTab',
+        'lessons': 'editorLessonsTab',
+        'pricing': 'editorPricingTab',
+        'settings': 'editorSettingsTab'
+    };
+    
+    document.getElementById(tabMap[tab]).style.display = 'block';
+}
+
+// Выбор иконки
+function showIconPicker() {
+    document.getElementById('iconPickerModal').classList.add('active');
+}
+
+function selectCourseIcon(icon) {
+    hapticFeedback('light');
+    editorState.selectedIcon = icon;
+    document.getElementById('courseIconPreview').textContent = icon;
+    closeModal('iconPickerModal');
+}
+
+// Выбор уровня
+function selectLevel(level, el) {
+    hapticFeedback('light');
+    editorState.selectedLevel = level;
+    document.querySelectorAll('.level-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+// Тип доступа
+function selectAccessType(type, el) {
+    hapticFeedback('light');
+    editorState.selectedAccessType = type;
+    document.querySelectorAll('.access-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    
+    const priceFields = document.getElementById('priceField');
+    const oldPriceFields = document.getElementById('oldPriceField');
+    
+    if (type === 'free') {
+        priceFields.style.display = 'none';
+        oldPriceFields.style.display = 'none';
+        document.getElementById('coursePrice').value = 0;
+    } else {
+        priceFields.style.display = 'block';
+        oldPriceFields.style.display = 'block';
+    }
+    
+    updatePricePreview();
+}
+
+// Статус
+function selectStatus(status, el) {
+    hapticFeedback('light');
+    editorState.selectedStatus = status;
+    document.querySelectorAll('.status-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+// Превью цены
+function updatePricePreview() {
+    const price = document.getElementById('coursePrice').value || 0;
+    const oldPrice = document.getElementById('courseOldPrice').value;
+    
+    document.getElementById('pricePreviewNew').textContent = 
+        editorState.selectedAccessType === 'free' ? 'Бесплатно' : `${price} ⭐`;
+    
+    document.getElementById('pricePreviewOld').textContent = 
+        oldPrice ? `${oldPrice} ⭐` : '';
+}
+
+// Добавить слушатели на поля цены
+document.getElementById('coursePrice')?.addEventListener('input', updatePricePreview);
+document.getElementById('courseOldPrice')?.addEventListener('input', updatePricePreview);
+
+// ===== УРОКИ =====
+
+function renderLessonsEditor() {
+    const container = document.getElementById('lessonsEditorList');
+    
+    if (editorState.lessons.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📚</div>
+                <div class="empty-text">Добавьте первый урок</div>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = editorState.lessons.map((lesson, index) => `
+        <div class="lesson-editor-item" onclick="editLesson(${index})">
+            <div class="lesson-drag-handle">⋮⋮</div>
+            <div class="lesson-editor-number">${index + 1}</div>
+            <div class="lesson-editor-info">
+                <div class="lesson-editor-title">${lesson.title}</div>
+                <div class="lesson-editor-meta">
+                    <span>${getContentTypeIcon(lesson.type)} ${getContentTypeName(lesson.type)}</span>
+                    <span>⏱ ${lesson.duration || 0} мин</span>
+                </div>
+            </div>
+            <div class="lesson-editor-actions">
+                <button class="lesson-action-btn delete" onclick="event.stopPropagation(); deleteLesson(${index})">🗑️</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function getContentTypeIcon(type) {
+    return { 'video': '🎬', 'text': '📝', 'quiz': '❓' }[type] || '📄';
+}
+
+function getContentTypeName(type) {
+    return { 'video': 'Видео', 'text': 'Текст', 'quiz': 'Тест' }[type] || 'Контент';
+}
+
+function addLesson() {
+    hapticFeedback('medium');
+    editorState.currentLessonIndex = null;
+    editorState.selectedContentType = 'video';
+    editorState.quizQuestions = [];
+    
+    // Очищаем поля
+    document.getElementById('lessonTitle').value = '';
+    document.getElementById('lessonVideoUrl').value = '';
+    document.getElementById('lessonTextContent').value = '';
+    document.getElementById('lessonDuration').value = '';
+    document.getElementById('lessonDescription').value = '';
+    document.getElementById('lessonEditorTitle').textContent = '📚 Новый урок';
+    
+    // Показываем нужные поля
+    updateContentTypeFields();
+    renderQuizQuestions();
+    
+    document.getElementById('lessonEditorModal').classList.add('active');
+}
+
+function editLesson(index) {
+    hapticFeedback('light');
+    
+    const lesson = editorState.lessons[index];
+    editorState.currentLessonIndex = index;
+    editorState.selectedContentType = lesson.type || 'video';
+    editorState.quizQuestions = lesson.quiz || [];
+    
+    document.getElementById('lessonTitle').value = lesson.title || '';
+    document.getElementById('lessonVideoUrl').value = lesson.videoUrl || '';
+    document.getElementById('lessonTextContent').value = lesson.textContent || '';
+    document.getElementById('lessonDuration').value = lesson.duration || '';
+    document.getElementById('lessonDescription').value = lesson.description || '';
+    document.getElementById('lessonEditorTitle').textContent = '✏️ Редактировать урок';
+    
+    // Устанавливаем тип контента
+    document.querySelectorAll('.content-type').forEach(el => el.classList.remove('selected'));
+    const typeIndex = { 'video': 0, 'text': 1, 'quiz': 2 };
+    document.querySelectorAll('.content-type')[typeIndex[editorState.selectedContentType]]?.classList.add('selected');
+    
+    updateContentTypeFields();
+    renderQuizQuestions();
+    
+    document.getElementById('lessonEditorModal').classList.add('active');
+}
+
+function deleteLesson(index) {
+    hapticFeedback('medium');
+    
+    if (confirm('Удалить урок?')) {
+        editorState.lessons.splice(index, 1);
+        renderLessonsEditor();
+        showToast('🗑️', 'Урок удалён');
+    }
+}
+
+function selectContentType(type, el) {
+    hapticFeedback('light');
+    editorState.selectedContentType = type;
+    document.querySelectorAll('.content-type').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    updateContentTypeFields();
+}
+
+function updateContentTypeFields() {
+    document.getElementById('videoUrlField').style.display = 
+        editorState.selectedContentType === 'video' ? 'block' : 'none';
+    document.getElementById('textContentField').style.display = 
+        editorState.selectedContentType === 'text' ? 'block' : 'none';
+    document.getElementById('quizEditorField').style.display = 
+        editorState.selectedContentType === 'quiz' ? 'block' : 'none';
+}
+
+function saveLesson() {
+    const title = document.getElementById('lessonTitle').value.trim();
+    
+    if (!title) {
+        showToast('⚠️', 'Введите название урока');
+        return;
+    }
+    
+    hapticFeedback('success');
+    
+    const lessonData = {
+        title: title,
+        type: editorState.selectedContentType,
+        videoUrl: document.getElementById('lessonVideoUrl').value,
+        textContent: document.getElementById('lessonTextContent').value,
+        quiz: editorState.quizQuestions,
+        duration: parseInt(document.getElementById('lessonDuration').value) || 10,
+        description: document.getElementById('lessonDescription').value
+    };
+    
+    if (editorState.currentLessonIndex !== null) {
+        editorState.lessons[editorState.currentLessonIndex] = lessonData;
+    } else {
+        editorState.lessons.push(lessonData);
+    }
+    
+    closeModal('lessonEditorModal');
+    renderLessonsEditor();
+    showToast('✅', 'Урок сохранён');
+}
+
+// ===== ТЕСТ =====
+
+function renderQuizQuestions() {
+    const container = document.getElementById('quizQuestionsList');
+    
+    if (editorState.quizQuestions.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    
+    container.innerHTML = editorState.quizQuestions.map((q, qIndex) => `
+        <div class="quiz-question-item">
+            <div class="quiz-question-header">
+                <span class="quiz-question-number">Вопрос ${qIndex + 1}</span>
+                <button class="quiz-question-delete" onclick="deleteQuizQuestion(${qIndex})">🗑️</button>
+            </div>
+            <input type="text" class="quiz-question-input" 
+                value="${q.question}" 
+                placeholder="Текст вопроса"
+                onchange="updateQuizQuestion(${qIndex}, 'question', this.value)">
+            <div class="quiz-options-list">
+                ${q.options.map((opt, oIndex) => `
+                    <div class="quiz-option-row">
+                        <input type="text" class="quiz-option-input" 
+                            value="${opt}"
+                            placeholder="Вариант ${oIndex + 1}"
+                            onchange="updateQuizOption(${qIndex}, ${oIndex}, this.value)">
+                        <button class="quiz-correct-btn ${q.correct === oIndex ? 'selected' : ''}" 
+                            onclick="setCorrectAnswer(${qIndex}, ${oIndex})">✓</button>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function addQuizQuestion() {
+    hapticFeedback('light');
+    
+    editorState.quizQuestions.push({
+        question: '',
+        options: ['', '', '', ''],
+        correct: 0
+    });
+    
+    renderQuizQuestions();
+}
+
+function deleteQuizQuestion(index) {
+    editorState.quizQuestions.splice(index, 1);
+    renderQuizQuestions();
+}
+
+function updateQuizQuestion(qIndex, field, value) {
+    editorState.quizQuestions[qIndex][field] = value;
+}
+
+function updateQuizOption(qIndex, oIndex, value) {
+    editorState.quizQuestions[qIndex].options[oIndex] = value;
+}
+
+function setCorrectAnswer(qIndex, oIndex) {
+    hapticFeedback('light');
+    editorState.quizQuestions[qIndex].correct = oIndex;
+    renderQuizQuestions();
+}
+
+// ===== СОХРАНЕНИЕ КУРСА =====
+
+function saveCourse() {
+    const title = document.getElementById('courseTitle').value.trim();
+    
+    if (!title) {
+        showToast('⚠️', 'Введите название курса');
+        switchEditorTab('info');
+        return;
+    }
+    
+    hapticFeedback('success');
+    
+    const courseData = {
+        id: editorState.courseId || Date.now(),
+        title: title,
+        description: document.getElementById('courseDescription').value,
+        category: document.getElementById('courseCategory').value,
+        icon: editorState.selectedIcon,
+        level: editorState.selectedLevel,
+        price: editorState.selectedAccessType === 'free' ? 0 : 
+            (parseInt(document.getElementById('coursePrice').value) || 0),
+        oldPrice: parseInt(document.getElementById('courseOldPrice').value) || null,
+        status: editorState.selectedStatus,
+        certificate: document.getElementById('courseCertificate').checked,
+        comments: document.getElementById('courseComments').checked,
+        preview: document.getElementById('coursePreview').checked,
+        lessons: editorState.lessons,
+        students: 0,
+        earnings: 0,
+        rating: 0,
+        createdAt: editorState.isNewCourse ? new Date().toISOString() : undefined,
+        updatedAt: new Date().toISOString()
+    };
+    
+    if (!state.expertData) {
+        state.expertData = { courses: [], students: 0, earnings: 0, promoCodes: [] };
+    }
+    
+    if (editorState.isNewCourse) {
+        state.expertData.courses.push(courseData);
+    } else {
+        const index = state.expertData.courses.findIndex(c => c.id === editorState.courseId);
+        if (index !== -1) {
+            courseData.students = state.expertData.courses[index].students;
+            courseData.earnings = state.expertData.courses[index].earnings;
+            courseData.rating = state.expertData.courses[index].rating;
+            courseData.createdAt = state.expertData.courses[index].createdAt;
+            state.expertData.courses[index] = courseData;
+        }
+    }
+    
+    saveState();
+    
+    showToast('✅', editorState.isNewCourse ? 'Курс создан!' : 'Курс сохранён!');
+    closeCourseEditor();
+}
+
+function deleteCourse() {
+    if (!confirm('Удалить курс? Это действие нельзя отменить.')) return;
+    
+    hapticFeedback('heavy');
+    
+    if (editorState.courseId) {
+        const index = state.expertData.courses.findIndex(c => c.id === editorState.courseId);
+        if (index !== -1) {
+            state.expertData.courses.splice(index, 1);
+            saveState();
+        }
+    }
+    
+    showToast('🗑️', 'Курс удалён');
+    closeCourseEditor();
+}
+
+// Обновляем функцию редактирования курса
+function editCourse(courseId) {
+    openCourseEditor(courseId);
+}
+
+// Обновляем функцию создания курса
+function createNewCourse() {
+    openCourseEditor(null);
 }
 </script>
 
